@@ -1,0 +1,470 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ChangeListManager">
+    <list default="true" id="87684892-ab2f-4c5d-a44e-40e56dbfe67e" name="Default Changelist" comment="">
+      <change afterPath="$PROJECT_DIR$/.gitignore" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/_config.yml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/package-lock.json" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/package.json" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/scaffolds/draft.md" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/scaffolds/page.md" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/scaffolds/post.md" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/source/CNAME" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/source/_posts/Iframe简单介绍.md" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/source/_posts/ajax顺序执行.md" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/source/_posts/commonJs规范.md" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/source/_posts/exports和module.exports.md" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/source/_posts/git常用命令.md" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/source/_posts/gulp基本用法.md" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/source/_posts/html和css简介.md" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/source/_posts/img和父容器之间有间隙的问题.md" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/source/_posts/inline-block并列排序位置影响.md" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/source/_posts/inline-block间隙问题.md" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/source/_posts/js实现刷新.md" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/source/_posts/js实现排序的几种方法.md" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/source/_posts/react入门.md" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/source/_posts/requireJS原理.md" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/source/_posts/sass-scss入门.md" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/source/_posts/this问题.md" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/source/_posts/ueditor使用手册.md" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/source/_posts/两列布局.md" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/source/_posts/五环.md" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/source/_posts/关于文字的垂直居中.md" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/source/_posts/前端优化之css替代js动画.md" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/source/_posts/原型链.md" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/source/_posts/原生js实现input的数据双向绑定.md" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/source/_posts/图片预加载.md" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/source/_posts/字体图标的制作方法.md" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/source/_posts/定位以及z-index.md" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/source/_posts/定时器.md" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/source/_posts/序列化.md" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/source/_posts/弹性盒模型.md" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/source/_posts/循环保存数值.md" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/source/_posts/文档兼容性.md" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/source/_posts/校招面试题（一）.md" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/source/_posts/浅谈phpCI框架.md" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/source/_posts/跨域问题的解决方案.md" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/source/_posts/输入url会发生什么.md" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/source/_posts/闭包.md" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/source/_posts/面向对象.md" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/source/_posts/预编译.md" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/source/image/inline-block并列排序位置影响/1.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/source/image/inline-block并列排序位置影响/2.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/source/image/inline-block并列排序位置影响/3.jpg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/source/image/ueditor使用手册/1.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/source/image/ueditor使用手册/10.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/source/image/ueditor使用手册/11.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/source/image/ueditor使用手册/12.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/source/image/ueditor使用手册/2.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/source/image/ueditor使用手册/3.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/source/image/ueditor使用手册/4.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/source/image/ueditor使用手册/5.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/source/image/ueditor使用手册/6.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/source/image/ueditor使用手册/7.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/source/image/ueditor使用手册/8.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/source/image/ueditor使用手册/9.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/source/image/五环/1.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/source/image/五环/2.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/source/image/五环/3.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/source/image/五环/4.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/source/image/五环/5.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/source/image/五环/6.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/source/image/五环/7.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/source/image/五环/8.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/source/image/五环/9.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/source/image/关于文字的垂直居中/1.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/source/image/关于文字的垂直居中/2.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/source/image/关于文字的垂直居中/3.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/source/image/关于文字的垂直居中/4.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/source/image/原型链/1.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/source/image/原型链/2.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/source/image/原型链/3.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/source/image/原型链/4.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/source/image/原型链/5.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/source/image/原型链/6.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/source/image/弹性盒模型/1.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/source/image/弹性盒模型/2.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/source/image/弹性盒模型/3.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/source/image/弹性盒模型/4.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/source/image/弹性盒模型/5.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/source/image/弹性盒模型/6.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/source/image/输入url会发生什么/1.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/themes/ocean/.gitignore" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/themes/ocean/README.md" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/themes/ocean/_config.yml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/themes/ocean/languages/de.yml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/themes/ocean/languages/default.yml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/themes/ocean/languages/es.yml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/themes/ocean/languages/fr.yml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/themes/ocean/languages/ja.yml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/themes/ocean/languages/ko.yml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/themes/ocean/languages/nl.yml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/themes/ocean/languages/no.yml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/themes/ocean/languages/pt.yml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/themes/ocean/languages/ru.yml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/themes/ocean/languages/zh-CN.yml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/themes/ocean/languages/zh-TW.yml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/themes/ocean/layout/_partial/after-footer.ejs" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/themes/ocean/layout/_partial/archive-post.ejs" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/themes/ocean/layout/_partial/archive.ejs" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/themes/ocean/layout/_partial/article.ejs" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/themes/ocean/layout/_partial/footer.ejs" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/themes/ocean/layout/_partial/head.ejs" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/themes/ocean/layout/_partial/ocean.ejs" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/themes/ocean/layout/_partial/post/albums.ejs" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/themes/ocean/layout/_partial/post/busuanzi.ejs" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/themes/ocean/layout/_partial/post/category.ejs" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/themes/ocean/layout/_partial/post/date.ejs" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/themes/ocean/layout/_partial/post/gallery.ejs" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/themes/ocean/layout/_partial/post/gitalk.ejs" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/themes/ocean/layout/_partial/post/justifiedGallery.ejs" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/themes/ocean/layout/_partial/post/nav.ejs" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/themes/ocean/layout/_partial/post/search.ejs" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/themes/ocean/layout/_partial/post/tag.ejs" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/themes/ocean/layout/_partial/post/title.ejs" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/themes/ocean/layout/_partial/post/tocbot.ejs" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/themes/ocean/layout/_partial/post/topping.ejs" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/themes/ocean/layout/_partial/sidebar.ejs" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/themes/ocean/layout/_partial/totop.ejs" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/themes/ocean/layout/archive.ejs" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/themes/ocean/layout/categories.ejs" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/themes/ocean/layout/index.ejs" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/themes/ocean/layout/layout.ejs" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/themes/ocean/layout/page.ejs" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/themes/ocean/layout/post.ejs" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/themes/ocean/layout/tags.ejs" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/themes/ocean/package.json" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/themes/ocean/screenshots/hexo-theme-ocean.jpg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/themes/ocean/source/404.html" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/themes/ocean/source/css/404.styl" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/themes/ocean/source/css/_extend.styl" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/themes/ocean/source/css/_feathericon.styl" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/themes/ocean/source/css/_mixins.styl" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/themes/ocean/source/css/_normalize.styl" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/themes/ocean/source/css/_partial/albums.styl" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/themes/ocean/source/css/_partial/apple.styl" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/themes/ocean/source/css/_partial/archive.styl" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/themes/ocean/source/css/_partial/article.styl" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/themes/ocean/source/css/_partial/articles.styl" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/themes/ocean/source/css/_partial/categories.styl" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/themes/ocean/source/css/_partial/float.styl" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/themes/ocean/source/css/_partial/footer.styl" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/themes/ocean/source/css/_partial/gallery.styl" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/themes/ocean/source/css/_partial/gitalk.styl" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/themes/ocean/source/css/_partial/highlight.styl" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/themes/ocean/source/css/_partial/justifiedGallery.styl" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/themes/ocean/source/css/_partial/layou.styl" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/themes/ocean/source/css/_partial/lists.styl" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/themes/ocean/source/css/_partial/mobile.styl" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/themes/ocean/source/css/_partial/navbar.styl" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/themes/ocean/source/css/_partial/ocean.styl" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/themes/ocean/source/css/_partial/pace.styl" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/themes/ocean/source/css/_partial/search.styl" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/themes/ocean/source/css/_partial/sidebar.styl" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/themes/ocean/source/css/_partial/tag.styl" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/themes/ocean/source/css/_partial/tocbot.styl" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/themes/ocean/source/css/_partial/totop.styl" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/themes/ocean/source/css/_variables.styl" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/themes/ocean/source/css/feathericon/feathericon.eot" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/themes/ocean/source/css/feathericon/feathericon.svg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/themes/ocean/source/css/feathericon/feathericon.ttf" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/themes/ocean/source/css/feathericon/feathericon.woff" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/themes/ocean/source/css/feathericon/feathericon.woff2" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/themes/ocean/source/css/style.styl" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/themes/ocean/source/fancybox/jquery.fancybox.min.css" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/themes/ocean/source/fancybox/jquery.fancybox.min.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/themes/ocean/source/favicon.ico" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/themes/ocean/source/images/forrestgump.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/themes/ocean/source/images/hexo-inverted.svg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/themes/ocean/source/images/hexo.svg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/themes/ocean/source/images/ocean/ocean.mp4" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/themes/ocean/source/images/ocean/ocean.ogv" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/themes/ocean/source/images/ocean/ocean.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/themes/ocean/source/images/ocean/ocean.webm" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/themes/ocean/source/images/ocean/overlay-hero.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/themes/ocean/source/js/busuanzi-2.3.pure.min.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/themes/ocean/source/js/jquery-2.0.3.min.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/themes/ocean/source/js/jquery.justifiedGallery.min.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/themes/ocean/source/js/lazyload.min.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/themes/ocean/source/js/ocean.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/themes/ocean/source/js/pace.min.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/themes/ocean/source/js/search.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/themes/ocean/source/js/tocbot.min.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/themes/ocean/source/robots.txt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/yarn.lock" afterDir="false" />
+    </list>
+    <ignored path="$PROJECT_DIR$/.tmp/" />
+    <ignored path="$PROJECT_DIR$/temp/" />
+    <ignored path="$PROJECT_DIR$/tmp/" />
+    <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
+    <option name="SHOW_DIALOG" value="false" />
+    <option name="HIGHLIGHT_CONFLICTS" value="true" />
+    <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
+    <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="FUSProjectUsageTrigger">
+    <session id="-53445902">
+      <usages-collector id="statistics.lifecycle.project">
+        <counts>
+          <entry key="project.open.time.1" value="1" />
+          <entry key="project.opened" value="1" />
+        </counts>
+      </usages-collector>
+      <usages-collector id="statistics.vcs.git.usages">
+        <counts>
+          <entry key="git.branch.checkout.remote" value="2" />
+        </counts>
+      </usages-collector>
+      <usages-collector id="statistics.file.extensions.open">
+        <counts>
+          <entry key="CNAME" value="1" />
+          <entry key="gitignore" value="3" />
+          <entry key="json" value="1" />
+          <entry key="pub" value="1" />
+          <entry key="yml" value="1" />
+        </counts>
+      </usages-collector>
+      <usages-collector id="statistics.file.types.open">
+        <counts>
+          <entry key="JSON" value="1" />
+          <entry key="PLAIN_TEXT" value="5" />
+          <entry key="YAML" value="1" />
+        </counts>
+      </usages-collector>
+      <usages-collector id="statistics.file.extensions.edit">
+        <counts>
+          <entry key="txt" value="6" />
+        </counts>
+      </usages-collector>
+      <usages-collector id="statistics.file.types.edit">
+        <counts>
+          <entry key="PLAIN_TEXT" value="6" />
+        </counts>
+      </usages-collector>
+    </session>
+  </component>
+  <component name="FileEditorManager">
+    <leaf>
+      <file pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/source/CNAME">
+          <provider selected="true" editor-type-id="text-editor">
+            <state>
+              <caret column="12" selection-start-column="12" selection-end-column="12" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+    </leaf>
+  </component>
+  <component name="Git.Settings">
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
+    <option name="RECENT_BRANCH_BY_REPOSITORY">
+      <map>
+        <entry key="$PROJECT_DIR$" value="master" />
+      </map>
+    </option>
+  </component>
+  <component name="IdeDocumentHistory">
+    <option name="CHANGED_PATHS">
+      <list>
+        <option value="$PROJECT_DIR$/source/CNAME" />
+      </list>
+    </option>
+  </component>
+  <component name="JsBuildToolGruntFileManager" detection-done="true" sorting="DEFINITION_ORDER" />
+  <component name="JsBuildToolPackageJson" detection-done="true" sorting="DEFINITION_ORDER" />
+  <component name="JsGulpfileManager">
+    <detection-done>true</detection-done>
+    <sorting>DEFINITION_ORDER</sorting>
+  </component>
+  <component name="NodeModulesDirectoryManager">
+    <handled-path value="$PROJECT_DIR$/node_modules" />
+  </component>
+  <component name="NodePackageJsonFileManager">
+    <packageJsonPaths>
+      <path value="$PROJECT_DIR$/package.json" />
+      <path value="$PROJECT_DIR$/themes/ocean/package.json" />
+    </packageJsonPaths>
+  </component>
+  <component name="ProjectFrameBounds" fullScreen="true">
+    <option name="width" value="1680" />
+    <option name="height" value="1050" />
+  </component>
+  <component name="ProjectInspectionProfilesVisibleTreeState">
+    <entry key="Project Default">
+      <profile-state>
+        <expanded-state>
+          <State />
+        </expanded-state>
+        <selected-state>
+          <State>
+            <id>Angular</id>
+          </State>
+        </selected-state>
+      </profile-state>
+    </entry>
+  </component>
+  <component name="ProjectLevelVcsManager" settingsEditedManually="true" />
+  <component name="ProjectView">
+    <navigator proportions="" version="1">
+      <foldersAlwaysOnTop value="true" />
+    </navigator>
+    <panes>
+      <pane id="ProjectPane">
+        <subPane>
+          <expand>
+            <path>
+              <item name="Vera0720.github.io" type="b2602c69:ProjectViewProjectNode" />
+              <item name="Vera0720.github.io" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="Vera0720.github.io" type="b2602c69:ProjectViewProjectNode" />
+              <item name="Vera0720.github.io" type="462c0819:PsiDirectoryNode" />
+              <item name="source" type="462c0819:PsiDirectoryNode" />
+            </path>
+          </expand>
+          <select />
+        </subPane>
+      </pane>
+      <pane id="Scope" />
+    </panes>
+  </component>
+  <component name="PropertiesComponent">
+    <property name="WebServerToolWindowFactoryState" value="false" />
+    <property name="nodejs_interpreter_path.stuck_in_default_project" value="undefined stuck path" />
+    <property name="nodejs_npm_path_reset_for_default_project" value="true" />
+    <property name="settings.editor.selected.configurable" value="project.propVCSSupport.Mappings" />
+  </component>
+  <component name="RunDashboard">
+    <option name="ruleStates">
+      <list>
+        <RuleState>
+          <option name="name" value="ConfigurationTypeDashboardGroupingRule" />
+        </RuleState>
+        <RuleState>
+          <option name="name" value="StatusDashboardGroupingRule" />
+        </RuleState>
+      </list>
+    </option>
+  </component>
+  <component name="SvnConfiguration">
+    <configuration />
+  </component>
+  <component name="TaskManager">
+    <task active="true" id="Default" summary="Default task">
+      <changelist id="87684892-ab2f-4c5d-a44e-40e56dbfe67e" name="Default Changelist" comment="" />
+      <created>1578474827996</created>
+      <option name="number" value="Default" />
+      <option name="presentableId" value="Default" />
+      <updated>1578474827996</updated>
+      <workItem from="1578474829657" duration="2614000" />
+    </task>
+    <task id="LOCAL-00001" summary="上传">
+      <created>1578475152717</created>
+      <option name="number" value="00001" />
+      <option name="presentableId" value="LOCAL-00001" />
+      <option name="project" value="LOCAL" />
+      <updated>1578475152718</updated>
+    </task>
+    <option name="localTasksCounter" value="2" />
+    <servers />
+  </component>
+  <component name="TimeTrackingManager">
+    <option name="totallyTimeSpent" value="2614000" />
+  </component>
+  <component name="ToolWindowManager">
+    <frame x="0" y="0" width="1680" height="1050" extended-state="0" />
+    <editor active="true" />
+    <layout>
+      <window_info id="Favorites" side_tool="true" />
+      <window_info active="true" content_ui="combo" id="Project" order="0" visible="true" weight="0.24954791" />
+      <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
+      <window_info anchor="bottom" id="Docker" show_stripe_button="false" />
+      <window_info anchor="bottom" id="Version Control" show_stripe_button="false" />
+      <window_info anchor="bottom" id="Terminal" visible="true" weight="0.27653062" />
+      <window_info anchor="bottom" id="Event Log" side_tool="true" />
+      <window_info anchor="bottom" id="Message" order="0" />
+      <window_info anchor="bottom" id="Find" order="1" />
+      <window_info anchor="bottom" id="Run" order="2" />
+      <window_info anchor="bottom" id="Debug" order="3" weight="0.4" />
+      <window_info anchor="bottom" id="Cvs" order="4" weight="0.25" />
+      <window_info anchor="bottom" id="Inspection" order="5" weight="0.4" />
+      <window_info anchor="bottom" id="TODO" order="6" />
+      <window_info anchor="right" id="Commander" internal_type="SLIDING" order="0" type="SLIDING" weight="0.4" />
+      <window_info anchor="right" id="Ant Build" order="1" weight="0.25" />
+      <window_info anchor="right" content_ui="combo" id="Hierarchy" order="2" weight="0.25" />
+    </layout>
+  </component>
+  <component name="TypeScriptGeneratedFilesManager">
+    <option name="version" value="1" />
+  </component>
+  <component name="VcsContentAnnotationSettings">
+    <option name="myLimit" value="2678400000" />
+  </component>
+  <component name="VcsManagerConfiguration">
+    <ignored-roots>
+      <path value="$PROJECT_DIR$/.deploy_git" />
+      <path value="$PROJECT_DIR$/themes/ocean" />
+    </ignored-roots>
+    <MESSAGE value="上传" />
+    <option name="LAST_COMMIT_MESSAGE" value="上传" />
+  </component>
+  <component name="editorHistoryManager">
+    <entry file="file://$USER_HOME$/.ssh/id_rsa.pub">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="15">
+          <caret line="1" lean-forward="true" selection-end-line="1" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/_config.yml">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-973" />
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/.gitignore">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="90">
+          <caret line="6" column="9" lean-forward="true" selection-start-line="6" selection-start-column="9" selection-end-line="6" selection-end-column="9" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/package.json">
+      <provider selected="true" editor-type-id="text-editor" />
+    </entry>
+    <entry file="file://$PROJECT_DIR$/source/CNAME">
+      <provider selected="true" editor-type-id="text-editor">
+        <state>
+          <caret column="12" selection-start-column="12" selection-end-column="12" />
+        </state>
+      </provider>
+    </entry>
+  </component>
+  <component name="masterDetails">
+    <states>
+      <state key="Copyright.UI">
+        <settings>
+          <splitter-proportions>
+            <option name="proportions">
+              <list>
+                <option value="0.2" />
+              </list>
+            </option>
+          </splitter-proportions>
+        </settings>
+      </state>
+      <state key="ScopeChooserConfigurable.UI">
+        <settings>
+          <splitter-proportions>
+            <option name="proportions">
+              <list>
+                <option value="0.2" />
+              </list>
+            </option>
+          </splitter-proportions>
+        </settings>
+      </state>
+    </states>
+  </component>
+</project>
