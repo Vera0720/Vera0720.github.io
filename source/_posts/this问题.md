@@ -7,6 +7,8 @@ tags: js
 
 首先来看这样一段代码
 
+<!-- more -->
+
 Html部分代码
 
     <body>

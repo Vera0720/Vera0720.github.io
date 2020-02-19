@@ -3,17 +3,17 @@
 ## Source: https://github.com/hexojs/hexo/
 
 # Site
-title: Hexo
+title: 今天天气晴朗
 subtitle: ''
-description: ''
+description: '治愈系少女'
 keywords:
-author: John Doe
+author: Vera
 language: en
 timezone: ''
 
 # URL
 ## If your site is put in a subdirectory, set url as 'http://yoursite.com/child' and root as '/child/'
-url: http://yoursite.com
+url: http://fairyqing.cn
 root: /
 permalink: :year/:month/:day/:title/
 permalink_defaults:

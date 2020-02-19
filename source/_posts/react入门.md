@@ -3,6 +3,16 @@ title: react入门
 date: 2017-12-22 22:35:34
 tags:
 ---
+React 是一个用于构建用户界面的 JAVASCRIPT 库。
+
+React 主要用于构建UI，很多人认为 React 是 MVC 中的 V（视图）。
+
+React 起源于 Facebook 的内部项目，用来架设 Instagram 的网站，并于 2013 年 5 月开源。
+
+React 拥有较高的性能，代码逻辑非常简单，越来越多的人已开始关注和使用它。
+
+<!-- more -->
+
 一、HTML 模板
 
 使用 React 的网页源码，结构大致如下。

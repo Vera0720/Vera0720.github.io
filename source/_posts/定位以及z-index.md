@@ -11,6 +11,8 @@ tags: css
 
 我用以下几个例子来演示absolute绝对定位和relative相对定位
 
+<!-- more -->
+
 1.我定义了一个main里面套着三个div,部分代码如下
 
     #main{

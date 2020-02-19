@@ -3,8 +3,11 @@ title: exports和module.exports
 date: 2017-05-06 23:00:45
 tags: js
 ---
+exports和module.exports到底是什么？
+
 首先参考一个js的示例
 
+<!-- more -->
 app.js
 
     var a = {name: 'nswbmw 1'};

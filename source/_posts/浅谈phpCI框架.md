@@ -7,6 +7,8 @@ tags: php
 
 推荐的书籍:PHP与MySQL程序设计
 
+<!-- more -->
+
 ### 我们所关心的为XAMPP下的这几部分:
 
 1.Apache---web服务器,客户端发送request到服务器端,服务器返回response给客户端

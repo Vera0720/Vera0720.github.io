@@ -3,11 +3,14 @@ title: requireJS原理
 date: 2018-02-025 02:09:24
 tags: js
 ---
+
 Require原理
 
 在require中，根据AMD(Asynchronous Module Definition)的思想，即异步模块加载机制，其思想就是把代码分为一个一个的模块来分块加载，这样无疑可以提高代码的重用。
 
 在整个require中，主要的方法就两个：require和define，我们先来聊聊require
+
+<!-- more -->
 
 require作为主函数来引入我们的“模块”，require会从自身的存储中去查找对应的defined模块，如果没有找到，则这时这个模块有可以存在三种状态：loading, enabling, defining，这就是require中要注意的地方，如果模块还没有被加载，那么它的这三种状态出现的时机是：
 
