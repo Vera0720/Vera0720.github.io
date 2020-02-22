@@ -4,3 +4,5 @@
 npm install
 ##启动
 hexo s
+##部署
+hexo d -g
