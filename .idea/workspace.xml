@@ -2,17 +2,12 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="87684892-ab2f-4c5d-a44e-40e56dbfe67e" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/source/_posts/react之setState到底是同步还是异步.md" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/source/_posts/前端优化.md" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/source/_posts/前端面试题集.md" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/source/_posts/错误处理.md" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/source/_posts/防抖与节流.md" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/source/image/前端优化/1.jpg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/source/image/输入url会发生什么/2.jpg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/source/_posts/数组去重.md" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/source/image/输入url会发生什么/3.jpg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/source/image/输入url会发生什么/4.jpg" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/source/_posts/es6语法.md" beforeDir="false" afterPath="$PROJECT_DIR$/source/_posts/es6语法.md" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/source/_posts/事件循环.md" beforeDir="false" afterPath="$PROJECT_DIR$/source/_posts/事件循环.md" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/source/_posts/类型.md" beforeDir="false" afterPath="$PROJECT_DIR$/source/_posts/类型.md" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/source/_posts/前端面试题集.md" beforeDir="false" afterPath="$PROJECT_DIR$/source/_posts/前端面试题集.md" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/source/_posts/输入url会发生什么.md" beforeDir="false" afterPath="$PROJECT_DIR$/source/_posts/输入url会发生什么.md" afterDir="false" />
     </list>
     <ignored path="$PROJECT_DIR$/.tmp/" />
@@ -28,11 +23,12 @@
     <session id="-53445902">
       <usages-collector id="statistics.lifecycle.project">
         <counts>
-          <entry key="project.closed" value="4" />
-          <entry key="project.open.time.1" value="3" />
+          <entry key="project.closed" value="6" />
+          <entry key="project.open.time.0" value="1" />
+          <entry key="project.open.time.1" value="4" />
           <entry key="project.open.time.4" value="1" />
           <entry key="project.open.time.7" value="1" />
-          <entry key="project.opened" value="5" />
+          <entry key="project.opened" value="7" />
         </counts>
       </usages-collector>
       <usages-collector id="statistics.vcs.git.usages">
@@ -42,15 +38,15 @@
       </usages-collector>
       <usages-collector id="statistics.file.extensions.open">
         <counts>
-          <entry key="CNAME" value="4" />
+          <entry key="CNAME" value="5" />
           <entry key="ejs" value="2" />
           <entry key="gitignore" value="3" />
           <entry key="html" value="1" />
           <entry key="jpeg" value="15" />
           <entry key="jpg" value="1" />
-          <entry key="js" value="4" />
+          <entry key="js" value="5" />
           <entry key="json" value="2" />
-          <entry key="md" value="142" />
+          <entry key="md" value="162" />
           <entry key="png" value="5" />
           <entry key="pub" value="1" />
           <entry key="svg" value="6" />
@@ -63,9 +59,9 @@
           <entry key="HTML" value="1" />
           <entry key="Image" value="21" />
           <entry key="JSON" value="2" />
-          <entry key="JavaScript" value="4" />
-          <entry key="Markdown" value="142" />
-          <entry key="PLAIN_TEXT" value="8" />
+          <entry key="JavaScript" value="5" />
+          <entry key="Markdown" value="162" />
+          <entry key="PLAIN_TEXT" value="9" />
           <entry key="SVG" value="6" />
           <entry key="YAML" value="15" />
         </counts>
@@ -73,17 +69,17 @@
       <usages-collector id="statistics.file.extensions.edit">
         <counts>
           <entry key="ejs" value="19" />
-          <entry key="md" value="9467" />
+          <entry key="md" value="11981" />
           <entry key="styl" value="9" />
-          <entry key="txt" value="38" />
+          <entry key="txt" value="45" />
           <entry key="yml" value="60" />
         </counts>
       </usages-collector>
       <usages-collector id="statistics.file.types.edit">
         <counts>
           <entry key="EJS" value="19" />
-          <entry key="Markdown" value="9467" />
-          <entry key="PLAIN_TEXT" value="38" />
+          <entry key="Markdown" value="11981" />
+          <entry key="PLAIN_TEXT" value="45" />
           <entry key="Stylus" value="9" />
           <entry key="YAML" value="60" />
         </counts>
@@ -91,37 +87,35 @@
     </session>
   </component>
   <component name="FileEditorManager">
-    <leaf>
+    <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
       <file pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/source/_posts/前端面试题集.md">
           <provider selected="true" editor-type-id="split-provider[text-editor;markdown-preview-editor]">
             <state split_layout="FIRST">
-              <first_editor relative-caret-position="30">
-                <caret line="2" column="16" selection-start-line="2" selection-start-column="16" selection-end-line="2" selection-end-column="16" />
-              </first_editor>
-              <second_editor />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/source/_posts/react之setState到底是同步还是异步.md">
-          <provider selected="true" editor-type-id="split-provider[text-editor;markdown-preview-editor]">
-            <state split_layout="SPLIT">
-              <first_editor relative-caret-position="210">
-                <caret line="14" lean-forward="true" selection-start-line="14" selection-end-line="14" />
-              </first_editor>
-              <second_editor />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/source/_posts/es6语法.md">
-          <provider selected="true" editor-type-id="split-provider[text-editor;markdown-preview-editor]">
-            <state split_layout="FIRST">
-              <first_editor relative-caret-position="285">
-                <caret line="19" selection-start-line="19" selection-end-line="19" />
+              <first_editor relative-caret-position="374">
+                <caret line="516" column="17" lean-forward="true" selection-start-line="516" selection-start-column="17" selection-end-line="516" selection-end-column="17" />
+                <folding>
+                  <element signature="e#98#105#0" />
+                  <element signature="e#107#130#0" />
+                  <element signature="e#186#196#0" />
+                  <element signature="e#967#973#0" />
+                  <element signature="e#6072#6077#0" />
+                  <element signature="e#5342#5391#0" />
+                  <element signature="e#5686#5697#0" />
+                  <element signature="e#6170#6189#0" />
+                  <element signature="e#8535#8541#0" />
+                  <element signature="e#8543#8564#0" />
+                  <element signature="e#8628#8635#0" />
+                  <element signature="e#8979#8990#0" />
+                  <element signature="e#9154#9174#0" />
+                  <element signature="e#11410#11419#0" />
+                  <element signature="e#11537#11558#0" />
+                  <element signature="e#11812#11822#0" />
+                  <element signature="e#12087#12095#0" />
+                  <element signature="e#13634#13642#0" />
+                  <element signature="e#14568#14578#0" />
+                  <element signature="e#17901#17906#0" />
+                </folding>
               </first_editor>
               <second_editor />
             </state>
@@ -164,8 +158,6 @@
   <component name="IdeDocumentHistory">
     <option name="CHANGED_PATHS">
       <list>
-        <option value="$PROJECT_DIR$/source/_posts/关于文字的垂直居中.md" />
-        <option value="$PROJECT_DIR$/source/_posts/前端优化之css替代js动画.md" />
         <option value="$PROJECT_DIR$/source/_posts/原生js实现input的数据双向绑定.md" />
         <option value="$PROJECT_DIR$/source/_posts/图片预加载.md" />
         <option value="$PROJECT_DIR$/source/_posts/字体图标的制作方法.md" />
@@ -207,13 +199,15 @@
         <option value="$PROJECT_DIR$/source/_posts/函数柯里化.md" />
         <option value="$PROJECT_DIR$/source/_posts/防抖与节流.md" />
         <option value="$PROJECT_DIR$/source/_posts/错误处理.md" />
-        <option value="$PROJECT_DIR$/source/_posts/输入url会发生什么.md" />
         <option value="$PROJECT_DIR$/source/_posts/前端优化.md" />
         <option value="$PROJECT_DIR$/source/_posts/事件委托.md" />
         <option value="$PROJECT_DIR$/source/_posts/类型.md" />
-        <option value="$PROJECT_DIR$/source/_posts/事件循环.md" />
         <option value="$PROJECT_DIR$/source/_posts/es6语法.md" />
         <option value="$PROJECT_DIR$/source/_posts/react之setState到底是同步还是异步.md" />
+        <option value="$PROJECT_DIR$/source/_posts/事件循环.md" />
+        <option value="$PROJECT_DIR$/source/_posts/数组去重.md" />
+        <option value="$PROJECT_DIR$/source/_posts/输入url会发生什么.md" />
+        <option value="$PROJECT_DIR$/source/_posts/webpack.md" />
         <option value="$PROJECT_DIR$/source/_posts/前端面试题集.md" />
       </list>
     </option>
@@ -233,10 +227,9 @@
       <path value="$PROJECT_DIR$/themes/ocean/package.json" />
     </packageJsonPaths>
   </component>
-  <component name="ProjectFrameBounds" extendedState="6" fullScreen="true">
-    <option name="x" value="517" />
+  <component name="ProjectFrameBounds" fullScreen="true">
     <option name="y" value="23" />
-    <option name="width" value="1142" />
+    <option name="width" value="1680" />
     <option name="height" value="943" />
   </component>
   <component name="ProjectInspectionProfilesVisibleTreeState">
@@ -294,15 +287,15 @@
     <property name="settings.editor.selected.configurable" value="project.propVCSSupport.Mappings" />
   </component>
   <component name="RecentsManager">
-    <key name="MoveFile.RECENT_KEYS">
-      <recent name="$PROJECT_DIR$/source/image" />
-    </key>
     <key name="CopyFile.RECENT_KEYS">
       <recent name="$PROJECT_DIR$/source/_posts" />
       <recent name="$PROJECT_DIR$/source/image/输入url会发生什么" />
       <recent name="$PROJECT_DIR$/source/image/前端优化" />
       <recent name="$PROJECT_DIR$/source/image/作用域链的深入理解" />
       <recent name="$PROJECT_DIR$/source/gallery/index" />
+    </key>
+    <key name="MoveFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$/source/image" />
     </key>
   </component>
   <component name="RunDashboard">
@@ -331,7 +324,9 @@
       <workItem from="1582287195807" duration="26472000" />
       <workItem from="1582705285650" duration="5963000" />
       <workItem from="1582789404971" duration="1115000" />
-      <workItem from="1582796293112" duration="13087000" />
+      <workItem from="1582796293112" duration="13343000" />
+      <workItem from="1583127665638" duration="1533000" />
+      <workItem from="1583150851735" duration="29810000" />
     </task>
     <task id="LOCAL-00001" summary="上传">
       <created>1578475152717</created>
@@ -368,14 +363,21 @@
       <option name="project" value="LOCAL" />
       <updated>1582447772368</updated>
     </task>
-    <option name="localTasksCounter" value="6" />
+    <task id="LOCAL-00006" summary="2月系列">
+      <created>1583072430955</created>
+      <option name="number" value="00006" />
+      <option name="presentableId" value="LOCAL-00006" />
+      <option name="project" value="LOCAL" />
+      <updated>1583072430955</updated>
+    </task>
+    <option name="localTasksCounter" value="7" />
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="80018000" />
+    <option name="totallyTimeSpent" value="111617000" />
   </component>
   <component name="ToolWindowManager">
-    <frame x="0" y="0" width="1680" height="1050" extended-state="6" />
+    <frame x="0" y="0" width="1680" height="1050" extended-state="0" />
     <editor active="true" />
     <layout>
       <window_info active="true" content_ui="combo" id="Project" order="0" visible="true" weight="0.1681736" />
@@ -414,49 +416,15 @@
     <MESSAGE value="作用域相关" />
     <MESSAGE value="异步相关" />
     <MESSAGE value="函数式编程系列" />
-    <option name="LAST_COMMIT_MESSAGE" value="函数式编程系列" />
+    <MESSAGE value="2月系列" />
+    <option name="LAST_COMMIT_MESSAGE" value="2月系列" />
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/source/_posts/循环保存数值.md">
-      <provider selected="true" editor-type-id="split-provider[text-editor;markdown-preview-editor]">
-        <state split_layout="SPLIT">
-          <first_editor relative-caret-position="120">
-            <caret line="8" selection-start-line="8" selection-end-line="8" />
-          </first_editor>
-          <second_editor />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/themes/ocean/layout/_partial/post/busuanzi.ejs">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="75">
-          <caret line="5" column="16" selection-start-line="5" selection-start-column="9" selection-end-line="5" selection-end-column="16" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/themes/ocean/layout/_partial/footer.ejs">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="105">
-          <caret line="7" column="9" lean-forward="true" selection-start-line="7" selection-start-column="9" selection-end-line="7" selection-end-column="9" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/source/_posts/gallery.md" />
     <entry file="file://$PROJECT_DIR$/source/_posts/react入门.md">
       <provider selected="true" editor-type-id="split-provider[text-editor;markdown-preview-editor]">
         <state split_layout="SPLIT">
           <first_editor relative-caret-position="357">
             <caret line="72" column="31" selection-start-line="72" selection-start-column="31" selection-end-line="72" selection-end-column="31" />
-          </first_editor>
-          <second_editor />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/source/_posts/关于文字的垂直居中.md">
-      <provider selected="true" editor-type-id="split-provider[text-editor;markdown-preview-editor]">
-        <state split_layout="SPLIT">
-          <first_editor relative-caret-position="135">
-            <caret line="45" column="5" selection-start-line="45" selection-start-column="5" selection-end-line="45" selection-end-column="5" />
           </first_editor>
           <second_editor />
         </state>
@@ -550,16 +518,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/source/_posts/ueditor使用手册.md">
-      <provider selected="true" editor-type-id="split-provider[text-editor;markdown-preview-editor]">
-        <state split_layout="SPLIT">
-          <first_editor relative-caret-position="464">
-            <caret line="96" selection-start-line="96" selection-end-line="96" selection-end-column="33" />
-          </first_editor>
-          <second_editor />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/source/_posts/原型链.md">
       <provider selected="true" editor-type-id="split-provider[text-editor;markdown-preview-editor]">
         <state split_layout="SPLIT">
@@ -600,27 +558,10 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/source/CNAME">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="15">
-          <caret line="1" selection-start-line="1" selection-end-line="1" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/_config.yml">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="270">
           <caret line="18" column="19" selection-start-line="18" selection-start-column="19" selection-end-line="18" selection-end-column="19" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/README.md">
-      <provider selected="true" editor-type-id="split-provider[text-editor;markdown-preview-editor]">
-        <state split_layout="SPLIT">
-          <first_editor relative-caret-position="45">
-            <caret line="3" column="11" lean-forward="true" selection-start-line="3" selection-start-column="11" selection-end-line="3" selection-end-column="11" />
-          </first_editor>
-          <second_editor />
         </state>
       </provider>
     </entry>
@@ -648,9 +589,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="452">
           <caret line="49" column="1" lean-forward="true" selection-start-line="49" selection-start-column="1" selection-end-line="49" selection-end-column="1" />
-          <folding>
-            <element signature="n#!!doc" expanded="true" />
-          </folding>
         </state>
       </provider>
     </entry>
@@ -669,16 +607,6 @@
         <state split_layout="SPLIT">
           <first_editor relative-caret-position="45">
             <caret line="3" column="8" lean-forward="true" selection-start-line="3" selection-start-column="8" selection-end-line="3" selection-end-column="8" />
-          </first_editor>
-          <second_editor />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/source/_posts/防抖与节流.md">
-      <provider selected="true" editor-type-id="split-provider[text-editor;markdown-preview-editor]">
-        <state split_layout="FIRST">
-          <first_editor relative-caret-position="89">
-            <caret line="29" lean-forward="true" selection-start-line="29" selection-end-line="29" />
           </first_editor>
           <second_editor />
         </state>
@@ -704,26 +632,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/source/_posts/输入url会发生什么.md">
-      <provider selected="true" editor-type-id="split-provider[text-editor;markdown-preview-editor]">
-        <state split_layout="FIRST">
-          <first_editor relative-caret-position="605">
-            <caret line="78" column="28" selection-start-line="78" selection-start-column="28" selection-end-line="78" selection-end-column="28" />
-          </first_editor>
-          <second_editor />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/source/_posts/前端优化.md">
-      <provider selected="true" editor-type-id="split-provider[text-editor;markdown-preview-editor]">
-        <state split_layout="SPLIT">
-          <first_editor relative-caret-position="364">
-            <caret line="60" selection-start-line="60" selection-end-line="60" />
-          </first_editor>
-          <second_editor />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/source/_posts/promise.md">
       <provider selected="true" editor-type-id="split-provider[text-editor;markdown-preview-editor]">
         <state split_layout="FIRST">
@@ -742,16 +650,6 @@
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/source/_posts/事件委托.md" />
-    <entry file="file://$PROJECT_DIR$/source/_posts/类型.md">
-      <provider selected="true" editor-type-id="split-provider[text-editor;markdown-preview-editor]">
-        <state split_layout="FIRST">
-          <first_editor relative-caret-position="555">
-            <caret line="37" column="51" selection-start-line="37" selection-start-column="51" selection-end-line="37" selection-end-column="51" />
-          </first_editor>
-          <second_editor />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/source/_posts/ajax顺序执行.md">
       <provider selected="true" editor-type-id="split-provider[text-editor;markdown-preview-editor]">
         <state split_layout="SPLIT">
@@ -782,11 +680,21 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/source/_posts/事件循环.md">
+    <entry file="file://$PROJECT_DIR$/README.md">
       <provider selected="true" editor-type-id="split-provider[text-editor;markdown-preview-editor]">
-        <state split_layout="FIRST">
-          <first_editor relative-caret-position="840">
-            <caret line="64" lean-forward="true" selection-start-line="64" selection-end-line="64" />
+        <state split_layout="SPLIT">
+          <first_editor>
+            <caret column="20" lean-forward="true" selection-start-column="20" selection-end-column="20" />
+          </first_editor>
+          <second_editor />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/source/_posts/react之setState到底是同步还是异步.md">
+      <provider selected="true" editor-type-id="split-provider[text-editor;markdown-preview-editor]">
+        <state split_layout="SPLIT">
+          <first_editor relative-caret-position="210">
+            <caret line="14" selection-start-line="14" selection-end-line="14" />
           </first_editor>
           <second_editor />
         </state>
@@ -802,7 +710,7 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/source/_posts/react之setState到底是同步还是异步.md">
+    <entry file="file://$PROJECT_DIR$/source/_posts/校招面试题（一）.md">
       <provider selected="true" editor-type-id="split-provider[text-editor;markdown-preview-editor]">
         <state split_layout="SPLIT">
           <first_editor relative-caret-position="210">
@@ -812,11 +720,137 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/source/_posts/关于文字的垂直居中.md">
+      <provider selected="true" editor-type-id="split-provider[text-editor;markdown-preview-editor]">
+        <state split_layout="SPLIT">
+          <first_editor relative-caret-position="135">
+            <caret line="45" column="5" selection-start-line="45" selection-start-column="5" selection-end-line="45" selection-end-column="5" />
+          </first_editor>
+          <second_editor />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/source/_posts/ueditor使用手册.md">
+      <provider selected="true" editor-type-id="split-provider[text-editor;markdown-preview-editor]">
+        <state split_layout="SPLIT">
+          <first_editor relative-caret-position="494">
+            <caret line="96" selection-start-line="96" selection-end-line="96" selection-end-column="33" />
+          </first_editor>
+          <second_editor />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/../practice/快手面试/index.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="120">
+          <caret line="8" column="6" lean-forward="true" selection-start-line="8" selection-start-column="6" selection-end-line="8" selection-end-column="6" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/source/_posts/类型.md">
+      <provider selected="true" editor-type-id="split-provider[text-editor;markdown-preview-editor]">
+        <state split_layout="FIRST">
+          <first_editor relative-caret-position="555">
+            <caret line="37" column="51" selection-start-line="37" selection-start-column="51" selection-end-line="37" selection-end-column="51" />
+          </first_editor>
+          <second_editor />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/source/_posts/事件循环.md">
+      <provider selected="true" editor-type-id="split-provider[text-editor;markdown-preview-editor]">
+        <state split_layout="FIRST">
+          <first_editor relative-caret-position="494">
+            <caret line="57" column="17" lean-forward="true" selection-start-line="57" selection-start-column="17" selection-end-line="57" selection-end-column="17" />
+          </first_editor>
+          <second_editor />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/source/_posts/前端优化.md">
+      <provider selected="true" editor-type-id="split-provider[text-editor;markdown-preview-editor]">
+        <state split_layout="SPLIT">
+          <first_editor relative-caret-position="394">
+            <caret line="45" column="5" lean-forward="true" selection-start-line="45" selection-end-line="46" />
+          </first_editor>
+          <second_editor />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/source/_posts/防抖与节流.md">
+      <provider selected="true" editor-type-id="split-provider[text-editor;markdown-preview-editor]">
+        <state split_layout="FIRST">
+          <first_editor relative-caret-position="314">
+            <caret line="42" column="25" selection-start-line="42" selection-start-column="25" selection-end-line="42" selection-end-column="25" />
+          </first_editor>
+          <second_editor />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/source/CNAME">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="15">
+          <caret line="1" selection-start-line="1" selection-end-line="1" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/source/_posts/输入url会发生什么.md">
+      <provider selected="true" editor-type-id="split-provider[text-editor;markdown-preview-editor]">
+        <state split_layout="FIRST">
+          <first_editor relative-caret-position="180">
+            <caret line="12" selection-start-line="12" selection-end-line="30" selection-end-column="15" />
+          </first_editor>
+          <second_editor />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/source/_posts/数组去重.md">
+      <provider selected="true" editor-type-id="split-provider[text-editor;markdown-preview-editor]">
+        <state split_layout="SPLIT">
+          <first_editor relative-caret-position="395">
+            <caret line="53" column="7" selection-start-line="53" selection-start-column="7" selection-end-line="53" selection-end-column="7" />
+          </first_editor>
+          <second_editor />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/source/_posts/webpack.md">
+      <provider selected="true" editor-type-id="split-provider[text-editor;markdown-preview-editor]">
+        <state split_layout="SPLIT">
+          <first_editor relative-caret-position="150">
+            <caret line="10" lean-forward="true" selection-start-line="10" selection-end-line="10" />
+          </first_editor>
+          <second_editor />
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/source/_posts/前端面试题集.md">
       <provider selected="true" editor-type-id="split-provider[text-editor;markdown-preview-editor]">
         <state split_layout="FIRST">
-          <first_editor relative-caret-position="30">
-            <caret line="2" column="16" selection-start-line="2" selection-start-column="16" selection-end-line="2" selection-end-column="16" />
+          <first_editor relative-caret-position="374">
+            <caret line="516" column="17" lean-forward="true" selection-start-line="516" selection-start-column="17" selection-end-line="516" selection-end-column="17" />
+            <folding>
+              <element signature="e#98#105#0" />
+              <element signature="e#107#130#0" />
+              <element signature="e#186#196#0" />
+              <element signature="e#967#973#0" />
+              <element signature="e#6072#6077#0" />
+              <element signature="e#5342#5391#0" />
+              <element signature="e#5686#5697#0" />
+              <element signature="e#6170#6189#0" />
+              <element signature="e#8535#8541#0" />
+              <element signature="e#8543#8564#0" />
+              <element signature="e#8628#8635#0" />
+              <element signature="e#8979#8990#0" />
+              <element signature="e#9154#9174#0" />
+              <element signature="e#11410#11419#0" />
+              <element signature="e#11537#11558#0" />
+              <element signature="e#11812#11822#0" />
+              <element signature="e#12087#12095#0" />
+              <element signature="e#13634#13642#0" />
+              <element signature="e#14568#14578#0" />
+              <element signature="e#17901#17906#0" />
+            </folding>
           </first_editor>
           <second_editor />
         </state>
