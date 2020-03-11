@@ -2,8 +2,7 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="87684892-ab2f-4c5d-a44e-40e56dbfe67e" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/source/_posts/继承.md" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/source/_posts/函数式编程.md" beforeDir="false" afterPath="$PROJECT_DIR$/source/_posts/函数式编程.md" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/source/_posts/前端面试题集.md" beforeDir="false" afterPath="$PROJECT_DIR$/source/_posts/前端面试题集.md" afterDir="false" />
     </list>
     <ignored path="$PROJECT_DIR$/.tmp/" />
@@ -41,13 +40,13 @@
           <entry key="html" value="1" />
           <entry key="jpeg" value="15" />
           <entry key="jpg" value="2" />
-          <entry key="js" value="5" />
+          <entry key="js" value="6" />
           <entry key="json" value="2" />
-          <entry key="md" value="179" />
+          <entry key="md" value="183" />
           <entry key="png" value="5" />
           <entry key="pub" value="1" />
           <entry key="svg" value="6" />
-          <entry key="yml" value="15" />
+          <entry key="yml" value="16" />
         </counts>
       </usages-collector>
       <usages-collector id="statistics.file.types.open">
@@ -56,17 +55,17 @@
           <entry key="HTML" value="1" />
           <entry key="Image" value="22" />
           <entry key="JSON" value="2" />
-          <entry key="JavaScript" value="5" />
-          <entry key="Markdown" value="179" />
+          <entry key="JavaScript" value="6" />
+          <entry key="Markdown" value="183" />
           <entry key="PLAIN_TEXT" value="9" />
           <entry key="SVG" value="6" />
-          <entry key="YAML" value="15" />
+          <entry key="YAML" value="16" />
         </counts>
       </usages-collector>
       <usages-collector id="statistics.file.extensions.edit">
         <counts>
           <entry key="ejs" value="19" />
-          <entry key="md" value="14920" />
+          <entry key="md" value="15041" />
           <entry key="styl" value="9" />
           <entry key="txt" value="75" />
           <entry key="yml" value="60" />
@@ -75,7 +74,7 @@
       <usages-collector id="statistics.file.types.edit">
         <counts>
           <entry key="EJS" value="19" />
-          <entry key="Markdown" value="14920" />
+          <entry key="Markdown" value="15041" />
           <entry key="PLAIN_TEXT" value="75" />
           <entry key="Stylus" value="9" />
           <entry key="YAML" value="60" />
@@ -89,26 +88,21 @@
         <entry file="file://$PROJECT_DIR$/source/_posts/前端面试题集.md">
           <provider selected="true" editor-type-id="split-provider[text-editor;markdown-preview-editor]">
             <state split_layout="FIRST">
-              <first_editor relative-caret-position="345">
-                <caret line="538" lean-forward="true" selection-start-line="538" selection-end-line="538" />
+              <first_editor relative-caret-position="596">
+                <caret line="1268" column="4" selection-start-line="1268" selection-start-column="4" selection-end-line="1268" selection-end-column="4" />
                 <folding>
                   <element signature="e#98#105#0" />
-                  <element signature="e#1200#1206#0" />
-                  <element signature="e#6559#6566#0" />
-                  <element signature="e#6567#6580#0" />
-                  <element signature="e#6617#6666#0" />
-                  <element signature="e#6960#6971#0" />
-                  <element signature="e#7266#7272#0" />
-                  <element signature="e#8896#8916#0" />
-                  <element signature="e#9255#9261#0" />
-                  <element signature="e#9308#9314#0" />
-                  <element signature="e#8943#8949#0" />
-                  <element signature="e#20795#20802#0" />
-                  <element signature="e#21462#21470#0" />
-                  <element signature="e#21546#21556#0" />
-                  <element signature="e#27686#27691#0" />
-                  <element signature="e#29899#29904#0" />
-                  <element signature="e#31002#31007#0" />
+                  <element signature="e#1199#1205#0" />
+                  <element signature="e#6550#6557#0" />
+                  <element signature="e#6799#6804#0" />
+                  <element signature="e#9142#9162#0" />
+                  <element signature="e#16304#16310#0" />
+                  <element signature="e#16578#16584#0" />
+                  <element signature="e#28671#28678#0" />
+                  <element signature="e#29882#29890#0" />
+                  <element signature="e#38528#38533#0" />
+                  <element signature="e#39637#39642#0" />
+                  <element signature="e#40053#40058#0" />
                 </folding>
               </first_editor>
               <second_editor />
@@ -187,7 +181,6 @@
         <option value="$PROJECT_DIR$/source/_posts/es6.md" />
         <option value="$PROJECT_DIR$/README.md" />
         <option value="$PROJECT_DIR$/source/_posts/闭包(二).md" />
-        <option value="$PROJECT_DIR$/source/_posts/函数式编程.md" />
         <option value="$PROJECT_DIR$/source/_posts/函数科里化.md" />
         <option value="$PROJECT_DIR$/../practice/curry/curry.js" />
         <option value="$PROJECT_DIR$/source/_posts/函数柯里化.md" />
@@ -203,6 +196,7 @@
         <option value="$PROJECT_DIR$/source/_posts/输入url会发生什么.md" />
         <option value="$PROJECT_DIR$/source/_posts/webpack.md" />
         <option value="$PROJECT_DIR$/source/_posts/继承.md" />
+        <option value="$PROJECT_DIR$/source/_posts/函数式编程.md" />
         <option value="$PROJECT_DIR$/source/_posts/前端面试题集.md" />
       </list>
     </option>
@@ -249,7 +243,6 @@
       <foldersAlwaysOnTop value="true" />
     </navigator>
     <panes>
-      <pane id="Scope" />
       <pane id="ProjectPane">
         <subPane>
           <expand>
@@ -257,21 +250,11 @@
               <item name="Vera0720.github.io" type="b2602c69:ProjectViewProjectNode" />
               <item name="Vera0720.github.io" type="462c0819:PsiDirectoryNode" />
             </path>
-            <path>
-              <item name="Vera0720.github.io" type="b2602c69:ProjectViewProjectNode" />
-              <item name="Vera0720.github.io" type="462c0819:PsiDirectoryNode" />
-              <item name="source" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="Vera0720.github.io" type="b2602c69:ProjectViewProjectNode" />
-              <item name="Vera0720.github.io" type="462c0819:PsiDirectoryNode" />
-              <item name="source" type="462c0819:PsiDirectoryNode" />
-              <item name="_posts" type="462c0819:PsiDirectoryNode" />
-            </path>
           </expand>
           <select />
         </subPane>
       </pane>
+      <pane id="Scope" />
     </panes>
   </component>
   <component name="PropertiesComponent">
@@ -385,7 +368,7 @@
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="137341000" />
+    <option name="totallyTimeSpent" value="139771000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="0" y="0" width="1680" height="1050" extended-state="0" />
@@ -403,7 +386,7 @@
       <window_info anchor="bottom" id="TODO" order="6" />
       <window_info anchor="bottom" id="Docker" order="7" show_stripe_button="false" />
       <window_info anchor="bottom" id="Version Control" order="8" weight="0.32959184" />
-      <window_info anchor="bottom" id="Terminal" order="9" sideWeight="0.4996986" weight="0.21836735" />
+      <window_info anchor="bottom" id="Terminal" order="9" sideWeight="0.4996986" visible="true" weight="0.21836735" />
       <window_info anchor="bottom" id="Event Log" order="10" sideWeight="0.50030136" side_tool="true" weight="0.27653062" />
       <window_info anchor="bottom" id="Messages" order="11" />
       <window_info anchor="right" id="Commander" internal_type="SLIDING" order="0" type="SLIDING" weight="0.4" />
@@ -413,6 +396,42 @@
   </component>
   <component name="TypeScriptGeneratedFilesManager">
     <option name="version" value="1" />
+  </component>
+  <component name="Vcs.Log.History.Properties">
+    <option name="COLUMN_ORDER">
+      <list>
+        <option value="0" />
+        <option value="2" />
+        <option value="3" />
+        <option value="1" />
+      </list>
+    </option>
+  </component>
+  <component name="Vcs.Log.Tabs.Properties">
+    <option name="TAB_STATES">
+      <map>
+        <entry key="MAIN">
+          <value>
+            <State>
+              <option name="RECENTLY_FILTERED_USER_GROUPS">
+                <collection />
+              </option>
+              <option name="RECENTLY_FILTERED_BRANCH_GROUPS">
+                <collection />
+              </option>
+              <option name="COLUMN_ORDER">
+                <list>
+                  <option value="0" />
+                  <option value="1" />
+                  <option value="2" />
+                  <option value="3" />
+                </list>
+              </option>
+            </State>
+          </value>
+        </entry>
+      </map>
+    </option>
   </component>
   <component name="VcsContentAnnotationSettings">
     <option name="myLimit" value="2678400000" />
@@ -433,9 +452,6 @@
     <option name="LAST_COMMIT_MESSAGE" value="vue相关，webpack相关更新" />
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/source/gallery/index/20191225.jpeg">
-      <provider selected="true" editor-type-id="images" />
-    </entry>
     <entry file="file://$PROJECT_DIR$/source/gallery/index/20180806.jpeg">
       <provider selected="true" editor-type-id="images" />
     </entry>
@@ -514,28 +530,11 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/_config.yml">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="270">
-          <caret line="18" column="19" selection-start-line="18" selection-start-column="19" selection-end-line="18" selection-end-column="19" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/source/_posts/前端优化之css替代js动画.md">
       <provider selected="true" editor-type-id="split-provider[text-editor;markdown-preview-editor]">
         <state split_layout="SPLIT">
           <first_editor relative-caret-position="105">
             <caret line="7" selection-start-line="7" selection-end-line="7" selection-end-column="13" />
-          </first_editor>
-          <second_editor />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/source/_posts/函数式编程.md">
-      <provider selected="true" editor-type-id="split-provider[text-editor;markdown-preview-editor]">
-        <state split_layout="FIRST">
-          <first_editor relative-caret-position="3510">
-            <caret line="234" column="5" lean-forward="true" selection-start-line="234" selection-start-column="5" selection-end-line="234" selection-end-column="5" />
           </first_editor>
           <second_editor />
         </state>
@@ -822,29 +821,48 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/_config.yml">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="165">
+          <caret line="11" column="12" selection-start-line="11" selection-start-column="12" selection-end-line="11" selection-end-column="12" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/../practice/函数式编程/index.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state>
+          <caret selection-end-line="9" selection-end-column="1" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/source/_posts/函数式编程.md">
+      <provider selected="true" editor-type-id="split-provider[text-editor;markdown-preview-editor]">
+        <state split_layout="FIRST">
+          <first_editor relative-caret-position="131">
+            <caret line="249" column="4" lean-forward="true" selection-start-line="249" selection-start-column="4" selection-end-line="249" selection-end-column="4" />
+          </first_editor>
+          <second_editor />
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/source/_posts/前端面试题集.md">
       <provider selected="true" editor-type-id="split-provider[text-editor;markdown-preview-editor]">
         <state split_layout="FIRST">
-          <first_editor relative-caret-position="345">
-            <caret line="538" lean-forward="true" selection-start-line="538" selection-end-line="538" />
+          <first_editor relative-caret-position="596">
+            <caret line="1268" column="4" selection-start-line="1268" selection-start-column="4" selection-end-line="1268" selection-end-column="4" />
             <folding>
               <element signature="e#98#105#0" />
-              <element signature="e#1200#1206#0" />
-              <element signature="e#6559#6566#0" />
-              <element signature="e#6567#6580#0" />
-              <element signature="e#6617#6666#0" />
-              <element signature="e#6960#6971#0" />
-              <element signature="e#7266#7272#0" />
-              <element signature="e#8896#8916#0" />
-              <element signature="e#9255#9261#0" />
-              <element signature="e#9308#9314#0" />
-              <element signature="e#8943#8949#0" />
-              <element signature="e#20795#20802#0" />
-              <element signature="e#21462#21470#0" />
-              <element signature="e#21546#21556#0" />
-              <element signature="e#27686#27691#0" />
-              <element signature="e#29899#29904#0" />
-              <element signature="e#31002#31007#0" />
+              <element signature="e#1199#1205#0" />
+              <element signature="e#6550#6557#0" />
+              <element signature="e#6799#6804#0" />
+              <element signature="e#9142#9162#0" />
+              <element signature="e#16304#16310#0" />
+              <element signature="e#16578#16584#0" />
+              <element signature="e#28671#28678#0" />
+              <element signature="e#29882#29890#0" />
+              <element signature="e#38528#38533#0" />
+              <element signature="e#39637#39642#0" />
+              <element signature="e#40053#40058#0" />
             </folding>
           </first_editor>
           <second_editor />
