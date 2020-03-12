@@ -1,0 +1,112 @@
+---
+title: js实现单向链表
+date: 2020-03-12 22:47:08
+tags: 算法
+---
+
+好久没有写过算法题啦，今年目标刷完100道leetcode。还是要有一个目标的，万一实现了呢～
+
+<!-- more -->
+
+上代码
+
+    
+    // 链表存储有序的集合，但不同于数组
+    // 链表中的元素在内存中并不是连续放置的
+    // 每个元素由一个存储元素本身的节点和一个指向下一个元素的引用（也称指针或链接）组成
+    
+    function LinkedList() {
+    
+        function Node (element) {
+            this.element = element
+            this.next = null
+        }
+        let length = 0
+        let head = null
+    
+        // 向链表尾部追加元素
+        this.append = function (element) {
+            let node = new Node(element)
+            let current
+            if (head === null) { // 列表中第一个节点
+                head = node
+            } else {
+                current = head
+                while (current.next) {
+                    current = current.next // 找到最后一项，是null
+                }
+                current.next = node // 给最后一项赋值
+            }
+            length++ // 更新列表的长度
+        }
+    
+        // 向链表中间增加元素
+        this.insert = function (position,element) {
+            if(position >= 0 && position <= length){
+                let node = new Node(element)
+                let current = head
+                let previous = null
+                let index = 0
+                // 如果当前的位置是0，就把插入的元素设置成head
+                if(position === 0){
+                    node.next = current
+                    head = node
+                }else{
+                    while(index < position){
+                        previous = current
+                        current = current.next
+                        index ++
+                    }
+                    node.next = current
+                    previous.next = node
+                }
+                length++
+                return true
+            } else{
+                return false
+            }
+        }
+    
+        // 从链表中移除指定位置的元素
+        this.remove = function (position) {
+            if(position >= 0 && position <= length){
+                let current = head
+                let previous = 0
+                let index = 0
+                if (position === 0) { //  移除第一项
+                    head = current.next
+                }else{
+                    while(index < position){
+                        previous = current
+                        current = current.next
+                        index ++
+                    }
+                    previous.next = current.next
+                }
+                length --
+                return true
+            } else{
+                return false
+            }
+        }
+    
+        // 把链表内的值转换成一个字符串
+        this.toString = function () {
+            let current = head,
+                string = ''
+            while (current) {
+                string += current.element + ','
+                current = current.next
+            }
+            return string
+        }
+    
+    }
+    
+    let list = new LinkedList()
+    list.append('a')
+    list.append('b')
+    list.insert(1, 'hello')
+    console.log(list.toString())
+    list.remove(0)
+    console.log(list.toString())
