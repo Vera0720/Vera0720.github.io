@@ -1,566 +1,205 @@
 ---
-title: requireJS原理
-date: 2018-02-025 02:09:24
-tags: js
+title: 模块机制
+date: 2019-2-28 10:54:14
+tags: JavaScript
+categories: JavaScript
 ---
-
-Require原理
-
-在require中，根据AMD(Asynchronous Module Definition)的思想，即异步模块加载机制，其思想就是把代码分为一个一个的模块来分块加载，这样无疑可以提高代码的重用。
-
-在整个require中，主要的方法就两个：require和define，我们先来聊聊require
-
+## 前言
+程序员最怕两件事，第一件事是产品改需求，第二件事是接手的代码乱七八糟结果最后发现是自己以前写的。
+很不幸，我正在经历第二件事。
+本文旨在让你对模块机制有简单了解以及对require js的核心原理的介绍。
 <!-- more -->
+## 什么是模块
+模块的实质就是业务逻辑的低耦合高内聚，一个模块独立实现一个功能不依赖其他模块，这就是低耦合高内聚。而不是所有功能代码堆叠在一起，牵一发而动全身。模块最重要的是你使用它时仅导入导出你所需要的绑定。
 
-require作为主函数来引入我们的“模块”，require会从自身的存储中去查找对应的defined模块，如果没有找到，则这时这个模块有可以存在三种状态：loading, enabling, defining，这就是require中要注意的地方，如果模块还没有被加载，那么它的这三种状态出现的时机是：
+引入模块和引入脚本是有区别的，模块可以理解为按需加载，后者更多是一次性引入全部不管你有没有用，例如引入JQuery。
 
-loading 文件还没有加载完毕
+## 模块编程的几种方式
 
-enabling 对该模块的依赖进行加载和模块化
+### 原始写法
 
-defining 对正在处理的模块进行加载，并运行模块中的callback
-
-js是单线程操作，拿过来直接加载不就完了吗？ 先看require的load方法的主要代码：
-
-    req.load = function (context, moduleName, url) {
-    
-      var config = (context && context.config) || {},
-    
-      node;
-    
-      if (isBrowser) {
-    
-        //create a async script element
-    
-        node = req.createNode(config, moduleName, url);
-    
-        //add Events [onreadystatechange,load,error]
-    
-        //set url for loading
-    
-        node.src = url;
-    
-        //insert script element to head and start load
-    
-        currentlyAddingScript = node;
-    
-        if (baseElement) {
-    
-          head.insertBefore(node, baseElement);
-    
-        } else {
-    
-          head.appendChild(node);
-    
-        }
-    
-        currentlyAddingScript = null;
-    
-        return node;
-    
-      } else if (isWebWorker) {
-    
-        //do something
-    
-      }
-    
-    };
-    
-    req.createNode = function (config, moduleName, url) {
-    
-      var node = config.xhtml ?
-    
-        document.createElementNS('http://www.w3.org/1999/xhtml', 'html:script') :
-    
-        document.createElement('script');
-    
-      node.type = config.scriptType || 'text/javascript';
-    
-      node.charset = 'utf-8';
-    
-      node.async = true;
-    
-      return node;
-    
-    };
-    
-    require使用的是script标签去拿js，细心的同学会注意到node上设定了 async 属性（异步加载script标签），并且在标签上绑定了load等事件，当文件loading完成后，则要做的主要工作是执行 completeLoad 事件函数，但是要注意的是这时候把script加载完成后，立即执行的是script标签内部的内容，执行完后才触发的 completeLoad事件，而在我们的模块里面，一定要用define函数来对模块进行定义，所以这里我们先穿插着来讲讲define干了什么
-    
-    define
-    
-    define顾名思义是去定义一个模块，但它并不是单纯的去定义
-    
-    define = function (name, deps, callback) {
-    
-      var node,
-    
-      context;
-    
-      //do for multiple constructor
-    
-      ......
-    
-      //If no name, and callback is a function, then figure out if it a
-    
-      //CommonJS thing with dependencies.
-    
-      if (!deps && isFunction(callback)) {
-    
-        deps = [];
-    
-        //Remove comments from the callback string,
-    
-        //look for require calls, and pull them into the dependencies,
-    
-        //but only if there are function args.
-    
-        if (callback.length) {
-    
-          callback
-    
-          .toString()
-    
-          .replace(commentRegExp, '')
-    
-          .replace(cjsRequireRegExp, function (match, dep) {
-    
-            deps.push(dep);
-    
-          });
-    
-          deps = (callback.length === 1 ? ['require'] : ['require', 'exports', 'module']).concat(deps);
-    
-        }
-    
-      }
-    
-      //If in IE 6-8 and hit an anonymous define() call, do the interactive work.
-    
-      if (useInteractive) {
-    
-        node = currentlyAddingScript || getInteractiveScript();
-    
-        if (node) {
-    
-          if (!name) {
-    
-            name = node.getAttribute('data-requiremodule');
-    
-          }
-    
-          context = contexts[node.getAttribute('data-requirecontext')];
-    
-        }
-    
-      }
-    
-      //add to queue line
-    
-      if (context) {
-    
-        context.defQueue.push([name, deps, callback]);
-    
-        context.defQueueMap[name] = true;
-    
-      } else {
-    
-        globalDefQueue.push([name, deps, callback]);
-    
-      }
-    
-    };
-
-这就是define函数，代码不是很多，但是新奇的东西却是有一个！！！那就是代码中对 callback.toString() 文本来进行 正则匹配 ,我们看看这两个replace中的正则表达式是什么样的
-
-commentRegExp = /(\/\*([\s\S]*?)\*\/|([^:]|^)\/\/(.*)$)/mg;
-
-cjsRequireRegExp = /[^.]\s*require\s*\(\s*["']([^'"\s]+)["']\s*\)/g;
-
-第一个正则是用来支掉callback中的注释的，而第二个正则是用来匹配callback.toString() 文本中的 require(.....) ，并将 ..... 这个字段push到queue中，这个方法是不是很变态？现在让我们来接着回到require的completeLoad 函数
-
-require回归
-
-rquire的compeleteLoad函数又做了什么
-
-    completeLoad : function (moduleName) {
-    
-      var found,
-    
-      args,
-    
-      mod,
-    
-      shim = getOwn(config.shim, moduleName) || {},
-    
-      shExports = shim.exports;
-    
-      takeGlobalQueue();
-    
-      while (defQueue.length) {
-    
-        args = defQueue.shift();
-    
-        if (args[0] === null) {
-    
-          args[0] = moduleName;
-    
-          //If already found an anonymous module and bound it
-    
-          //to this name, then this is some other anon module
-    
-          //waiting for its completeLoad to fire.
-    
-          if (found) {
-    
-            break;
-    
-          }
-    
-          found = true;
-    
-        } else if (args[0] === moduleName) {
-    
-          //Found matching define call for this script!
-    
-          found = true;
-    
-        }
-    
-        callGetModule(args);
-    
-      }
-    
-      context.defQueueMap = {};
-    
-      //Do this after the cycle of callGetModule in case the result
-    
-      //of those calls/init calls changes the registry.
-    
-      mod = getOwn(registry, moduleName);
-    
-      if (!found && !hasProp(defined, moduleName) && mod && !mod.inited) {
-    
-        if (config.enforceDefine && (!shExports || !getGlobal(shExports))) {
-    
-          if (hasPathFallback(moduleName)) {
-    
-            return;
-    
-          } else {
-    
-            return onError(makeError('nodefine',
-    
-                'No define call for ' + moduleName,
-    
-                null,
-    
-                [moduleName]));
-    
-          }
-    
-        } else {
-    
-          //A script that does not call define(), so just simulate
-    
-          //the call for it.
-    
-          callGetModule([moduleName, (shim.deps || []), shim.exportsFn]);
-    
-        }
-    
-      }
-    
-      checkLoaded();
-    
+    function a() {
+        //......
     }
-
-这个函数主要是去做了从queue中拿出来define里push进去的字符串，并调用callGetModule 去调用模块， callGetModule 又去做了什么
-
-    function callGetModule(args) {
-    
-        //Skip modules already defined.
-    
-        if (!hasProp(defined, args[0])) {
-    
-            getModule(makeModuleMap(args[0], null, true)).init(args[1], args[2]);
-    
-        }
-    
+    function b() {
+    	//......
     }
+  >  这种做法的缺点很明显："污染"了全局变量，无法保证不与其他模块发生变量名冲突，而且模块成员之间看不出直接关系。
 
-在require内部，有一个 defined 全局变量来储存已经定义好的模块，如果这个模块目前没有定义，那就再做下面的 makeModuleMap ，这个方法则是用来实现对当前module信息的组装，并生成一个Map，它将会返回以下的值：
+### 对象写法
+   
+    var obj = new Object({
+        num:0,
+    	fn1 : function (){
+        	//...
+    	},
+    	fn2 : function (){
+        	//...
+    	}
+	});
+	obj.num = 10
+>  这种方法会有一个明显的缺点，就是内部的变量会被外部改变。举个栗子，你定义了一个a=10,但我在我的代码中把a改成了100，但其实模块里的a应该一直是10，不应该被外部所改变。
+      
+### 立即执行函数写法
+  
+    var immediately = (function(){
+        var num = 0;
+    	var func1 = function(){
+        	//...
+    	};
+    	var func2 = function(){
+        	//...
+    	};
+    	return {
+        	func1 : func1,
+        	func2 : func2
+    	};
+	})();
+	console.log(immediately.num)
+> 这种特点也很明显，就是外部无法读取内部的变量,虽然模块不应该被改变变量，但好歹获取得让我获取一下啊。
 
-    return {
-    
-      prefix : prefix,
-    
-      name : normalizedName,
-    
-      parentMap : parentModuleMap,
-    
-      unnormalized : !!suffix,
-    
-      url : url,
-    
-      originalName : originalName,
-    
-      isDefine : isDefine,
-    
-      id : (prefix ?
-    
-        prefix + '!' + normalizedName :
-    
-        normalizedName) + suffix
-    
-    };
+### 输入全局变量写法
 
-然后再去调用 getModule ，这也是require里面来组装module的主要方法，在require内部定义了 Module类 ，而这个方法则会为当前的 ModuleMap ，其中包含了这个模块的路径等信息。这里要注意的是getModule方法里面拥有一个 基于全局context的registry变量 ，这里则是用来保存根据ModuleMap来实例化的Module，并将其保存在了 registry 变量中（立即保存的Module只是一个空壳，后面实例中介绍），后面会介绍代码的重用如何实现的。
+    var  globalVariable= (function ($,y) {
+           //...
+    })(JQuery,yhooh);
+> 输入全局变量写法,为了在模块内部调用全局变量，必须将其他变量输入模块,就把这两个库（也是两个模块）当作参数.这样做除了保证模块的独立性，还使得模块之间的依赖关系变得明显。
 
-我们直接来看看Module类是长什么样的：
+## Common js的require和AMD的require
 
-    Module = function (map) {
-    
-      this.events = getOwn(undefEvents, map.id) || {};
-    
-      this.map = map;
-    
-      this.shim = getOwn(config.shim, map.id);
-    
-      this.depExports = [];
-    
-      this.depMaps = [];
-    
-      this.depMatched = [];
-    
-      this.pluginMaps = {};
-    
-      this.depCount = 0;
-    
-    };
-    
-    Module.prototype = {
-    
-      //init Module
-    
-      init : function (depMaps, factory, errback, options) {},
-    
-      //define dependencies
-    
-      defineDep : function (i, depExports) {},
-    
-      //call require for plugins
-    
-      fetch : function () {},
-    
-      //use script to load js
-    
-      load : function () {},
-    
-      //Checks if the module is ready to define itself, and if so, define it.
-    
-      check : function () {},
-    
-      //call Plugins if them exist and defines them
-    
-      callPlugin : function () {},
-    
-      //enable dependencies and call defineDep
-    
-      enable : function () {},
-    
-      //register event
-    
-      on : function (name, cb) {},
-    
-      //trigger event
-    
-      emit : function (name, evt) {}
-    
-    }
+* Commonjs是同步加载，在服务器端并不是问题，因为服务器端的文件都是存在本地硬盘里可以同步加载，等待时间就是硬盘读取时间，但是浏览器端不同，时间取决于网速，很可能造成浏览器假死。
+* AMD规范下的require接受两个参数，异步加载所需模块，不阻塞进程，只有依赖模块加载完毕后才会执行回调方法。
 
-new一个Module后，使用init来对Module对象进行初始化，并主要传入其的依赖数组和工厂化方法。这这么多的方法里，主要的两个方法则是 enable 和 check 方法，这两个方法是对方法，当init里调用enable后，下来将要进行的就是一个不断重复的过程，但是过程的主角在一直改变。
+## require js优点
+* 实现js文件的异步加载，避免网页失去响应
+* 管理模块之间的依赖性
 
-递归
+## Require的原理
 
-上面说的这个过程那就是在初始化Model的时候去查找它的依赖，再去 用load方法异步地去请求依赖 ，而依赖又是一个个Module，又会再对自己自身的依赖的依赖进行查找。由于这个过程都是异步进行的，所以都是通过事件监听回调来完成调用的，我们来举下面的例子：
+* Require作为程序的入口，调度javascript资源，加载到各个defined模块时，各个模块就悄无声息的动态创建script标签加载文件，加载结束后往require队列里报告自己结束了，require中所有以来的模块都结束了，就执行回调函数。
+* 举个栗子：马上开学了，小明的寒假作业还有很多没写（需要依赖的模块很多），如果让他自己写（按照顺序加载），可能会写不完（等待时间过长造成浏览器卡死），小明找了几个自己的好朋友帮自己一起写（异步执行加载模块操作），每个小伙伴领了自己的任务开始写作业（创建script标签放到html的head头里），每一个人写完小明给他们的作业了就告诉小明，我写完了（每一个模块向队列报告加载完成），小明把作业都放进自己的书包里（记录模块加载完成的个数长度），当所有人的任务都完成，小明就开开心心上学了（所有模块依赖完成后，执行回调代码）
 
-如
+一起来看看我写的一个require源码中核心思想，源码太多了，就讲讲原理吧
 
-A 的依赖有 B C
-B 的依赖有 C D
-C 的依赖有 A B
-这是一个很绕的例子，如A，B，C都有自己的方法，而我们在实现时都互相调用了各自的方法，我们姑且不讨论这种情况的现实性。
+index.html
 
-当如果我去 require("A") 时，require去查找 defined 中是否有A模块，如果没有，则去调用 makeModuleMap 来为即将调用的模块实例一个 ModuleMap 并加入到defined中，再用ModuleMap实例化一个 Module 加入到registry中，但是这时候的Module是一个空壳，它是只存储了一些模块相关的依赖等，模块里的exports或者callback是还没有被嵌进来，因为这个文件根本没有被加载呀！
+	<!DOCTYPE html>
+	<html lang="en">
+	<head>
+	    <meta charset="UTF-8">
+	    <title>Title</title>
+	</head>
+	<body>
+	<script src="myRequire.js"></script>
+	<script>
+	    require(['defined1.js'], function(def) {
+	        def.define.sayHello();
+	    });
+	</script>
+	</body>
+	</html>
+>	这里require就是myRequire.js里的方法，require接受两个参数，第一个参数是个数组，也就是所有依赖的模块名，第二个参数是加载完这些模块后执行的回调函数.def1和def2是这两个模块定义的时候导出的对象
 
-注册时触发 Module.init 方法去异步加载文件(使用script)。加载完毕后，触发A里的define函数，define函数通过参数或callback里查找A模块需要的依赖，即B和C模块，将B，C加入到A的依赖数组中。这时则触发 completeLoad 函数，这时complete再去从queue中遍历，调用 callGetModule 去查找B、C模块，这时则会创建B和C模块的ModuleMap，根据ModuleMap去实例化空壳Module，（ 调用异步load加载，再触发define等，继续查找依赖………… ），再接下来会做 checkLoaded ，我们看看这个函数：
+defined1.js
 
- 
+	exports.define = {
+	    topic: '老王',
+	    desc: '说了声Hello',
+	    sayHello: function() {
+	        console.log( this.topic + this.desc);
+	    }
+	}
+>	这其实就是一个简单的模块---defined1模块,exports.define包裹的部分也就是导出的内容，也就是之前提到过的def1
 
-    function checkLoaded() {
-    
-      var err,
-    
-      usingPathFallback,
-    
-      waitInterval = config.waitSeconds * 1000,
-    
-      //It is possible to disable the wait interval by using waitSeconds of 0.
-    
-      expired = waitInterval && (context.startTime + waitInterval) < new Date().getTime(),
-    
-      noLoads = [],
-    
-      reqCalls = [],
-    
-      stillLoading = false,
-    
-      needCycleCheck = true;
-    
-      //Do not bother if this call was a result of a cycle break.
-    
-      if (inCheckLoaded) {
-    
-        return;
-    
-      }
-    
-      inCheckLoaded = true;
-    
-      //Figure out the state of all the modules.
-    
-      eachProp(enabledRegistry, function (mod) {
-    
-        var map = mod.map,
-    
-        modId = map.id;
-    
-        //Skip things that are not enabled or in error state.
-    
-        if (!mod.enabled) {
-    
-          return;
-    
-        }
-    
-        if (!map.isDefine) {
-    
-          reqCalls.push(mod);
-    
-        }
-    
-        if (!mod.error) {
-    
-          //If the module should be executed, and it has not
-    
-          //been inited and time is up, remember it.
-    
-          if (!mod.inited && expired) {
-    
-            if (hasPathFallback(modId)) {
-    
-              usingPathFallback = true;
-    
-              stillLoading = true;
-    
-            } else {
-    
-              noLoads.push(modId);
-    
-              removeScript(modId);
-    
-            }
-    
-          } else if (!mod.inited && mod.fetched && map.isDefine) {
-    
-            stillLoading = true;
-    
-            if (!map.prefix) {
-    
-              //No reason to keep looking for unfinished
-    
-              //loading. If the only stillLoading is a
-    
-              //plugin resource though, keep going,
-    
-              //because it may be that a plugin resource
-    
-              //is waiting on a non-plugin cycle.
-    
-              return (needCycleCheck = false);
-    
-            }
-    
-          }
-    
-        }
-    
-      });
-    
-      if (expired && noLoads.length) {
-    
-        //If wait time expired, throw error of unloaded modules.
-    
-        err = makeError('timeout', 'Load timeout for modules: ' + noLoads, null, noLoads);
-    
-        err.contextName = context.contextName;
-    
-        return onError(err);
-    
-      }
-    
-      //Not expired, check for a cycle.
-    
-      if (needCycleCheck) {
-    
-        each(reqCalls, function (mod) {
-    
-          breakCycle(mod, {}, {});
-    
-        });
-    
-      }
-    
-      if ((!expired || usingPathFallback) && stillLoading) {
-    
-        //Something is still waiting to load. Wait for it, but only
-    
-        //if a timeout is not already in effect.
-    
-        if ((isBrowser || isWebWorker) && !checkLoadedTimeoutId) {
-    
-          checkLoadedTimeoutId = setTimeout(function () {
-    
-              checkLoadedTimeoutId = 0;
-    
-              checkLoaded();
-    
-            }, 50);
-    
-        }
-    
-      }
-    
-      inCheckLoaded = false;
-    
-    }
+myRequire.js
+		
+	//标记已经加载成功的个数
+	let successNum = 0;
+	//模块导出
+	window.exports = {};
+	//记录各个模块的顺序
+	let moduleOrder = [];
+	
+	//判断是否数组
+	function isArray(param) {
+	    return param instanceof Array;
+	}
+	
+	//require 真正实现
+	function require(arr, callback) {
+	    let req_list;
+	
+	    // 转化成数组。（arr就是小明的朋友们）
+	    if(isArray(arr)) {
+	        req_list = arr;
+	    } else {
+	        req_list = [arr];
+	    }
+	
+	    let req_len = req_list.length;
+	
+	    //模块逐个加载（小明的朋友们都到齐了）
+	    for(let i=0;i<req_len;i++) {
+	        let req_item = req_list[i];
+	        // 每一个都创建script标签（每一个小伙伴都领了一部分要帮小明写的作业）
+	        let $script = createScript(req_item, i);
+			//html里的head节点
+			let $node = document.querySelector('head');
+			
+	        (function($script) {
+		        //将每个script标签加入扫head头里（每个小伙伴正在写作业）
+	            $node.appendChild($script);
+	            //检测script 的onload事件(判断小明的朋友们是否写完作业)
+	            $script.onload = function() {
+	
+	                // 将加载完成后的模块按照顺序塞到一个数组里（写完作业的朋友们将作业给了小明，小明记录了已经写完的作业数量）
+	                successNum++;
+	
+	                let script_index = $script.getAttribute('index');
+					//这是模块加载完成顺序数组（小明按照顺序将写好的作业排好）
+	                moduleOrder[script_index] = exports;
+	
+	                window.exports = {};
+	
+	                //所有的模块都加载成功后，执行callback（所有的小伙伴都写完了作业，小明收好了所有的作业，去上学了）
+	                if(successNum == req_len) {
+	
+	                    callback && callback.apply(exports, moduleOrder);
+	                }
+	
+	            }
+	          
+	        })($script);
+	
+	    }
+	
+	}
+	
+	//创建一个script标签（小伙伴们领到任务开始写作业）
+	function createScript(src, index) {
+	    let $script = document.createElement('script');
+	
+	    $script.setAttribute('src', src);
+	    $script.setAttribute('index', index);
+	
+	    return $script;
+	}
+>	回想上面提过的require原理
 
-这个函数对所有已在 registry 中的Module进行遍历，并来判断其是否已经完成了定义（定义是在 Module.check 函数里完成的，定义完成后 ModuleMap.isDefined = true ，并将其从registry中删除，其会将真正的模块内容注入到对应的defined中），注意这里有一个重要的地方， checkoutLoadTimeoutId 是一个间隔为50ms的setTimeout函数，即当在加载的时候会不断轮询去查看所有模块是否已经加载好了，因为所有的模块都是异步进行加载的，所以这样可以完全保证所有模块进行完全加载，并进行了过期设定。
+## Es6模块化export和import
+### Es6模块化的基本特点：
+*  基于文件的模块化，通俗的说就是一个文件一个模块
+*  模块的API是静态的，需要在模块公开API中静态定义所有最高层导出，后期无法补充
+*  单例模式，模块只有一个实例，其中维护了他的状态，每次被导入时，是对单个中心实例的引用，如果想要多个模块实例，模块需要提供某种工厂方法来实现这一点。
+*  模块公开的API中暴露的属性和方法并不仅仅是普通的值或者引用赋值，他们是到内部模块定义中的标识符的实际绑定，几乎类似于指针。每一个模块内声明的变量都是局部变量，不会污染全局作用域。
 
-接着上面的例子讲，当加载B模块时，会去查找A和C模块，这时候A模块是已经加载的，但是不能确定C是否已经加载好，但是这时的C模块空壳Module已经加入到了registry中，所以这时会像上面去轮询C模块是否加载， C模块不加载好，是无法对B模块进行注入的，B模块在这一阶段仍是那一个registry里的空壳Module ，直至C模块已经定义，B模块的depCount成为0，才可以继续运行去注入自己。在对模块进行define的时候，用上了defining，是为了防止内部的factory进行加工时，再去尝试去define这个Module，就像一个圈一样，掐断了它。
+### Export和export default
+*  都可以用来导出常量，函数，模块，文件等等
+*  都可以通过import引入
+*  Export可以有很多，但export default只有一个
+*  Export导出后面要用{ },export default不用
+*  Import export default 输出的模块时，可以随便起名，但Import export输出的模块时，只能用export导出时定义的名字
 
-这就是整个require工作的流程，其中主要使用了异步加载，所以让这个思想变得异常的复杂，但是带来的却是性能上的优化，需要我们注意的是：
+以上就是所有的内容啦，BIU～
 
-在使用require时，我们需要注意依赖包的引入，如果我们把B的改成 define("B",[],callback) ，这时 B是没有callback依赖预读 ，那么我们在引入A模块的时候异步加载了B和C模块，但是B模块里使用了C模块的方法，这里的B是直接运行的， 并不去检测其的依赖包是否加载完毕 ，所以这时的B运行时碰到 require("C") 时，C模块是否加载好是不确定的，这时候代码会不会出问题就是网速的问题了……………………
 
-小心
-
-我们在使用时要小心define()的用法：
-
-define(name, dependencies, callback) 
-将依赖写在参数dependencies中，这样require时会对里面的依赖进行加载，加载完后才会执行callback
-define(name, callback) 
-直接在callback中require依赖，会对 callback.toString() 进行正则查找require(....) ，同样加载查找出的所有依赖并加载完后执行callback
-define(callback) 
-同上
-使用时千万不能在第一种情况下直接require依赖，这样并不能保障该模块是否已被定义下执行了callback。
