@@ -1,5 +1,5 @@
 ---
-title: promise
+title: es6系列之promise
 date: 2019-10-20 22:30:56
 tags: js
 ---

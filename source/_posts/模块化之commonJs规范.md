@@ -1,6 +1,6 @@
 ---
-title: 模块化commonJs规范
-date: 2017-05-06 23:00:45
+title: 模块化之commonJs规范
+date: 2019-02-06 23:00:45
 tags: js
 ---
 CommonJS是服务器端模块的规范，Node.js采用了这个规范。

@@ -1,5 +1,5 @@
 ---
-title: 不再害怕webpack（上篇）
+title: webpack系列之配置
 date: 2020-03-14 15:29:59
 tags: webpack
 ---

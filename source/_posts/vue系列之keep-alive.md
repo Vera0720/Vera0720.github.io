@@ -1,7 +1,7 @@
 ---
-title: keep-alive
-date: 2018-08-20 16:01:08
-tags: vue,js
+title: vue系列之keep-alive
+date: 2019-08-20 16:01:08
+tags: vue
 ---
 ### keep-alive是什么
 keep-alive是一个抽象组件：它自身不会渲染一个 DOM 元素，也不会出现在父组件链中；使用keep-alive包裹动态组件时，会缓存不活动的组件实例，而不是销毁它们。

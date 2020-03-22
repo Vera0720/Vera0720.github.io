@@ -1,6 +1,6 @@
 ---
-title: 模块机制
-date: 2019-2-28 10:54:14
+title: 模块化之requirejs
+date: 2019-02-28 10:54:14
 tags: JavaScript
 categories: JavaScript
 ---

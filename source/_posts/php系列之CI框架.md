@@ -1,5 +1,5 @@
 ---
-title: 浅谈phpCI框架
+title: php系列之CI框架
 date: 2017-03-14 23:57
 tags: php
 ---

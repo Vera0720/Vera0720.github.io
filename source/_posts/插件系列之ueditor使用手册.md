@@ -1,6 +1,6 @@
 ---
-title: ueditor使用手册
-date: 2018-08-19 16:45:01
+title: 插件系列之ueditor使用手册
+date: 2017-12-19 16:45:01
 tags: js
 ---
 UEditor使用手册

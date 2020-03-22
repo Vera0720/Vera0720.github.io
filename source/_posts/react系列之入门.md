@@ -1,6 +1,6 @@
 ---
-title: react入门
-date: 2017-12-22 22:35:34
+title: react系列之入门
+date: 2020-01-19 22:35:34
 tags:
 ---
 React 是一个用于构建用户界面的 JAVASCRIPT 库。

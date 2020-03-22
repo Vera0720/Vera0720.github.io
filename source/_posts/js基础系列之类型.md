@@ -1,6 +1,6 @@
 ---
-title: 类型
-date: 2018-11-1 16:01:08
+title: js基础系列之类型
+date: 2018-04-03 16:01:08
 tags: js
 ---
 js中的基本数据类型有：string,number,boolean,null,undefined,symbol

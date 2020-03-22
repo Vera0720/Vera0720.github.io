@@ -1,6 +1,6 @@
 ---
-title: cssinline-block间隙问题
-date: 2018-03-02 14:09:06
+title: css系列之inline-block间隙
+date: 2016-09-02 14:09:06
 tags: css
 ---
 一、现象描述

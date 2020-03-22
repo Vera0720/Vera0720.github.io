@@ -1,6 +1,6 @@
 ---
 title: 模块化之exports和module.exports
-date: 2017-05-06 23:00:45
+date: 2019-02-23 23:00:45
 tags: js
 ---
 exports和module.exports到底是什么？
