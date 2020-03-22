@@ -1,5 +1,5 @@
 ---
-title: es6语法
+title: es6系列之语法简介
 date: 2019-12-11 00:24:08
 tags: js
 ---

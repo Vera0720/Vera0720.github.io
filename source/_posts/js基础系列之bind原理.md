@@ -1,5 +1,5 @@
 ---
-title: bind原理
+title: js基础系列之bind原理
 date: 2019-04-03 16:23:55
 tags: js
 ---

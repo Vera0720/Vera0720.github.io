@@ -1,5 +1,5 @@
 ---
-title: exports和module.exports
+title: 模块化之exports和module.exports
 date: 2017-05-06 23:00:45
 tags: js
 ---

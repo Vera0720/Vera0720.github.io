@@ -1,5 +1,5 @@
 ---
-title: commonJs规范
+title: 模块化commonJs规范
 date: 2017-05-06 23:00:45
 tags: js
 ---
