@@ -3,59 +3,7 @@
   <component name="ChangeListManager">
     <list default="true" id="87684892-ab2f-4c5d-a44e-40e56dbfe67e" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/source/_posts/Iframe简单介绍.md" beforeDir="false" afterPath="$PROJECT_DIR$/source/_posts/html系列之Iframe.md" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/source/_posts/ajax顺序执行.md" beforeDir="false" afterPath="$PROJECT_DIR$/source/_posts/ajax顺序执行.md" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/source/_posts/bind原理.md" beforeDir="false" afterPath="$PROJECT_DIR$/source/_posts/js基础系列之bind原理.md" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/source/_posts/commonJs规范.md" beforeDir="false" afterPath="$PROJECT_DIR$/source/_posts/模块化之commonJs规范.md" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/source/_posts/es6语法.md" beforeDir="false" afterPath="$PROJECT_DIR$/source/_posts/es6系列之语法简介.md" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/source/_posts/exports和module.exports.md" beforeDir="false" afterPath="$PROJECT_DIR$/source/_posts/模块化之exports和module.exports.md" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/source/_posts/git常用命令.md" beforeDir="false" afterPath="$PROJECT_DIR$/source/_posts/git常用命令.md" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/source/_posts/html和css简介.md" beforeDir="false" afterPath="$PROJECT_DIR$/source/_posts/前端入门之html,css.md" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/source/_posts/img和父容器之间有间隙的问题.md" beforeDir="false" afterPath="$PROJECT_DIR$/source/_posts/css系列之img和父容器间隙.md" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/source/_posts/inline-block并列排序位置影响.md" beforeDir="false" afterPath="$PROJECT_DIR$/source/_posts/css系列之inline-block并列排序位置影响.md" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/source/_posts/inline-block间隙问题.md" beforeDir="false" afterPath="$PROJECT_DIR$/source/_posts/css系列之inline-block间隙.md" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/source/_posts/js实现排序的几种方法.md" beforeDir="false" afterPath="$PROJECT_DIR$/source/_posts/算法系列之排序.md" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/source/_posts/keep-alive.md" beforeDir="false" afterPath="$PROJECT_DIR$/source/_posts/vue系列之keep-alive.md" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/source/_posts/promise.md" beforeDir="false" afterPath="$PROJECT_DIR$/source/_posts/es6系列之promise.md" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/source/_posts/react之setState到底是同步还是异步.md" beforeDir="false" afterPath="$PROJECT_DIR$/source/_posts/react原理解析系列之setState.md" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/source/_posts/react入门.md" beforeDir="false" afterPath="$PROJECT_DIR$/source/_posts/react系列之入门.md" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/source/_posts/requireJS原理.md" beforeDir="false" afterPath="$PROJECT_DIR$/source/_posts/模块化之requirejs.md" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/source/_posts/sass-scss入门.md" beforeDir="false" afterPath="$PROJECT_DIR$/source/_posts/css系列之sass和scss.md" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/source/_posts/this解析.md" beforeDir="false" afterPath="$PROJECT_DIR$/source/_posts/js基础系列之this解析.md" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/source/_posts/ueditor使用手册.md" beforeDir="false" afterPath="$PROJECT_DIR$/source/_posts/插件系列之ueditor使用手册.md" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/source/_posts/不再害怕webpack（上篇）.md" beforeDir="false" afterPath="$PROJECT_DIR$/source/_posts/webpack系列之配置.md" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/source/_posts/两列布局.md" beforeDir="false" afterPath="$PROJECT_DIR$/source/_posts/css系列之两列布局.md" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/source/_posts/事件循环.md" beforeDir="false" afterPath="$PROJECT_DIR$/source/_posts/js基础系列之事件循环.md" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/source/_posts/五环.md" beforeDir="false" afterPath="$PROJECT_DIR$/source/_posts/css系列之五环.md" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/source/_posts/作用域链的深入理解.md" beforeDir="false" afterPath="$PROJECT_DIR$/source/_posts/js基础系列之作用域链.md" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/source/_posts/关于文字的垂直居中.md" beforeDir="false" afterPath="$PROJECT_DIR$/source/_posts/css系列之文字的垂直居中.md" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/source/_posts/前端优化.md" beforeDir="false" afterPath="$PROJECT_DIR$/source/_posts/前端优化.md" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/source/_posts/前端优化之css替代js动画.md" beforeDir="false" afterPath="$PROJECT_DIR$/source/_posts/前端优化系列之css替代js动画.md" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/source/_posts/前端必会的算法题目.md" beforeDir="false" afterPath="$PROJECT_DIR$/source/_posts/前端面试系列之必会算法.md" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/source/_posts/前端面试题集.md" beforeDir="false" afterPath="$PROJECT_DIR$/source/_posts/前端面试题集.md" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/source/_posts/原型链.md" beforeDir="false" afterPath="$PROJECT_DIR$/source/_posts/js基础系列之原型链.md" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/source/_posts/原生js实现input的数据双向绑定.md" beforeDir="false" afterPath="$PROJECT_DIR$/source/_posts/vue系列之原生js实现input双向绑定.md" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/source/_posts/图片预加载.md" beforeDir="false" afterPath="$PROJECT_DIR$/source/_posts/前端优化系列之图片预加载.md" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/source/_posts/定位以及z-index.md" beforeDir="false" afterPath="$PROJECT_DIR$/source/_posts/css系列之定位以及z-index.md" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/source/_posts/定时器.md" beforeDir="false" afterPath="$PROJECT_DIR$/source/_posts/定时器.md" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/source/_posts/序列化.md" beforeDir="false" afterPath="$PROJECT_DIR$/source/_posts/序列化.md" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/source/_posts/弹性盒模型.md" beforeDir="false" afterPath="$PROJECT_DIR$/source/_posts/css系列之弹性盒模型.md" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/source/_posts/执行环境与作用域.md" beforeDir="false" afterPath="$PROJECT_DIR$/source/_posts/js基础系列之执行环境与作用域.md" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/source/_posts/数组去重.md" beforeDir="false" afterPath="$PROJECT_DIR$/source/_posts/算法系列之数组去重.md" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/source/_posts/文档兼容性.md" beforeDir="false" afterPath="$PROJECT_DIR$/source/_posts/html系列之文档兼容性.md" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/source/_posts/校招面试题（一）.md" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/source/_posts/浅谈phpCI框架.md" beforeDir="false" afterPath="$PROJECT_DIR$/source/_posts/php系列之CI框架.md" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/source/_posts/类型.md" beforeDir="false" afterPath="$PROJECT_DIR$/source/_posts/js基础系列之类型.md" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/source/_posts/继承.md" beforeDir="false" afterPath="$PROJECT_DIR$/source/_posts/js基础系列之继承.md" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/source/_posts/跨域问题的解决方案.md" beforeDir="false" afterPath="$PROJECT_DIR$/source/_posts/跨域问题的解决方案.md" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/source/_posts/输入url会发生什么.md" beforeDir="false" afterPath="$PROJECT_DIR$/source/_posts/前端面试系列之输入url会发生什么.md" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/source/_posts/重复弹出层问题.md" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/source/_posts/错误处理.md" beforeDir="false" afterPath="$PROJECT_DIR$/source/_posts/前端优化系列之错误处理.md" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/source/_posts/闭包(二).md" beforeDir="false" afterPath="$PROJECT_DIR$/source/_posts/js基础系列之闭包.md" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/source/_posts/闭包.md" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/source/_posts/防抖与节流.md" beforeDir="false" afterPath="$PROJECT_DIR$/source/_posts/前端优化系列之防抖与节流.md" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/source/_posts/面向对象.md" beforeDir="false" afterPath="$PROJECT_DIR$/source/_posts/js基础系列之面向对象.md" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/source/_posts/预编译.md" beforeDir="false" afterPath="$PROJECT_DIR$/source/_posts/js基础系列之预编译.md" afterDir="false" />
     </list>
     <ignored path="$PROJECT_DIR$/.tmp/" />
     <ignored path="$PROJECT_DIR$/temp/" />
@@ -70,14 +18,14 @@
     <session id="-53445902">
       <usages-collector id="statistics.lifecycle.project">
         <counts>
-          <entry key="project.closed" value="14" />
+          <entry key="project.closed" value="16" />
           <entry key="project.open.time.0" value="1" />
-          <entry key="project.open.time.1" value="8" />
+          <entry key="project.open.time.1" value="9" />
           <entry key="project.open.time.2" value="2" />
           <entry key="project.open.time.3" value="1" />
           <entry key="project.open.time.4" value="1" />
           <entry key="project.open.time.7" value="2" />
-          <entry key="project.opened" value="15" />
+          <entry key="project.opened" value="16" />
         </counts>
       </usages-collector>
       <usages-collector id="statistics.vcs.git.usages">
@@ -95,7 +43,7 @@
           <entry key="jpg" value="3" />
           <entry key="js" value="7" />
           <entry key="json" value="2" />
-          <entry key="md" value="342" />
+          <entry key="md" value="343" />
           <entry key="png" value="5" />
           <entry key="pub" value="1" />
           <entry key="svg" value="6" />
@@ -109,7 +57,7 @@
           <entry key="Image" value="23" />
           <entry key="JSON" value="2" />
           <entry key="JavaScript" value="7" />
-          <entry key="Markdown" value="342" />
+          <entry key="Markdown" value="343" />
           <entry key="PLAIN_TEXT" value="9" />
           <entry key="SVG" value="6" />
           <entry key="YAML" value="16" />
@@ -118,17 +66,17 @@
       <usages-collector id="statistics.file.extensions.edit">
         <counts>
           <entry key="ejs" value="19" />
-          <entry key="md" value="21774" />
+          <entry key="md" value="21787" />
           <entry key="styl" value="9" />
-          <entry key="txt" value="98" />
+          <entry key="txt" value="109" />
           <entry key="yml" value="60" />
         </counts>
       </usages-collector>
       <usages-collector id="statistics.file.types.edit">
         <counts>
           <entry key="EJS" value="19" />
-          <entry key="Markdown" value="21774" />
-          <entry key="PLAIN_TEXT" value="98" />
+          <entry key="Markdown" value="21787" />
+          <entry key="PLAIN_TEXT" value="109" />
           <entry key="Stylus" value="9" />
           <entry key="YAML" value="60" />
         </counts>
@@ -137,89 +85,17 @@
   </component>
   <component name="FileEditorManager">
     <leaf>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/source/_posts/前端面试系列之输入url会发生什么.md">
-          <provider selected="true" editor-type-id="split-provider[text-editor;markdown-preview-editor]">
-            <state split_layout="SPLIT">
-              <first_editor relative-caret-position="30">
-                <caret line="2" column="16" selection-start-line="2" selection-start-column="16" selection-end-line="2" selection-end-column="16" />
-              </first_editor>
-              <second_editor />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/source/_posts/序列化.md">
-          <provider selected="true" editor-type-id="split-provider[text-editor;markdown-preview-editor]">
-            <state split_layout="SPLIT">
-              <first_editor relative-caret-position="30">
-                <caret line="2" column="13" selection-start-line="2" selection-start-column="13" selection-end-line="2" selection-end-column="13" />
-              </first_editor>
-              <second_editor />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/source/_posts/算法系列之排序.md">
-          <provider selected="true" editor-type-id="split-provider[text-editor;markdown-preview-editor]">
-            <state split_layout="FIRST">
-              <first_editor relative-caret-position="45">
-                <caret line="3" column="8" lean-forward="true" selection-start-line="3" selection-start-column="8" selection-end-line="3" selection-end-column="8" />
-              </first_editor>
-              <second_editor />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/source/_posts/算法系列之数组去重.md">
-          <provider selected="true" editor-type-id="split-provider[text-editor;markdown-preview-editor]">
-            <state split_layout="SPLIT">
-              <first_editor relative-caret-position="30">
-                <caret line="2" column="13" selection-start-line="2" selection-start-column="13" selection-end-line="2" selection-end-column="13" />
-              </first_editor>
-              <second_editor />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
+      <file pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/source/_posts/前端面试题集.md">
           <provider selected="true" editor-type-id="split-provider[text-editor;markdown-preview-editor]">
             <state split_layout="FIRST">
-              <first_editor relative-caret-position="30">
-                <caret line="2" column="16" selection-start-line="2" selection-start-column="16" selection-end-line="2" selection-end-column="16" />
+              <first_editor relative-caret-position="161">
+                <caret line="1948" column="24" selection-start-line="1948" selection-start-column="24" selection-end-line="1948" selection-end-column="24" />
                 <folding>
                   <element signature="e#463#475#0" />
                   <element signature="e#2029#2039#0" />
                   <element signature="e#4421#4433#0" />
                 </folding>
-              </first_editor>
-              <second_editor />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/source/_posts/前端面试系列之必会算法.md">
-          <provider selected="true" editor-type-id="split-provider[text-editor;markdown-preview-editor]">
-            <state split_layout="SPLIT">
-              <first_editor relative-caret-position="285">
-                <caret line="19" column="27" lean-forward="true" selection-start-line="19" selection-start-column="27" selection-end-line="19" selection-end-column="27" />
-              </first_editor>
-              <second_editor />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/source/_posts/vue系列之原生js实现input双向绑定.md">
-          <provider selected="true" editor-type-id="split-provider[text-editor;markdown-preview-editor]">
-            <state split_layout="SPLIT">
-              <first_editor relative-caret-position="30">
-                <caret line="2" column="13" selection-start-line="2" selection-start-column="13" selection-end-line="2" selection-end-column="13" />
               </first_editor>
               <second_editor />
             </state>
@@ -265,8 +141,8 @@
       <find>cookie</find>
       <find>dns</find>
       <find>线程</find>
-      <find>优化</find>
       <find>前端优化</find>
+      <find>优化</find>
     </findStrings>
     <dirStrings>
       <dir>$PROJECT_DIR$/source</dir>
@@ -331,12 +207,12 @@
         <option value="$PROJECT_DIR$/source/_posts/模块化之requirejs.md" />
         <option value="$PROJECT_DIR$/source/_posts/前端优化.md" />
         <option value="$PROJECT_DIR$/source/_posts/react系列之入门.md" />
-        <option value="$PROJECT_DIR$/source/_posts/前端面试题集.md" />
         <option value="$PROJECT_DIR$/source/_posts/序列化.md" />
         <option value="$PROJECT_DIR$/source/_posts/算法系列之数组去重.md" />
         <option value="$PROJECT_DIR$/source/_posts/前端面试系列之输入url会发生什么.md" />
         <option value="$PROJECT_DIR$/source/_posts/前端面试系列之必会算法.md" />
         <option value="$PROJECT_DIR$/source/_posts/vue系列之原生js实现input双向绑定.md" />
+        <option value="$PROJECT_DIR$/source/_posts/前端面试题集.md" />
       </list>
     </option>
   </component>
@@ -356,9 +232,8 @@
     </packageJsonPaths>
   </component>
   <component name="ProjectFrameBounds" fullScreen="true">
-    <option name="x" value="12" />
     <option name="y" value="23" />
-    <option name="width" value="1142" />
+    <option name="width" value="1680" />
     <option name="height" value="943" />
   </component>
   <component name="ProjectInspectionProfilesVisibleTreeState">
@@ -383,6 +258,7 @@
       <foldersAlwaysOnTop value="true" />
     </navigator>
     <panes>
+      <pane id="Scope" />
       <pane id="ProjectPane">
         <subPane>
           <expand>
@@ -390,22 +266,10 @@
               <item name="Vera0720.github.io" type="b2602c69:ProjectViewProjectNode" />
               <item name="Vera0720.github.io" type="462c0819:PsiDirectoryNode" />
             </path>
-            <path>
-              <item name="Vera0720.github.io" type="b2602c69:ProjectViewProjectNode" />
-              <item name="Vera0720.github.io" type="462c0819:PsiDirectoryNode" />
-              <item name="source" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="Vera0720.github.io" type="b2602c69:ProjectViewProjectNode" />
-              <item name="Vera0720.github.io" type="462c0819:PsiDirectoryNode" />
-              <item name="source" type="462c0819:PsiDirectoryNode" />
-              <item name="_posts" type="462c0819:PsiDirectoryNode" />
-            </path>
           </expand>
           <select />
         </subPane>
       </pane>
-      <pane id="Scope" />
     </panes>
   </component>
   <component name="PropertiesComponent">
@@ -463,7 +327,8 @@
       <workItem from="1584413073340" duration="3472000" />
       <workItem from="1584496230527" duration="6794000" />
       <workItem from="1584606581168" duration="21788000" />
-      <workItem from="1584867100541" duration="4985000" />
+      <workItem from="1584867100541" duration="5175000" />
+      <workItem from="1584969008887" duration="1074000" />
     </task>
     <task id="LOCAL-00001" summary="上传">
       <created>1578475152717</created>
@@ -542,17 +407,23 @@
       <option name="project" value="LOCAL" />
       <updated>1584847358190</updated>
     </task>
-    <option name="localTasksCounter" value="12" />
+    <task id="LOCAL-00012" summary="title更改">
+      <created>1584888702619</created>
+      <option name="number" value="00012" />
+      <option name="presentableId" value="LOCAL-00012" />
+      <option name="project" value="LOCAL" />
+      <updated>1584888702619</updated>
+    </task>
+    <option name="localTasksCounter" value="13" />
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="203170000" />
+    <option name="totallyTimeSpent" value="204434000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="0" y="0" width="1680" height="1050" extended-state="0" />
-    <editor active="true" />
     <layout>
-      <window_info active="true" content_ui="combo" id="Project" order="0" visible="true" weight="0.19831224" />
+      <window_info active="true" content_ui="combo" id="Project" order="0" visible="true" weight="0.20494273" />
       <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
       <window_info id="Favorites" order="2" side_tool="true" />
       <window_info anchor="bottom" id="Message" order="0" />
@@ -629,7 +500,8 @@
     <MESSAGE value="面试题更新" />
     <MESSAGE value="单向链表" />
     <MESSAGE value="算法题" />
-    <option name="LAST_COMMIT_MESSAGE" value="算法题" />
+    <MESSAGE value="title更改" />
+    <option name="LAST_COMMIT_MESSAGE" value="title更改" />
   </component>
   <component name="editorHistoryManager">
     <entry file="file://$PROJECT_DIR$/source/_posts/css系列之两列布局.md">
@@ -1068,21 +940,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/source/_posts/前端面试题集.md">
-      <provider selected="true" editor-type-id="split-provider[text-editor;markdown-preview-editor]">
-        <state split_layout="FIRST">
-          <first_editor relative-caret-position="30">
-            <caret line="2" column="16" selection-start-line="2" selection-start-column="16" selection-end-line="2" selection-end-column="16" />
-            <folding>
-              <element signature="e#463#475#0" />
-              <element signature="e#2029#2039#0" />
-              <element signature="e#4421#4433#0" />
-            </folding>
-          </first_editor>
-          <second_editor />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/source/_posts/序列化.md">
       <provider selected="true" editor-type-id="split-provider[text-editor;markdown-preview-editor]">
         <state split_layout="SPLIT">
@@ -1097,7 +954,7 @@
       <provider selected="true" editor-type-id="split-provider[text-editor;markdown-preview-editor]">
         <state split_layout="FIRST">
           <first_editor relative-caret-position="45">
-            <caret line="3" column="8" lean-forward="true" selection-start-line="3" selection-start-column="8" selection-end-line="3" selection-end-column="8" />
+            <caret line="3" column="8" selection-start-line="3" selection-start-column="8" selection-end-line="3" selection-end-column="8" />
           </first_editor>
           <second_editor />
         </state>
@@ -1127,7 +984,7 @@
       <provider selected="true" editor-type-id="split-provider[text-editor;markdown-preview-editor]">
         <state split_layout="SPLIT">
           <first_editor relative-caret-position="285">
-            <caret line="19" column="27" lean-forward="true" selection-start-line="19" selection-start-column="27" selection-end-line="19" selection-end-column="27" />
+            <caret line="19" column="27" selection-start-line="19" selection-start-column="27" selection-end-line="19" selection-end-column="27" />
           </first_editor>
           <second_editor />
         </state>
@@ -1136,8 +993,23 @@
     <entry file="file://$PROJECT_DIR$/source/_posts/vue系列之原生js实现input双向绑定.md">
       <provider selected="true" editor-type-id="split-provider[text-editor;markdown-preview-editor]">
         <state split_layout="SPLIT">
-          <first_editor relative-caret-position="30">
-            <caret line="2" column="13" selection-start-line="2" selection-start-column="13" selection-end-line="2" selection-end-column="13" />
+          <first_editor relative-caret-position="120">
+            <caret line="8" lean-forward="true" selection-start-line="8" selection-end-line="8" />
+          </first_editor>
+          <second_editor />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/source/_posts/前端面试题集.md">
+      <provider selected="true" editor-type-id="split-provider[text-editor;markdown-preview-editor]">
+        <state split_layout="FIRST">
+          <first_editor relative-caret-position="161">
+            <caret line="1948" column="24" selection-start-line="1948" selection-start-column="24" selection-end-line="1948" selection-end-column="24" />
+            <folding>
+              <element signature="e#463#475#0" />
+              <element signature="e#2029#2039#0" />
+              <element signature="e#4421#4433#0" />
+            </folding>
           </first_editor>
           <second_editor />
         </state>
