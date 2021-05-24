@@ -1,0 +1,274 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  
+  
+  
+    <meta name="description" content="治愈系少女">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <title>
+    es6系列之promise |
+    
+    今天天气晴朗</title>
+  
+    <link rel="shortcut icon" href="/favicon.ico">
+  
+  
+<link rel="stylesheet" href="/css/style.css">
+
+  
+    
+<link rel="stylesheet" href="/fancybox/jquery.fancybox.min.css">
+
+  
+  
+<script src="/js/pace.min.js"></script>
+
+<meta name="generator" content="Hexo 4.2.0"></head>
+
+<body>
+<main class="content">
+  <section class="outer">
+  
+
+<article id="post-es6系列之promise" class="article article-type-post" itemscope itemprop="blogPost" data-scroll-reveal>
+
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
+  
+    <h1 class="article-title" itemprop="name">
+      es6系列之promise
+    </h1>
+  
+  
+
+
+
+
+      </header>
+    
+
+    
+      <div class="article-meta">
+        <a href="/2019/10/20/es6%E7%B3%BB%E5%88%97%E4%B9%8Bpromise/" class="article-date">
+  <time datetime="2019-10-20T14:30:56.000Z" itemprop="datePublished">2019-10-20</time>
+</a>
+        
+      </div>
+    
+
+    
+      
+    <div class="tocbot"></div>
+
+
+
+
+
+    
+
+    <div class="article-entry" itemprop="articleBody">
+      
+
+
+      
+
+      
+        <p>在 Promise 出现以前，我们处理一个异步网络请求，大概是疯狂回调嵌套地狱。<br>回调地狱带来的负面作用有以下几点：<br>1.代码臃肿<br>2.可读性差<br>3.耦合度过高，可维护性差<br>4.代码复用性差<br>5.容易滋生 bug<br>6.只能在回调里处理异常<br>为了解决这些问题，于是Promise规范诞生了，并且在业界有了很多实现来解决回调地狱的痛点。比如业界著名的Q和bluebird，bluebird甚至号称运行最快的类库。</p>
+<a id="more"></a>
+
+<h3 id="定义：Promise对象用于异步操作，它表示一个尚未完成且预计在未来完成的异步操作。"><a href="#定义：Promise对象用于异步操作，它表示一个尚未完成且预计在未来完成的异步操作。" class="headerlink" title="定义：Promise对象用于异步操作，它表示一个尚未完成且预计在未来完成的异步操作。"></a>定义：Promise对象用于异步操作，它表示一个尚未完成且预计在未来完成的异步操作。</h3><p>来看看他的常规操作</p>
+<pre><code>new Promise(请求1)
+    .then(请求2(请求结果1))
+    .then(请求3(请求结果2))
+    .then(请求4(请求结果3))
+    .then(请求5(请求结果4))
+    .catch(处理异常(异常信息))</code></pre><h3 id="状态"><a href="#状态" class="headerlink" title="状态"></a>状态</h3><p>pending：初始值，不是fulfilled，也不是rejected<br>fulfilled：代表操作成功<br>rejected：代表操作失败<br>Promise有两种状态改变的方式，既可以从pending转变为fulfilled，也可以从pending转变为rejected。一旦状态改变，就「凝固」了，会一直保持这个状态，不会再发生变化。当状态发生变化，promise.then绑定的函数就会被调用。</p>
+<h3 id="基本api"><a href="#基本api" class="headerlink" title="基本api"></a>基本api</h3><p>.then 两个参数，成功和失败，会创建并返回一个新的promise,这个promise可以用于实现promise链式流程控制<br>.catch 失败，相当于.then(null,reject)<br>.all 多个Promise实例，包装成一个新的Promise实例。接受一个数组作参数，数组中的对象均为promise实例（如果不是一个promise，该项会被用Promise.resolve转换为一个promise)。它的状态由这三个promise实例决定。当p1, p2, p3状态都变为fulfilled，p的状态才会变为fulfilled，并将三个promise返回的结果，按参数的顺序（而不是 resolved的顺序）存入数组，传给p的回调函数。当p1, p2, p3其中之一状态变为rejected，p的状态也会变为rejected，并把第一个被reject的promise的返回值，传给p的回调函数。如果传入一个空数组，会立即完成<br>.race Promise.race方法同样接受一个数组作参数。当参数中有一个实例的状态发生改变（变为fulfilled或rejected），p的状态就跟着改变。并把第一个改变状态的promise的返回值，传给p回调函数。在第一个promise对象变为resolve后，并不会取消其他promise对象的执行。如果传入一个空数组，会挂住，永远不会决议。<br>.resolve 让这个Promise对象立即进入resolved状态，并将结果success传递给then指定的onFulfilled回调函数。Promise.resolve()的另一个作用就是将thenable对象（即带有then方法的对象）转换为promise对象。<br>.reject 这段代码会让这个Promise对象立即进入rejected状态，并将错误对象传递给then指定的onRejected回调函数。</p>
+<h3 id="优缺点"><a href="#优缺点" class="headerlink" title="优缺点"></a>优缺点</h3><p>优点：Promise的真正强大之处在于它的多重链式调用，可以避免层层嵌套回调。<br>缺点：如果没有使用catch方法指定处理错误的回调函数，Promise对象抛出的错误不会传递到外层代码，即不会有任何反应（Chrome会抛错）；Promise一旦新建就会「立即执行」，无法取消。</p>
+<h3 id="封装ajax"><a href="#封装ajax" class="headerlink" title="封装ajax"></a>封装ajax</h3><pre><code>function get(url) {
+    // 返回一个Promise对象
+    return new Promise(function (resolve, reject) {
+        // 创建一个XHR对象
+        let req = new XMLHttpRequest() || new ActiveXObject(&apos;Microsoft.XMLHTTP&apos;)
+        req.open(&apos;GET&apos;, url, true)
+        // 使用req.onload监听req的状态
+        req.onload = function () {
+            if (req.readyState == 4 &amp;&amp; req.status == 200) {
+                resolve(req.response)
+            } else {
+                reject(Error(req.statusText))
+            }
+        }
+        // 网络错误
+        req.onerror = function () {
+            reject(Error(&quot;Network Error&quot;));
+        };
+        // 发送请求
+        req.send();
+    });
+}
+get(&quot;http://something&quot;).then(function (response) {
+    console.log(response);
+}).catch(function (error) {
+    console.log(error);
+})</code></pre><h3 id="Promise与事件循环"><a href="#Promise与事件循环" class="headerlink" title="Promise与事件循环"></a>Promise与事件循环</h3><p>Promise在初始化时，传入的函数是同步执行的，然后注册then回调。注册完之后，继续往下执行同步代码，在这之前，then中回调不会执行。同步代码块执行完毕后，才会在事件循环中检测是否有可用的promise回调，如果有，那么执行，如果没有，继续下一个事件循环。<br>Promise在事件循环中还有一个微任务的概念</p>
+<h3 id="常见问题"><a href="#常见问题" class="headerlink" title="常见问题"></a>常见问题</h3><p>promise.then(onFulfilled, onRejected)——&gt;在onFulfilled中发生异常的话，在onRejected中是捕获不到这个异常的。<br>promise.then(onFulfilled).catch(onRejected)——-&gt;.then中产生的异常能在.catch中捕获<br>如果在then中抛错，而没有对错误进行处理（即catch），那么会一直保持reject状态，直到catch了错误<br>每次调用then都会返回一个新创建的promise对象，而then内部只是返回的数据<br>在异步回调中抛错，不会被catch到<br>promise状态变为resove或reject，就凝固了，不会再改变</p>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://vera0720.github.io/2019/10/20/es6%E7%B3%BB%E5%88%97%E4%B9%8Bpromise/" data-id="ckp1zpvv7000l1pr9aynd4fjt"
+         class="article-share-link">Share</a>
+      
+  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/js/" rel="tag">js</a></li></ul>
+
+    </footer>
+
+  </div>
+
+  
+    
+  <nav class="article-nav">
+    
+      <a href="/2019/12/11/es6%E7%B3%BB%E5%88%97%E4%B9%8B%E8%AF%AD%E6%B3%95%E7%AE%80%E4%BB%8B/" class="article-nav-link">
+        <strong class="article-nav-caption">Newer posts</strong>
+        <div class="article-nav-title">
+          
+            es6系列之语法简介
+          
+        </div>
+      </a>
+    
+    
+      <a href="/2019/10/11/%E5%89%8D%E7%AB%AF%E4%BC%98%E5%8C%96/" class="article-nav-link">
+        <strong class="article-nav-caption">Olde posts</strong>
+        <div class="article-nav-title">前端优化系列之首屏优化</div>
+      </a>
+    
+  </nav>
+
+
+  
+
+  
+    
+  
+
+</article>
+
+
+
+</section>
+  <footer class="footer">
+  <div class="outer">
+    <ul class="list-inline">
+      <li>&copy; 2021 今天天气晴朗</li>
+      <li>Author <span>Vera</span></li>
+    </ul>
+  </div>
+</footer>
+
+</main>
+
+<aside class="sidebar sidebar-specter">
+  
+    <button class="navbar-toggle"></button>
+<nav class="navbar">
+  
+    <div class="logo">
+      <a href="/"><img src="/images/headImg.jpeg" alt="今天天气晴朗"></a>
+    </div>
+  
+  <ul class="nav nav-main">
+    
+      <li class="nav-item">
+        <a class="nav-item-link" href="/">Home</a>
+      </li>
+    
+      <li class="nav-item">
+        <a class="nav-item-link" href="/archives">Archives</a>
+      </li>
+    
+      <li class="nav-item">
+        <a class="nav-item-link" href="/gallery">Gallery</a>
+      </li>
+    
+      <li class="nav-item">
+        <a class="nav-item-link" href="/about">About</a>
+      </li>
+    
+    <li class="nav-item">
+      <a class="nav-item-link nav-item-search" title="Search">
+        <i class="fe fe-search"></i>
+        Search
+      </a>
+    </li>
+  </ul>
+</nav>
+<nav class="navbar navbar-bottom">
+  <ul class="nav">
+    <li class="nav-item">
+      <div class="totop" id="totop">
+  <i class="fe fe-rocket"></i>
+</div>
+    </li>
+    <li class="nav-item">
+      
+    </li>
+  </ul>
+</nav>
+<div class="search-form-wrap">
+  <div class="local-search local-search-plugin">
+  <input type="search" id="local-search-input" class="local-search-input" placeholder="Search...">
+  <div id="local-search-result" class="local-search-result"></div>
+</div>
+</div>
+  </aside>
+  
+<script src="/js/jquery-2.0.3.min.js"></script>
+
+
+<script src="/js/jquery.justifiedGallery.min.js"></script>
+
+
+<script src="/js/lazyload.min.js"></script>
+
+
+<script src="/js/busuanzi-2.3.pure.min.js"></script>
+
+
+  
+<script src="/fancybox/jquery.fancybox.min.js"></script>
+
+
+
+
+  
+<script src="/js/tocbot.min.js"></script>
+
+  <script>
+    // Tocbot_v4.7.0  http://tscanlin.github.io/tocbot/
+    tocbot.init({
+      tocSelector: '.tocbot',
+      contentSelector: '.article-entry',
+      headingSelector: 'h1, h2, h3, h4, h5, h6',
+      hasInnerContainers: true,
+      scrollSmooth: true,
+      positionFixedSelector: '.tocbot',
+      positionFixedClass: 'is-position-fixed',
+      fixedSidebarOffset: 'auto',
+    });
+  </script>
+
+
+
+<script src="/js/ocean.js"></script>
+
+
+</body>
+</html>

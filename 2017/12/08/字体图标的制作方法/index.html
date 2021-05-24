@@ -1,0 +1,264 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  
+  
+  
+    <meta name="description" content="治愈系少女">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <title>
+    字体图标的制作方法 |
+    
+    今天天气晴朗</title>
+  
+    <link rel="shortcut icon" href="/favicon.ico">
+  
+  
+<link rel="stylesheet" href="/css/style.css">
+
+  
+    
+<link rel="stylesheet" href="/fancybox/jquery.fancybox.min.css">
+
+  
+  
+<script src="/js/pace.min.js"></script>
+
+<meta name="generator" content="Hexo 4.2.0"></head>
+
+<body>
+<main class="content">
+  <section class="outer">
+  
+
+<article id="post-字体图标的制作方法" class="article article-type-post" itemscope itemprop="blogPost" data-scroll-reveal>
+
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
+  
+    <h1 class="article-title" itemprop="name">
+      字体图标的制作方法
+    </h1>
+  
+  
+
+
+
+
+      </header>
+    
+
+    
+      <div class="article-meta">
+        <a href="/2017/12/08/%E5%AD%97%E4%BD%93%E5%9B%BE%E6%A0%87%E7%9A%84%E5%88%B6%E4%BD%9C%E6%96%B9%E6%B3%95/" class="article-date">
+  <time datetime="2017-12-08T12:11:05.000Z" itemprop="datePublished">2017-12-08</time>
+</a>
+        
+      </div>
+    
+
+    
+      
+
+
+
+
+    
+
+    <div class="article-entry" itemprop="articleBody">
+      
+
+
+      
+
+      
+        <p>1.图标的制作:<br>原料是需要有标准的svg图标<br>知乎引导教程:<a href="http://www.zhihu.com/question/29054543" target="_blank" rel="noopener">http://www.zhihu.com/question/29054543</a><br>实际操作的第三方网站:<a href="https://icomoon.io/app/#/select,类似网站还有http://iconfont.cn(隶属阿里,需要注册)" target="_blank" rel="noopener">https://icomoon.io/app/#/select,类似网站还有http://iconfont.cn(隶属阿里,需要注册)</a><br>在网站上传svg文件,然后可以下载到打包的其他格式的文字文件及对应的demo;</p>
+<a id="more"></a>
+
+<p>2.使用<br>/* 字体声明部分,声明为jdf*/</p>
+<pre><code>@font-face {
+  font-family: &apos;jdf&apos;;
+  src:  url(&apos;fonts/jdf.eot?cfnq6a&apos;); /* IE9*/
+  src:  url(&apos;fonts/jdf.eot?cfnq6a#iefix&apos;) format(&apos;embedded-opentype&apos;),/* IE6-IE8 */
+    url(&apos;fonts/jdf.ttf?cfnq6a&apos;) format(&apos;truetype&apos;),/* chrome、firefox、opera、Safari, Android, iOS 4.2+*/
+    url(&apos;fonts/jdf.woff?cfnq6a&apos;) format(&apos;woff&apos;), /* chrome、firefox */
+    url(&apos;fonts/jdf.svg?cfnq6a#jdf&apos;) format(&apos;svg&apos;);/* iOS 4.1- */
+  font-weight: normal;
+  font-style: normal;
+}</code></pre><p>调用:</p>
+<pre><code>.class{
+  /* use !important to prevent issues with browser extensions that change fonts */
+  font-family: &apos;jdf&apos; !important;
+  speak: none;
+  font-style: normal;
+  font-weight: normal;
+  font-variant: normal;
+  text-transform: none;
+  line-height: 1;
+/*由于字体图标存在半个像素的锯齿，在浏览器渲染的时候直接显示一个像素了，导致在有背景下的图标显示感觉加粗；所以在应用字体图标的时候需要对图标样式进行抗锯齿处理 */
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}</code></pre><p>不考虑ie67的话可以使用伪类,完全使用样式即可搞定</p>
+<pre><code>.icon-c:before {
+    content: &quot;\e900&quot;;
+}</code></pre><p>如果是兼容ie67,需要在dom中写入文字代码,类似<i class="c_iconfont">&#xe900;</i></p>
+<p>其中的”900”字符再制作流程中是这个网站是用递增的方式给生成的,类似&#xe900;&#xe901;&#xe902;同样的图标,每构建一次,编号可能不一样的,所有再次”回炉”删减,再次打包下来的时候注意这个坑!<br>这个代码可以查看最终打包下载文件中的demo样式里面的content值,如果不确定,可以在字体在线生成操作流程中的最后一步每个icon上都有一个getcode按钮点击查看对应的详细信息</p>
+<p>一些特殊处理:<br>a.如果ie7下右侧出现小方框,那么需要设置display: block;<br>b.如果锯齿特别严重,webkit支持边缘模糊-webkit-text-stroke-width: 0.2px;<br>c.android和ios也都有响应的方法来使用icon字体图标,具体使用自行查资料</p>
+<p>3.如果想从电脑上的字体中或者设计人员提供的psd配套的字体中挑几个已经在使用的字体制作城icon-font,可以走以下流程<br>a.把整个字体文件进行格式转换,转成其他几种web支持的格式,需要借助第三放网站,这里有两个<br><a href="http://www.font2web.com/(字体文件不得超过512k)" target="_blank" rel="noopener">http://www.font2web.com/(字体文件不得超过512k)</a><br><a href="https://www.web-font-generator.com" target="_blank" rel="noopener">https://www.web-font-generator.com</a><br>字体需要是ttf格式,未探寻fon格式的字体转换格式的方法<br>b.上步骤得到了.eot,.ttf,.woff,.svg,虽然已经得到了web字体,但是他们依然非常大,三五兆,七八兆左右.依然不适合使用.<br>但是因为得到了svg文件,可以把svg传到网站<a href="https://icomoon.io/app/#/select,然后网站有&quot;挑字&quot;的操作,把需要使用的几个字或者图标挑出来,生成自定义的字体文件,这样得到的一套字体文件就非常小了,可以使用了" target="_blank" rel="noopener">https://icomoon.io/app/#/select,然后网站有&quot;挑字&quot;的操作,把需要使用的几个字或者图标挑出来,生成自定义的字体文件,这样得到的一套字体文件就非常小了,可以使用了</a>.</p>
+<p>4.png转svg简易流程(流程只是跑通,并不完美,欢迎psai大神进一步完善):<br>ps:<br>放大–魔术棒选中–右键新建工作路径–路径面板–前景色填充–裁剪–导出–ai<br>ai:<br>放大,锚点密集处反复用平滑工具拖动–特殊锚点使用白箭头选中后拖拉–选中路径,前景色面板取色填充–导出svg,合并path纯色–完毕</p>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://vera0720.github.io/2017/12/08/%E5%AD%97%E4%BD%93%E5%9B%BE%E6%A0%87%E7%9A%84%E5%88%B6%E4%BD%9C%E6%96%B9%E6%B3%95/" data-id="ckp1zpvwa002k1pr9awug0s9g"
+         class="article-share-link">Share</a>
+      
+    </footer>
+
+  </div>
+
+  
+    
+  <nav class="article-nav">
+    
+      <a href="/2017/12/19/%E6%8F%92%E4%BB%B6%E7%B3%BB%E5%88%97%E4%B9%8Bueditor%E4%BD%BF%E7%94%A8%E6%89%8B%E5%86%8C/" class="article-nav-link">
+        <strong class="article-nav-caption">Newer posts</strong>
+        <div class="article-nav-title">
+          
+            插件系列之ueditor使用手册
+          
+        </div>
+      </a>
+    
+    
+      <a href="/2017/11/06/%E5%BA%8F%E5%88%97%E5%8C%96/" class="article-nav-link">
+        <strong class="article-nav-caption">Olde posts</strong>
+        <div class="article-nav-title">序列化</div>
+      </a>
+    
+  </nav>
+
+
+  
+
+  
+    
+  
+
+</article>
+
+
+
+</section>
+  <footer class="footer">
+  <div class="outer">
+    <ul class="list-inline">
+      <li>&copy; 2021 今天天气晴朗</li>
+      <li>Author <span>Vera</span></li>
+    </ul>
+  </div>
+</footer>
+
+</main>
+
+<aside class="sidebar sidebar-specter">
+  
+    <button class="navbar-toggle"></button>
+<nav class="navbar">
+  
+    <div class="logo">
+      <a href="/"><img src="/images/headImg.jpeg" alt="今天天气晴朗"></a>
+    </div>
+  
+  <ul class="nav nav-main">
+    
+      <li class="nav-item">
+        <a class="nav-item-link" href="/">Home</a>
+      </li>
+    
+      <li class="nav-item">
+        <a class="nav-item-link" href="/archives">Archives</a>
+      </li>
+    
+      <li class="nav-item">
+        <a class="nav-item-link" href="/gallery">Gallery</a>
+      </li>
+    
+      <li class="nav-item">
+        <a class="nav-item-link" href="/about">About</a>
+      </li>
+    
+    <li class="nav-item">
+      <a class="nav-item-link nav-item-search" title="Search">
+        <i class="fe fe-search"></i>
+        Search
+      </a>
+    </li>
+  </ul>
+</nav>
+<nav class="navbar navbar-bottom">
+  <ul class="nav">
+    <li class="nav-item">
+      <div class="totop" id="totop">
+  <i class="fe fe-rocket"></i>
+</div>
+    </li>
+    <li class="nav-item">
+      
+    </li>
+  </ul>
+</nav>
+<div class="search-form-wrap">
+  <div class="local-search local-search-plugin">
+  <input type="search" id="local-search-input" class="local-search-input" placeholder="Search...">
+  <div id="local-search-result" class="local-search-result"></div>
+</div>
+</div>
+  </aside>
+  
+<script src="/js/jquery-2.0.3.min.js"></script>
+
+
+<script src="/js/jquery.justifiedGallery.min.js"></script>
+
+
+<script src="/js/lazyload.min.js"></script>
+
+
+<script src="/js/busuanzi-2.3.pure.min.js"></script>
+
+
+  
+<script src="/fancybox/jquery.fancybox.min.js"></script>
+
+
+
+
+  
+<script src="/js/tocbot.min.js"></script>
+
+  <script>
+    // Tocbot_v4.7.0  http://tscanlin.github.io/tocbot/
+    tocbot.init({
+      tocSelector: '.tocbot',
+      contentSelector: '.article-entry',
+      headingSelector: 'h1, h2, h3, h4, h5, h6',
+      hasInnerContainers: true,
+      scrollSmooth: true,
+      positionFixedSelector: '.tocbot',
+      positionFixedClass: 'is-position-fixed',
+      fixedSidebarOffset: 'auto',
+    });
+  </script>
+
+
+
+<script src="/js/ocean.js"></script>
+
+
+</body>
+</html>

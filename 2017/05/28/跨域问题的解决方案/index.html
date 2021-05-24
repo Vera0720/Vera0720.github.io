@@ -1,0 +1,292 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  
+  
+  
+    <meta name="description" content="治愈系少女">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <title>
+    跨域问题的解决方案 |
+    
+    今天天气晴朗</title>
+  
+    <link rel="shortcut icon" href="/favicon.ico">
+  
+  
+<link rel="stylesheet" href="/css/style.css">
+
+  
+    
+<link rel="stylesheet" href="/fancybox/jquery.fancybox.min.css">
+
+  
+  
+<script src="/js/pace.min.js"></script>
+
+<meta name="generator" content="Hexo 4.2.0"></head>
+
+<body>
+<main class="content">
+  <section class="outer">
+  
+
+<article id="post-跨域问题的解决方案" class="article article-type-post" itemscope itemprop="blogPost" data-scroll-reveal>
+
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
+  
+    <h1 class="article-title" itemprop="name">
+      跨域问题的解决方案
+    </h1>
+  
+  
+
+
+
+
+      </header>
+    
+
+    
+      <div class="article-meta">
+        <a href="/2017/05/28/%E8%B7%A8%E5%9F%9F%E9%97%AE%E9%A2%98%E7%9A%84%E8%A7%A3%E5%86%B3%E6%96%B9%E6%A1%88/" class="article-date">
+  <time datetime="2017-05-28T05:59:05.000Z" itemprop="datePublished">2017-05-28</time>
+</a>
+        
+      </div>
+    
+
+    
+      
+
+
+
+
+    
+
+    <div class="article-entry" itemprop="articleBody">
+      
+
+
+      
+
+      
+        <p>跨域问题的几种解决方案</p>
+<a id="more"></a>
+
+<p>1.JSONP：动态插入script标签，通过script标签引入一个js文件，这个文件载入成功之后会执行我们在url参数中制定的函数，并且会把我们需要的json数据传入</p>
+<p>代码实现</p>
+<p>Jquery方法</p>
+<pre><code>$.getJSON(&quot;http://a.com/data.php?callback=?&quot;,function dosomething(jsondata){
+    //处理获得的jsondata数据
+})</code></pre><p>jquery会自动生成一个全局函数来替换callback=?中的问号，之后获取到数据后又会自动销毁，实际上就是起一个临时代理函数的作用。<br>$.getJSON会自动判断是否跨域，不跨域的话，就调用普通的ajax方法；跨域的话，则会以异步加载js文件的形式来调用jsonp的回调函数。</p>
+<pre><code>getJSON: function( url, data, callback ) {
+    return jQuery.get( url, data, callback, &quot;json&quot; );
+}</code></pre><p>2.window.name+iframe</p>
+<p>Iframe的src属性由外域转向本地域，跨域数据即由iframe的window.name从外域传递到本地域，巧妙的绕过了浏览器的跨域访问限制，name 值在不同的页面（甚至不同域名）加载后依旧存在，并且可以支持非常长的 name 值（2MB）。</p>
+<p>代码实现：</p>
+<pre><code>var data = &apos;&apos;;
+var ifr = document.createElement(&apos;iframe&apos;);
+ifr.src = &quot;http://localhost:8081/data.html&quot;;
+ifr.style.display = &apos;none&apos;;
+document.body.appendChild(ifr);
+ifr.onload = function() {
+    ifr.onload = function() {
+        data = ifr.contentWindow.name;
+        console.log(&apos;收到数据:&apos;, data);
+    };
+    ifr.src = &quot;http://localhost:8080/同目录没有用.html&quot;;
+}</code></pre><p>把data.html页面载入进来?</p>
+<p>显然我们不能直接在跨域1.html页面中通过改变window.location来载入data.html页面，<br>因为我们想要即使跨域1.html页面不跳转也能得到data.html里的数据。<br>答案就是在跨域1.html页面中使用一个隐藏的iframe来充当一个中间人角色，由iframe去获取data.html的数据，然后跨域1.html再去得到iframe获取到的数据。<br>充当中间人的iframe想要获取到data.html的通过window.name设置的数据，只需要把这个iframe的src设为data.html就行了。然后跨域1.html想要得到iframe所获取到的数据，也就是想要得到iframe的window.name的值，还必须把这个iframe的src设成跟跨域1.html页面同一个域才行，不然根据前面讲的同源策略，跨域1.html是不能访问到iframe里的window.name属性的。这就是设置iframe的src=’同目录没有用.html’的原因。</p>
+<p>3.H5中的postMessage跨文档信息传输Cross Document Messaging</p>
+<p>代码实现：</p>
+<p>A.Html</p>
+<pre><code>&lt;iframe src=&quot;http://localhost:8081/b.html&quot;&gt;&lt;/iframe&gt;
+
+window.onload = function() {
+    var targetOrigin = &apos;http://localhost:8081&apos;;
+    window.frames[0].postMessage(&apos;要发了&apos;, targetOrigin);
+
+//otherwindow.postMessage(message, targetOrigin)中，otherwindow是对接收信息页的window引用，可以是iframe的contentwindow.
+
+Message是需要发送的信息string，targetOrigin是用于限制otherwindow，*表示不做限制
+}
+window.addEventListener(&apos;message&apos;, function(e) {
+    console.log(&apos;a收到消息&apos;, e.data);
+});</code></pre><p>B.Html</p>
+<pre><code> window.addEventListener(&apos;message&apos;, function(e) {
+
+        if(e.source != window.parent) {
+
+   return;
+
+        }
+
+        let data = e.data;
+
+        console.log(&apos;b.html 接收到的消息:&apos;, data);
+
+        parent.postMessage(&apos;我已经接收到消息了!&apos;, e.origin);
+
+});</code></pre><p>4.CORS 是一个 W3C 标准，全称是”跨域资源共享”（Cross-origin resource sharing）它允许浏览器向跨源服务器，发出 XMLHttpRequest 请求，从而克服了 ajax 只能同源使用的限制。</p>
+<p>CORS 需要浏览器和服务器同时支持才可以生效，对于开发者来说，CORS 通信与同源的 ajax 通信没有差别，代码完全一样。浏览器一旦发现 ajax 请求跨源，就会自动添加一些附加的头信息，有时还会多出一次附加的请求，但用户不会有感觉。</p>
+<p>因此，实现 CORS 通信的关键是服务器。只要服务器实现了 CORS 接口，就可以跨源通信。服务器设置相应头中的 Access-Control-Allow-Origin，浏览器允许跨域请求，需要浏览器支持H5，该值要与请求头中 Origin一致才能生效，否则将跨域失败。</p>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://vera0720.github.io/2017/05/28/%E8%B7%A8%E5%9F%9F%E9%97%AE%E9%A2%98%E7%9A%84%E8%A7%A3%E5%86%B3%E6%96%B9%E6%A1%88/" data-id="ckp1zpvwk00391pr96ehn8xv7"
+         class="article-share-link">Share</a>
+      
+  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/js/" rel="tag">js</a></li></ul>
+
+    </footer>
+
+  </div>
+
+  
+    
+  <nav class="article-nav">
+    
+      <a href="/2017/07/23/ajax%E9%A1%BA%E5%BA%8F%E6%89%A7%E8%A1%8C/" class="article-nav-link">
+        <strong class="article-nav-caption">Newer posts</strong>
+        <div class="article-nav-title">
+          
+            ajax顺序执行
+          
+        </div>
+      </a>
+    
+    
+      <a href="/2017/03/29/css%E7%B3%BB%E5%88%97%E4%B9%8B%E5%BC%B9%E6%80%A7%E7%9B%92%E6%A8%A1%E5%9E%8B/" class="article-nav-link">
+        <strong class="article-nav-caption">Olde posts</strong>
+        <div class="article-nav-title">css系列之弹性盒模型</div>
+      </a>
+    
+  </nav>
+
+
+  
+
+  
+    
+  
+
+</article>
+
+
+
+</section>
+  <footer class="footer">
+  <div class="outer">
+    <ul class="list-inline">
+      <li>&copy; 2021 今天天气晴朗</li>
+      <li>Author <span>Vera</span></li>
+    </ul>
+  </div>
+</footer>
+
+</main>
+
+<aside class="sidebar sidebar-specter">
+  
+    <button class="navbar-toggle"></button>
+<nav class="navbar">
+  
+    <div class="logo">
+      <a href="/"><img src="/images/headImg.jpeg" alt="今天天气晴朗"></a>
+    </div>
+  
+  <ul class="nav nav-main">
+    
+      <li class="nav-item">
+        <a class="nav-item-link" href="/">Home</a>
+      </li>
+    
+      <li class="nav-item">
+        <a class="nav-item-link" href="/archives">Archives</a>
+      </li>
+    
+      <li class="nav-item">
+        <a class="nav-item-link" href="/gallery">Gallery</a>
+      </li>
+    
+      <li class="nav-item">
+        <a class="nav-item-link" href="/about">About</a>
+      </li>
+    
+    <li class="nav-item">
+      <a class="nav-item-link nav-item-search" title="Search">
+        <i class="fe fe-search"></i>
+        Search
+      </a>
+    </li>
+  </ul>
+</nav>
+<nav class="navbar navbar-bottom">
+  <ul class="nav">
+    <li class="nav-item">
+      <div class="totop" id="totop">
+  <i class="fe fe-rocket"></i>
+</div>
+    </li>
+    <li class="nav-item">
+      
+    </li>
+  </ul>
+</nav>
+<div class="search-form-wrap">
+  <div class="local-search local-search-plugin">
+  <input type="search" id="local-search-input" class="local-search-input" placeholder="Search...">
+  <div id="local-search-result" class="local-search-result"></div>
+</div>
+</div>
+  </aside>
+  
+<script src="/js/jquery-2.0.3.min.js"></script>
+
+
+<script src="/js/jquery.justifiedGallery.min.js"></script>
+
+
+<script src="/js/lazyload.min.js"></script>
+
+
+<script src="/js/busuanzi-2.3.pure.min.js"></script>
+
+
+  
+<script src="/fancybox/jquery.fancybox.min.js"></script>
+
+
+
+
+  
+<script src="/js/tocbot.min.js"></script>
+
+  <script>
+    // Tocbot_v4.7.0  http://tscanlin.github.io/tocbot/
+    tocbot.init({
+      tocSelector: '.tocbot',
+      contentSelector: '.article-entry',
+      headingSelector: 'h1, h2, h3, h4, h5, h6',
+      hasInnerContainers: true,
+      scrollSmooth: true,
+      positionFixedSelector: '.tocbot',
+      positionFixedClass: 'is-position-fixed',
+      fixedSidebarOffset: 'auto',
+    });
+  </script>
+
+
+
+<script src="/js/ocean.js"></script>
+
+
+</body>
+</html>

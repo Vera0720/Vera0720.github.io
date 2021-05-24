@@ -1,0 +1,256 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  
+  
+  
+    <meta name="description" content="治愈系少女">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <title>
+    js基础系列之执行环境与作用域 |
+    
+    今天天气晴朗</title>
+  
+    <link rel="shortcut icon" href="/favicon.ico">
+  
+  
+<link rel="stylesheet" href="/css/style.css">
+
+  
+    
+<link rel="stylesheet" href="/fancybox/jquery.fancybox.min.css">
+
+  
+  
+<script src="/js/pace.min.js"></script>
+
+<meta name="generator" content="Hexo 4.2.0"></head>
+
+<body>
+<main class="content">
+  <section class="outer">
+  
+
+<article id="post-js基础系列之执行环境与作用域" class="article article-type-post" itemscope itemprop="blogPost" data-scroll-reveal>
+
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
+  
+    <h1 class="article-title" itemprop="name">
+      js基础系列之执行环境与作用域
+    </h1>
+  
+  
+
+
+
+
+      </header>
+    
+
+    
+      <div class="article-meta">
+        <a href="/2018/11/23/js%E5%9F%BA%E7%A1%80%E7%B3%BB%E5%88%97%E4%B9%8B%E6%89%A7%E8%A1%8C%E7%8E%AF%E5%A2%83%E4%B8%8E%E4%BD%9C%E7%94%A8%E5%9F%9F/" class="article-date">
+  <time datetime="2018-11-23T05:01:08.000Z" itemprop="datePublished">2018-11-23</time>
+</a>
+        
+      </div>
+    
+
+    
+      
+    <div class="tocbot"></div>
+
+
+
+
+
+    
+
+    <div class="article-entry" itemprop="articleBody">
+      
+
+
+      
+
+      
+        <p>JavaScript中有一个叫作用域(Scope)的概念，今天来学习下，什么叫作用域？什么叫作用域链？什么叫执行环境？</p>
+<a id="more"></a>
+
+<h2 id="执行环境（执行上下文）"><a href="#执行环境（执行上下文）" class="headerlink" title="执行环境（执行上下文）"></a>执行环境（执行上下文）</h2><p>执行环境定义了变量或函数有权访问的其他数据，决定了他们各自的行为，每个执行环境都有一个与之关联的变量对象，环境中定义的所有变量和函数都保存在这个对象中。<br>每个函数都有自己的执行环境，当执行流进入一个函数时，函数的环境就会被推入一个环境栈中。而在函数执行之后，栈将提环境弹出，把控制权交给之前的执行环境。<br>需要注意的是，上下文与作用域（scope）是不同的概念。<br>Js本身是单进程的，每当有function被执行时，就会产生一个新的执行环境，这个执行环境会被压入Js的执行环境栈中，function执行结束后则被弹出，因此Js解释器总是在栈顶上下文中执行。在生成新的执行环境时，首先会绑定该执行环境的活动对象，其中包括arguments和该函数中定义的变量；之后会创建属于该执行环境的作用域链，最后将this赋予这一function所属的Object</p>
+<h2 id="作用域"><a href="#作用域" class="headerlink" title="作用域"></a>作用域</h2><h3 id="什么是作用域"><a href="#什么是作用域" class="headerlink" title="什么是作用域"></a>什么是作用域</h3><p>简单来说，作用域就是决定了代码块中变量和函数等等的可访问性。</p>
+<pre><code>function fun() {
+    var name = &quot;jack&quot;;
+}
+fun();//要先执行这个函数，否则根本不知道里面是啥
+console.log(name); // Uncaught ReferenceError: name is not defined</code></pre><p>name在全局作用域没有声明，所以在全局作用域下取值会报错。我们可以这样理解：作用域就是一个独立的地盘，让变量不会外泄、暴露出去。也就是说作用域最大的用处就是隔离变量，不同作用域下同名变量不会有冲突。<br>ES6之前只有全局作用域和函数作用域,ES6新增了let和const体现块级作用域</p>
+<h3 id="全局作用域"><a href="#全局作用域" class="headerlink" title="全局作用域"></a>全局作用域</h3><ul>
+<li>最外层函数和在最外层函数外面定义的变量拥有全局作用域</li>
+<li>所有末定义直接赋值的变量自动声明为拥有全局作用域</li>
+<li>所有window对象的属性拥有全局作用域</li>
+</ul>
+<h3 id="函数作用域"><a href="#函数作用域" class="headerlink" title="函数作用域"></a>函数作用域</h3><p>函数作用域,是指声明在函数内部的变量，和全局作用域相反，局部作用域一般只在固定的代码片段内可访问到，最常见的例如函数内部。</p>
+<pre><code>function fun(){
+    var name=&quot;jack&quot;;
+}
+alert(name); //脚本错误</code></pre><p>作用域是分层的，内层作用域可以访问外层作用域的变量，反之则不行<br>大括号{ }中间的语句，如if和switch条件语句或for和while循环语句，不会创建一个新的作用域。在块语句中定义的变量将保留在它们已经存在的作用域中。</p>
+<h3 id="块级作用域"><a href="#块级作用域" class="headerlink" title="块级作用域"></a>块级作用域</h3><p>块级作用域可通过新增命令let和const声明，所声明的变量在指定块的作用域外无法被访问。变量的作用域限制在当前代码块中,并且不会被提升到当前代码块的顶部。禁止重复声明</p>
+<h2 id="活动对象和变量对象"><a href="#活动对象和变量对象" class="headerlink" title="活动对象和变量对象"></a>活动对象和变量对象</h2><p>在函数上下文中，用活动对象(activation object, AO)来表示变量对象。<br>活动对象和变量对象的区别在于<br>1、变量对象（VO）是规范上或者是JS引擎上实现的，并不能在JS环境中直接访问。<br>2、当进入到一个执行上下文后，这个变量对象才会被激活，所以叫活动对象（AO），这时候活动对象上的各种属性才能被访问。<br>调用函数时，会为其创建一个Arguments对象，并自动初始化局部变量arguments，指代该Arguments对象。所有作为参数传入的值都会成为Arguments对象的数组元素。<br>全局环境时，变量对象=活动对象</p>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://vera0720.github.io/2018/11/23/js%E5%9F%BA%E7%A1%80%E7%B3%BB%E5%88%97%E4%B9%8B%E6%89%A7%E8%A1%8C%E7%8E%AF%E5%A2%83%E4%B8%8E%E4%BD%9C%E7%94%A8%E5%9F%9F/" data-id="ckp1zpvvh00181pr9hkeh6wxl"
+         class="article-share-link">Share</a>
+      
+  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/js/" rel="tag">js</a></li></ul>
+
+    </footer>
+
+  </div>
+
+  
+    
+  <nav class="article-nav">
+    
+      <a href="/2018/11/25/js%E5%9F%BA%E7%A1%80%E7%B3%BB%E5%88%97%E4%B9%8B%E4%BD%9C%E7%94%A8%E5%9F%9F%E9%93%BE/" class="article-nav-link">
+        <strong class="article-nav-caption">Newer posts</strong>
+        <div class="article-nav-title">
+          
+            js基础系列之作用域链
+          
+        </div>
+      </a>
+    
+    
+      <a href="/2018/11/13/js%E5%9F%BA%E7%A1%80%E7%B3%BB%E5%88%97%E4%B9%8B%E7%BB%A7%E6%89%BF/" class="article-nav-link">
+        <strong class="article-nav-caption">Olde posts</strong>
+        <div class="article-nav-title">js基础系列之继承</div>
+      </a>
+    
+  </nav>
+
+
+  
+
+  
+    
+  
+
+</article>
+
+
+
+</section>
+  <footer class="footer">
+  <div class="outer">
+    <ul class="list-inline">
+      <li>&copy; 2021 今天天气晴朗</li>
+      <li>Author <span>Vera</span></li>
+    </ul>
+  </div>
+</footer>
+
+</main>
+
+<aside class="sidebar sidebar-specter">
+  
+    <button class="navbar-toggle"></button>
+<nav class="navbar">
+  
+    <div class="logo">
+      <a href="/"><img src="/images/headImg.jpeg" alt="今天天气晴朗"></a>
+    </div>
+  
+  <ul class="nav nav-main">
+    
+      <li class="nav-item">
+        <a class="nav-item-link" href="/">Home</a>
+      </li>
+    
+      <li class="nav-item">
+        <a class="nav-item-link" href="/archives">Archives</a>
+      </li>
+    
+      <li class="nav-item">
+        <a class="nav-item-link" href="/gallery">Gallery</a>
+      </li>
+    
+      <li class="nav-item">
+        <a class="nav-item-link" href="/about">About</a>
+      </li>
+    
+    <li class="nav-item">
+      <a class="nav-item-link nav-item-search" title="Search">
+        <i class="fe fe-search"></i>
+        Search
+      </a>
+    </li>
+  </ul>
+</nav>
+<nav class="navbar navbar-bottom">
+  <ul class="nav">
+    <li class="nav-item">
+      <div class="totop" id="totop">
+  <i class="fe fe-rocket"></i>
+</div>
+    </li>
+    <li class="nav-item">
+      
+    </li>
+  </ul>
+</nav>
+<div class="search-form-wrap">
+  <div class="local-search local-search-plugin">
+  <input type="search" id="local-search-input" class="local-search-input" placeholder="Search...">
+  <div id="local-search-result" class="local-search-result"></div>
+</div>
+</div>
+  </aside>
+  
+<script src="/js/jquery-2.0.3.min.js"></script>
+
+
+<script src="/js/jquery.justifiedGallery.min.js"></script>
+
+
+<script src="/js/lazyload.min.js"></script>
+
+
+<script src="/js/busuanzi-2.3.pure.min.js"></script>
+
+
+  
+<script src="/fancybox/jquery.fancybox.min.js"></script>
+
+
+
+
+  
+<script src="/js/tocbot.min.js"></script>
+
+  <script>
+    // Tocbot_v4.7.0  http://tscanlin.github.io/tocbot/
+    tocbot.init({
+      tocSelector: '.tocbot',
+      contentSelector: '.article-entry',
+      headingSelector: 'h1, h2, h3, h4, h5, h6',
+      hasInnerContainers: true,
+      scrollSmooth: true,
+      positionFixedSelector: '.tocbot',
+      positionFixedClass: 'is-position-fixed',
+      fixedSidebarOffset: 'auto',
+    });
+  </script>
+
+
+
+<script src="/js/ocean.js"></script>
+
+
+</body>
+</html>

@@ -1,0 +1,811 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  
+  
+  
+    <meta name="description" content="治愈系少女">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <title>
+    
+    今天天气晴朗</title>
+  
+    <link rel="shortcut icon" href="/favicon.ico">
+  
+  
+<link rel="stylesheet" href="/css/style.css">
+
+  
+    
+<link rel="stylesheet" href="/fancybox/jquery.fancybox.min.css">
+
+  
+  
+<script src="/js/pace.min.js"></script>
+
+<meta name="generator" content="Hexo 4.2.0"></head>
+
+<body>
+<main class="content">
+  <section class="jumbotron">
+  <div class="video">
+    
+      <div class="video-frame">
+        <img src="/images/ocean/overlay-hero.png" alt="Decorative image frame">
+      </div>
+    
+    <div class="video-media">
+      <video playsinline="" autoplay="" loop="" muted="" data-autoplay=""
+             poster="/images/ocean/ocean.png" x5-video-player-type="h5">
+        <source src="/images/ocean/ocean.mp4" type="video/mp4">
+        <source src="/images/ocean/ocean.ogv" type="video/ogg">
+        <source src="/images/ocean/ocean.webm" type="video/webm">
+        <p>Your user agent does not support the HTML5 Video element.</p>
+      </video>
+      <div class="video-overlay"></div>
+    </div>
+    <div class="video-inner text-center text-white">
+      <h1><a href="/">今天天气晴朗</a></h1>
+      <p></p>
+      <div><img src="/images/ship.png" class="brand" alt="今天天气晴朗"></div>
+    </div>
+    <div class="video-learn-more">
+      <a class="anchor" href="#landingpage"><i class="fe fe-mouse"></i></a>
+    </div>
+  </div>
+</section>
+
+<div id="landingpage">
+  <section class="outer">
+  <article class="articles">
+    
+    <h1 class="page-type-title"></h1>
+
+    
+      
+        
+
+<article id="post-前端面试题集" class="article article-type-post" itemscope itemprop="blogPost" data-scroll-reveal>
+
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
+  
+    <h2 itemprop="name">
+      <a class="article-title" href="/2021/04/28/%E5%89%8D%E7%AB%AF%E9%9D%A2%E8%AF%95%E9%A2%98%E9%9B%86/">前端面试题集</a>
+    </h2>
+  
+  
+
+
+
+
+      </header>
+    
+
+    
+      <div class="article-meta">
+        <a href="/2021/04/28/%E5%89%8D%E7%AB%AF%E9%9D%A2%E8%AF%95%E9%A2%98%E9%9B%86/" class="article-date">
+  <time datetime="2021-04-28T14:30:22.000Z" itemprop="datePublished">2021-04-28</time>
+</a>
+        
+      </div>
+    
+
+    
+
+    <div class="article-entry" itemprop="articleBody">
+      
+
+
+      
+
+      
+        <p>按照分类整理了一波面试题，后续会慢慢补充答案的。</p>
+        
+          <a class="article-more-link" style="text-decoration: none" href="/2021/04/28/%E5%89%8D%E7%AB%AF%E9%9D%A2%E8%AF%95%E9%A2%98%E9%9B%86/">阅读全文</a>
+        
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://vera0720.github.io/2021/04/28/%E5%89%8D%E7%AB%AF%E9%9D%A2%E8%AF%95%E9%A2%98%E9%9B%86/" data-id="ckp1zpvxd003f1pr9fv0aa29p"
+         class="article-share-link">Share</a>
+      
+  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/%E9%9D%A2%E8%AF%95/" rel="tag">面试</a></li></ul>
+
+    </footer>
+
+  </div>
+
+  
+
+  
+
+</article>
+
+
+
+      
+        
+
+<article id="post-webpack系列之配置" class="article article-type-post" itemscope itemprop="blogPost" data-scroll-reveal>
+
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
+  
+    <h2 itemprop="name">
+      <a class="article-title" href="/2020/03/14/webpack%E7%B3%BB%E5%88%97%E4%B9%8B%E9%85%8D%E7%BD%AE/">webpack系列之配置</a>
+    </h2>
+  
+  
+
+
+
+
+      </header>
+    
+
+    
+      <div class="article-meta">
+        <a href="/2020/03/14/webpack%E7%B3%BB%E5%88%97%E4%B9%8B%E9%85%8D%E7%BD%AE/" class="article-date">
+  <time datetime="2020-03-14T07:29:59.000Z" itemprop="datePublished">2020-03-14</time>
+</a>
+        
+      </div>
+    
+
+    
+
+    <div class="article-entry" itemprop="articleBody">
+      
+
+
+      
+
+      
+        <p>为什么选择webpack呢？大多数团队会在开发时采用紧跟时代的技术，这些技术基本上是采用”模块化+新语言+新框架”，webpack可以提供一个一站式解决的方案。<br>不知道你是不是和曾经的我一样，只会在vue里简单用用它自带的，或者是百度出来直接复制。今天让我们一起从0开始了解webpack吧～<br>本文主要从配置，优化，实战，原理4个方向来梳理。在此感谢吴浩麟先生的书，本文有一部分内容是借鉴吴先生的文章。</p>
+        
+          <a class="article-more-link" style="text-decoration: none" href="/2020/03/14/webpack%E7%B3%BB%E5%88%97%E4%B9%8B%E9%85%8D%E7%BD%AE/">阅读全文</a>
+        
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://vera0720.github.io/2020/03/14/webpack%E7%B3%BB%E5%88%97%E4%B9%8B%E9%85%8D%E7%BD%AE/" data-id="ckp1zpvvu001u1pr9eql9576t"
+         class="article-share-link">Share</a>
+      
+  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/webpack/" rel="tag">webpack</a></li></ul>
+
+    </footer>
+
+  </div>
+
+  
+
+  
+
+</article>
+
+
+
+      
+        
+
+<article id="post-react原理解析系列之setState" class="article article-type-post" itemscope itemprop="blogPost" data-scroll-reveal>
+
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
+  
+    <h2 itemprop="name">
+      <a class="article-title" href="/2020/02/01/react%E5%8E%9F%E7%90%86%E8%A7%A3%E6%9E%90%E7%B3%BB%E5%88%97%E4%B9%8BsetState/">react原理解析之setState</a>
+    </h2>
+  
+  
+
+
+
+
+      </header>
+    
+
+    
+      <div class="article-meta">
+        <a href="/2020/02/01/react%E5%8E%9F%E7%90%86%E8%A7%A3%E6%9E%90%E7%B3%BB%E5%88%97%E4%B9%8BsetState/" class="article-date">
+  <time datetime="2020-02-01T14:06:58.000Z" itemprop="datePublished">2020-02-01</time>
+</a>
+        
+      </div>
+    
+
+    
+
+    <div class="article-entry" itemprop="articleBody">
+      
+
+
+      
+
+      
+        <p>在我印象中，setState一直是异步的，直到有一天，我被问到什么情况下是同步？什么情况下是异步？批量更新的时候会发生什么？</p>
+        
+          <a class="article-more-link" style="text-decoration: none" href="/2020/02/01/react%E5%8E%9F%E7%90%86%E8%A7%A3%E6%9E%90%E7%B3%BB%E5%88%97%E4%B9%8BsetState/">阅读全文</a>
+        
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://vera0720.github.io/2020/02/01/react%E5%8E%9F%E7%90%86%E8%A7%A3%E6%9E%90%E7%B3%BB%E5%88%97%E4%B9%8BsetState/" data-id="ckp1zpvvp001k1pr989ma6z5c"
+         class="article-share-link">Share</a>
+      
+  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/react/" rel="tag">react</a></li></ul>
+
+    </footer>
+
+  </div>
+
+  
+
+  
+
+</article>
+
+
+
+      
+        
+
+<article id="post-react系列之入门" class="article article-type-post" itemscope itemprop="blogPost" data-scroll-reveal>
+
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
+  
+    <h2 itemprop="name">
+      <a class="article-title" href="/2020/01/19/react%E7%B3%BB%E5%88%97%E4%B9%8B%E5%85%A5%E9%97%A8/">react系列之入门</a>
+    </h2>
+  
+  
+
+
+
+
+      </header>
+    
+
+    
+      <div class="article-meta">
+        <a href="/2020/01/19/react%E7%B3%BB%E5%88%97%E4%B9%8B%E5%85%A5%E9%97%A8/" class="article-date">
+  <time datetime="2020-01-19T14:35:34.000Z" itemprop="datePublished">2020-01-19</time>
+</a>
+        
+      </div>
+    
+
+    
+
+    <div class="article-entry" itemprop="articleBody">
+      
+
+
+      
+
+      
+        <p>React 是一个用于构建用户界面的 JAVASCRIPT 库。</p>
+<p>React 主要用于构建UI，很多人认为 React 是 MVC 中的 V（视图）。</p>
+<p>React 起源于 Facebook 的内部项目，用来架设 Instagram 的网站，并于 2013 年 5 月开源。</p>
+<p>React 拥有较高的性能，代码逻辑非常简单，越来越多的人已开始关注和使用它。</p>
+        
+          <a class="article-more-link" style="text-decoration: none" href="/2020/01/19/react%E7%B3%BB%E5%88%97%E4%B9%8B%E5%85%A5%E9%97%A8/">阅读全文</a>
+        
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://vera0720.github.io/2020/01/19/react%E7%B3%BB%E5%88%97%E4%B9%8B%E5%85%A5%E9%97%A8/" data-id="ckp1zpvw000261pr91ezra8e6"
+         class="article-share-link">Share</a>
+      
+    </footer>
+
+  </div>
+
+  
+
+  
+
+</article>
+
+
+
+      
+        
+
+<article id="post-函数柯里化" class="article article-type-post" itemscope itemprop="blogPost" data-scroll-reveal>
+
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
+  
+    <h2 itemprop="name">
+      <a class="article-title" href="/2020/01/03/%E5%87%BD%E6%95%B0%E6%9F%AF%E9%87%8C%E5%8C%96/">函数柯里化</a>
+    </h2>
+  
+  
+
+
+
+
+      </header>
+    
+
+    
+      <div class="article-meta">
+        <a href="/2020/01/03/%E5%87%BD%E6%95%B0%E6%9F%AF%E9%87%8C%E5%8C%96/" class="article-date">
+  <time datetime="2020-01-03T15:46:08.000Z" itemprop="datePublished">2020-01-03</time>
+</a>
+        
+      </div>
+    
+
+    
+
+    <div class="article-entry" itemprop="articleBody">
+      
+
+
+      
+
+      
+        <p>柯里化的定义，接收一部分参数，返回一个函数接收剩余参数，接收足够参数后，执行原函数。<br>我们已经知道了，当柯里化函数接收到足够参数后，就会执行原函数，那么我们如何去确定何时达到足够的参数呢？</p>
+        
+          <a class="article-more-link" style="text-decoration: none" href="/2020/01/03/%E5%87%BD%E6%95%B0%E6%9F%AF%E9%87%8C%E5%8C%96/">阅读全文</a>
+        
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://vera0720.github.io/2020/01/03/%E5%87%BD%E6%95%B0%E6%9F%AF%E9%87%8C%E5%8C%96/" data-id="ckp1zpvvy00211pr9a2kh9idq"
+         class="article-share-link">Share</a>
+      
+  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/js/" rel="tag">js</a></li></ul>
+
+    </footer>
+
+  </div>
+
+  
+
+  
+
+</article>
+
+
+
+      
+        
+
+<article id="post-函数式编程" class="article article-type-post" itemscope itemprop="blogPost" data-scroll-reveal>
+
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
+  
+    <h2 itemprop="name">
+      <a class="article-title" href="/2020/01/01/%E5%87%BD%E6%95%B0%E5%BC%8F%E7%BC%96%E7%A8%8B/">函数式编程</a>
+    </h2>
+  
+  
+
+
+
+
+      </header>
+    
+
+    
+      <div class="article-meta">
+        <a href="/2020/01/01/%E5%87%BD%E6%95%B0%E5%BC%8F%E7%BC%96%E7%A8%8B/" class="article-date">
+  <time datetime="2020-01-01T02:11:48.000Z" itemprop="datePublished">2020-01-01</time>
+</a>
+        
+      </div>
+    
+
+    
+
+    <div class="article-entry" itemprop="articleBody">
+      
+
+
+      
+
+      
+        <p>在JavaScript中，函数是一等值。何谓一等？一等，是编程语言中值的通用修饰词，只要某个值满足以下三个条件，就能被成为一等值：<br>1.可以作为参数传递给函数<br>2.可以作为函数的返回值<br>3.可以赋值给变量</p>
+        
+          <a class="article-more-link" style="text-decoration: none" href="/2020/01/01/%E5%87%BD%E6%95%B0%E5%BC%8F%E7%BC%96%E7%A8%8B/">阅读全文</a>
+        
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://vera0720.github.io/2020/01/01/%E5%87%BD%E6%95%B0%E5%BC%8F%E7%BC%96%E7%A8%8B/" data-id="ckp1zpvvv001w1pr9eknb4nnr"
+         class="article-share-link">Share</a>
+      
+  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/js/" rel="tag">js</a></li></ul>
+
+    </footer>
+
+  </div>
+
+  
+
+  
+
+</article>
+
+
+
+      
+        
+
+<article id="post-es6系列之语法简介" class="article article-type-post" itemscope itemprop="blogPost" data-scroll-reveal>
+
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
+  
+    <h2 itemprop="name">
+      <a class="article-title" href="/2019/12/11/es6%E7%B3%BB%E5%88%97%E4%B9%8B%E8%AF%AD%E6%B3%95%E7%AE%80%E4%BB%8B/">es6系列之语法简介</a>
+    </h2>
+  
+  
+
+
+
+
+      </header>
+    
+
+    
+      <div class="article-meta">
+        <a href="/2019/12/11/es6%E7%B3%BB%E5%88%97%E4%B9%8B%E8%AF%AD%E6%B3%95%E7%AE%80%E4%BB%8B/" class="article-date">
+  <time datetime="2019-12-10T16:24:08.000Z" itemprop="datePublished">2019-12-11</time>
+</a>
+        
+      </div>
+    
+
+    
+
+    <div class="article-entry" itemprop="articleBody">
+      
+
+
+      
+
+      
+        <p>今年其实用了很多es6的语法，但没有完整系统的学习整理过，今天整理下，也算是给2019年一个交代<br>话不多说，我们进入正题</p>
+        
+          <a class="article-more-link" style="text-decoration: none" href="/2019/12/11/es6%E7%B3%BB%E5%88%97%E4%B9%8B%E8%AF%AD%E6%B3%95%E7%AE%80%E4%BB%8B/">阅读全文</a>
+        
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://vera0720.github.io/2019/12/11/es6%E7%B3%BB%E5%88%97%E4%B9%8B%E8%AF%AD%E6%B3%95%E7%AE%80%E4%BB%8B/" data-id="ckp1zpvvn001e1pr99m6dbzor"
+         class="article-share-link">Share</a>
+      
+  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/js/" rel="tag">js</a></li></ul>
+
+    </footer>
+
+  </div>
+
+  
+
+  
+
+</article>
+
+
+
+      
+        
+
+<article id="post-es6系列之promise" class="article article-type-post" itemscope itemprop="blogPost" data-scroll-reveal>
+
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
+  
+    <h2 itemprop="name">
+      <a class="article-title" href="/2019/10/20/es6%E7%B3%BB%E5%88%97%E4%B9%8Bpromise/">es6系列之promise</a>
+    </h2>
+  
+  
+
+
+
+
+      </header>
+    
+
+    
+      <div class="article-meta">
+        <a href="/2019/10/20/es6%E7%B3%BB%E5%88%97%E4%B9%8Bpromise/" class="article-date">
+  <time datetime="2019-10-20T14:30:56.000Z" itemprop="datePublished">2019-10-20</time>
+</a>
+        
+      </div>
+    
+
+    
+
+    <div class="article-entry" itemprop="articleBody">
+      
+
+
+      
+
+      
+        <p>在 Promise 出现以前，我们处理一个异步网络请求，大概是疯狂回调嵌套地狱。<br>回调地狱带来的负面作用有以下几点：<br>1.代码臃肿<br>2.可读性差<br>3.耦合度过高，可维护性差<br>4.代码复用性差<br>5.容易滋生 bug<br>6.只能在回调里处理异常<br>为了解决这些问题，于是Promise规范诞生了，并且在业界有了很多实现来解决回调地狱的痛点。比如业界著名的Q和bluebird，bluebird甚至号称运行最快的类库。</p>
+        
+          <a class="article-more-link" style="text-decoration: none" href="/2019/10/20/es6%E7%B3%BB%E5%88%97%E4%B9%8Bpromise/">阅读全文</a>
+        
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://vera0720.github.io/2019/10/20/es6%E7%B3%BB%E5%88%97%E4%B9%8Bpromise/" data-id="ckp1zpvv7000l1pr9aynd4fjt"
+         class="article-share-link">Share</a>
+      
+  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/js/" rel="tag">js</a></li></ul>
+
+    </footer>
+
+  </div>
+
+  
+
+  
+
+</article>
+
+
+
+      
+        
+
+<article id="post-前端优化" class="article article-type-post" itemscope itemprop="blogPost" data-scroll-reveal>
+
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
+  
+    <h2 itemprop="name">
+      <a class="article-title" href="/2019/10/11/%E5%89%8D%E7%AB%AF%E4%BC%98%E5%8C%96/">前端优化系列之首屏优化</a>
+    </h2>
+  
+  
+
+
+
+
+      </header>
+    
+
+    
+      <div class="article-meta">
+        <a href="/2019/10/11/%E5%89%8D%E7%AB%AF%E4%BC%98%E5%8C%96/" class="article-date">
+  <time datetime="2019-10-11T02:41:33.000Z" itemprop="datePublished">2019-10-11</time>
+</a>
+        
+      </div>
+    
+
+    
+
+    <div class="article-entry" itemprop="articleBody">
+      
+
+
+      
+
+      
+        <p>最近有个需求，就是首屏访问的时候速度很慢，产品想让我们优化到1秒内打开，所以大概用了一个星期的时间，搞定了优化。<br>原则上多使用内存，缓存或者其他方法，减少CPU计算，减少网络请求，减少IO操作（硬盘读写）</p>
+        
+          <a class="article-more-link" style="text-decoration: none" href="/2019/10/11/%E5%89%8D%E7%AB%AF%E4%BC%98%E5%8C%96/">阅读全文</a>
+        
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://vera0720.github.io/2019/10/11/%E5%89%8D%E7%AB%AF%E4%BC%98%E5%8C%96/" data-id="ckp1zpvvz00231pr95yb48lys"
+         class="article-share-link">Share</a>
+      
+  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/js/" rel="tag">js</a></li></ul>
+
+    </footer>
+
+  </div>
+
+  
+
+  
+
+</article>
+
+
+
+      
+        
+
+<article id="post-vue系列之keep-alive" class="article article-type-post" itemscope itemprop="blogPost" data-scroll-reveal>
+
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
+  
+    <h2 itemprop="name">
+      <a class="article-title" href="/2019/08/20/vue%E7%B3%BB%E5%88%97%E4%B9%8Bkeep-alive/">vue系列之keep-alive</a>
+    </h2>
+  
+  
+
+
+
+
+      </header>
+    
+
+    
+      <div class="article-meta">
+        <a href="/2019/08/20/vue%E7%B3%BB%E5%88%97%E4%B9%8Bkeep-alive/" class="article-date">
+  <time datetime="2019-08-20T08:01:08.000Z" itemprop="datePublished">2019-08-20</time>
+</a>
+        
+      </div>
+    
+
+    
+
+    <div class="article-entry" itemprop="articleBody">
+      
+
+
+      
+
+      
+        <h3 id="keep-alive是什么"><a href="#keep-alive是什么" class="headerlink" title="keep-alive是什么"></a>keep-alive是什么</h3><p>keep-alive是一个抽象组件：它自身不会渲染一个 DOM 元素，也不会出现在父组件链中；使用keep-alive包裹动态组件时，会缓存不活动的组件实例，而不是销毁它们。</p>
+        
+          <a class="article-more-link" style="text-decoration: none" href="/2019/08/20/vue%E7%B3%BB%E5%88%97%E4%B9%8Bkeep-alive/">阅读全文</a>
+        
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://vera0720.github.io/2019/08/20/vue%E7%B3%BB%E5%88%97%E4%B9%8Bkeep-alive/" data-id="ckp1zpvvw001z1pr9cf3udtal"
+         class="article-share-link">Share</a>
+      
+  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/vue/" rel="tag">vue</a></li></ul>
+
+    </footer>
+
+  </div>
+
+  
+
+  
+
+</article>
+
+
+
+      
+  </article>
+  
+
+  
+    <nav class="page-nav">
+      
+      <span class="page-number current">1</span><a class="page-number" href="/page/2/">2</a><a class="page-number" href="/page/3/">3</a><span class="space">&hellip;</span><a class="page-number" href="/page/6/">6</a><a class="extend next" rel="next" href="/page/2/">Next page</a>
+    </nav>
+  
+</section>
+</div>
+
+  <footer class="footer">
+  <div class="outer">
+    <ul class="list-inline">
+      <li>&copy; 2021 今天天气晴朗</li>
+      <li>Author <span>Vera</span></li>
+    </ul>
+  </div>
+</footer>
+
+</main>
+
+  <aside class="sidebar">
+    
+    <button class="navbar-toggle"></button>
+<nav class="navbar">
+  
+    <div class="logo">
+      <a href="/"><img src="/images/headImg.jpeg" alt="今天天气晴朗"></a>
+    </div>
+  
+  <ul class="nav nav-main">
+    
+      <li class="nav-item">
+        <a class="nav-item-link" href="/">Home</a>
+      </li>
+    
+      <li class="nav-item">
+        <a class="nav-item-link" href="/archives">Archives</a>
+      </li>
+    
+      <li class="nav-item">
+        <a class="nav-item-link" href="/gallery">Gallery</a>
+      </li>
+    
+      <li class="nav-item">
+        <a class="nav-item-link" href="/about">About</a>
+      </li>
+    
+    <li class="nav-item">
+      <a class="nav-item-link nav-item-search" title="Search">
+        <i class="fe fe-search"></i>
+        Search
+      </a>
+    </li>
+  </ul>
+</nav>
+<nav class="navbar navbar-bottom">
+  <ul class="nav">
+    <li class="nav-item">
+      <div class="totop" id="totop">
+  <i class="fe fe-rocket"></i>
+</div>
+    </li>
+    <li class="nav-item">
+      
+    </li>
+  </ul>
+</nav>
+<div class="search-form-wrap">
+  <div class="local-search local-search-plugin">
+  <input type="search" id="local-search-input" class="local-search-input" placeholder="Search...">
+  <div id="local-search-result" class="local-search-result"></div>
+</div>
+</div>
+  </aside>
+  
+<script src="/js/jquery-2.0.3.min.js"></script>
+
+
+<script src="/js/jquery.justifiedGallery.min.js"></script>
+
+
+<script src="/js/lazyload.min.js"></script>
+
+
+<script src="/js/busuanzi-2.3.pure.min.js"></script>
+
+
+  
+<script src="/fancybox/jquery.fancybox.min.js"></script>
+
+
+
+
+
+
+<script src="/js/ocean.js"></script>
+
+
+</body>
+</html>

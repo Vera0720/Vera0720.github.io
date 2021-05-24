@@ -1,0 +1,274 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  
+  
+  
+    <meta name="description" content="治愈系少女">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <title>
+    vue系列之原生js实现input的数据双向绑定 |
+    
+    今天天气晴朗</title>
+  
+    <link rel="shortcut icon" href="/favicon.ico">
+  
+  
+<link rel="stylesheet" href="/css/style.css">
+
+  
+    
+<link rel="stylesheet" href="/fancybox/jquery.fancybox.min.css">
+
+  
+  
+<script src="/js/pace.min.js"></script>
+
+<meta name="generator" content="Hexo 4.2.0"></head>
+
+<body>
+<main class="content">
+  <section class="outer">
+  
+
+<article id="post-vue系列之原生js实现input双向绑定" class="article article-type-post" itemscope itemprop="blogPost" data-scroll-reveal>
+
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
+  
+    <h1 class="article-title" itemprop="name">
+      vue系列之原生js实现input的数据双向绑定
+    </h1>
+  
+  
+
+
+
+
+      </header>
+    
+
+    
+      <div class="article-meta">
+        <a href="/2019/07/06/vue%E7%B3%BB%E5%88%97%E4%B9%8B%E5%8E%9F%E7%94%9Fjs%E5%AE%9E%E7%8E%B0input%E5%8F%8C%E5%90%91%E7%BB%91%E5%AE%9A/" class="article-date">
+  <time datetime="2019-07-06T11:25:10.000Z" itemprop="datePublished">2019-07-06</time>
+</a>
+        
+      </div>
+    
+
+    
+      
+
+
+
+
+    
+
+    <div class="article-entry" itemprop="articleBody">
+      
+
+
+      
+
+      
+        <p>在谈到vue等等的mvvm框架之前，先了解什么是数据双向绑定以及如何利用原生JS实现数据双向绑定</p>
+<a id="more"></a>
+
+<p>单向数据绑定</p>
+<p>指先把模板写好，然后把模板和数据（数据可能来自后台）整合到一起形成HTML代码，然后把这段HTML代码插入到文档流里</p>
+<p>缺点：一旦HTML代码生成就没有办法改变，如果有新数据重新传入，就必须重新把模板和数据整合到一起插入到文档流中</p>
+<p>数据双向绑定</p>
+<p>数据模型和视图之间的双向绑定，用户在视图上的修改会自动同步到数据模型中，同样的，如果数据模型中的值发生变化，也会同步到视图中去。</p>
+<p>优点：无需进行类似单向数据绑定的那些CRUD操作。</p>
+<p>最经常应用的场景：表单</p>
+<p>缺点：应用场景有限</p>
+<p>框架：angular js,Vue js</p>
+<p>底层实现大概有两种：</p>
+<p>1.手动绑定，同时使用dirty check去循环监听。（代表angular js）</p>
+<p>2.前端数据劫持，使用define Property,(代表Vue js)</p>
+<p>以下是一个简单的小例子，在input框里输入什么，后面就会显示什么</p>
+<p>代码如下：</p>
+<pre><code>&lt;!DOCTYPE html&gt;
+&lt;html lang=&quot;en&quot;&gt;
+&lt;head&gt;
+    &lt;meta charset=&quot;UTF-8&quot;&gt;
+    &lt;title&gt;&lt;/title&gt;
+&lt;/head&gt;
+&lt;body&gt;
+&lt;input type=&quot;text&quot; id=&quot;aa&quot;/&gt;
+&lt;span id=&quot;bb&quot;&gt;{{hello}}&lt;/span&gt;
+&lt;script&gt;
+    var obj = {};
+    Object.defineProperty(obj,&apos;hello&apos;,{
+        set:function(val){
+            document.getElementById(&apos;bb&apos;).innerHTML = val;
+            document.getElementById(&apos;aa&apos;).value = val;
+        }
+    });
+    document.getElementById(&apos;aa&apos;).onkeyup = function(e){
+        obj.hello = e.target.value;
+    };
+    obj.hello = &quot;&quot;;
+
+
+&lt;/script&gt;
+&lt;/body&gt;
+&lt;/html&gt;</code></pre>
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://vera0720.github.io/2019/07/06/vue%E7%B3%BB%E5%88%97%E4%B9%8B%E5%8E%9F%E7%94%9Fjs%E5%AE%9E%E7%8E%B0input%E5%8F%8C%E5%90%91%E7%BB%91%E5%AE%9A/" data-id="ckp1zpvvs001r1pr96fu2dwx4"
+         class="article-share-link">Share</a>
+      
+  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/js/" rel="tag">js</a></li></ul>
+
+    </footer>
+
+  </div>
+
+  
+    
+  <nav class="article-nav">
+    
+      <a href="/2019/08/20/vue%E7%B3%BB%E5%88%97%E4%B9%8Bkeep-alive/" class="article-nav-link">
+        <strong class="article-nav-caption">Newer posts</strong>
+        <div class="article-nav-title">
+          
+            vue系列之keep-alive
+          
+        </div>
+      </a>
+    
+    
+      <a href="/2019/04/28/%E5%89%8D%E7%AB%AF%E4%BC%98%E5%8C%96%E7%B3%BB%E5%88%97%E4%B9%8Bcss%E6%9B%BF%E4%BB%A3js%E5%8A%A8%E7%94%BB/" class="article-nav-link">
+        <strong class="article-nav-caption">Olde posts</strong>
+        <div class="article-nav-title">前端优化系列之css替代js动画</div>
+      </a>
+    
+  </nav>
+
+
+  
+
+  
+    
+  
+
+</article>
+
+
+
+</section>
+  <footer class="footer">
+  <div class="outer">
+    <ul class="list-inline">
+      <li>&copy; 2021 今天天气晴朗</li>
+      <li>Author <span>Vera</span></li>
+    </ul>
+  </div>
+</footer>
+
+</main>
+
+<aside class="sidebar sidebar-specter">
+  
+    <button class="navbar-toggle"></button>
+<nav class="navbar">
+  
+    <div class="logo">
+      <a href="/"><img src="/images/headImg.jpeg" alt="今天天气晴朗"></a>
+    </div>
+  
+  <ul class="nav nav-main">
+    
+      <li class="nav-item">
+        <a class="nav-item-link" href="/">Home</a>
+      </li>
+    
+      <li class="nav-item">
+        <a class="nav-item-link" href="/archives">Archives</a>
+      </li>
+    
+      <li class="nav-item">
+        <a class="nav-item-link" href="/gallery">Gallery</a>
+      </li>
+    
+      <li class="nav-item">
+        <a class="nav-item-link" href="/about">About</a>
+      </li>
+    
+    <li class="nav-item">
+      <a class="nav-item-link nav-item-search" title="Search">
+        <i class="fe fe-search"></i>
+        Search
+      </a>
+    </li>
+  </ul>
+</nav>
+<nav class="navbar navbar-bottom">
+  <ul class="nav">
+    <li class="nav-item">
+      <div class="totop" id="totop">
+  <i class="fe fe-rocket"></i>
+</div>
+    </li>
+    <li class="nav-item">
+      
+    </li>
+  </ul>
+</nav>
+<div class="search-form-wrap">
+  <div class="local-search local-search-plugin">
+  <input type="search" id="local-search-input" class="local-search-input" placeholder="Search...">
+  <div id="local-search-result" class="local-search-result"></div>
+</div>
+</div>
+  </aside>
+  
+<script src="/js/jquery-2.0.3.min.js"></script>
+
+
+<script src="/js/jquery.justifiedGallery.min.js"></script>
+
+
+<script src="/js/lazyload.min.js"></script>
+
+
+<script src="/js/busuanzi-2.3.pure.min.js"></script>
+
+
+  
+<script src="/fancybox/jquery.fancybox.min.js"></script>
+
+
+
+
+  
+<script src="/js/tocbot.min.js"></script>
+
+  <script>
+    // Tocbot_v4.7.0  http://tscanlin.github.io/tocbot/
+    tocbot.init({
+      tocSelector: '.tocbot',
+      contentSelector: '.article-entry',
+      headingSelector: 'h1, h2, h3, h4, h5, h6',
+      hasInnerContainers: true,
+      scrollSmooth: true,
+      positionFixedSelector: '.tocbot',
+      positionFixedClass: 'is-position-fixed',
+      fixedSidebarOffset: 'auto',
+    });
+  </script>
+
+
+
+<script src="/js/ocean.js"></script>
+
+
+</body>
+</html>

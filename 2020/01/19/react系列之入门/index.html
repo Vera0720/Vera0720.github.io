@@ -1,0 +1,795 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  
+  
+  
+    <meta name="description" content="治愈系少女">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <title>
+    react系列之入门 |
+    
+    今天天气晴朗</title>
+  
+    <link rel="shortcut icon" href="/favicon.ico">
+  
+  
+<link rel="stylesheet" href="/css/style.css">
+
+  
+    
+<link rel="stylesheet" href="/fancybox/jquery.fancybox.min.css">
+
+  
+  
+<script src="/js/pace.min.js"></script>
+
+<meta name="generator" content="Hexo 4.2.0"></head>
+
+<body>
+<main class="content">
+  <section class="outer">
+  
+
+<article id="post-react系列之入门" class="article article-type-post" itemscope itemprop="blogPost" data-scroll-reveal>
+
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
+  
+    <h1 class="article-title" itemprop="name">
+      react系列之入门
+    </h1>
+  
+  
+
+
+
+
+      </header>
+    
+
+    
+      <div class="article-meta">
+        <a href="/2020/01/19/react%E7%B3%BB%E5%88%97%E4%B9%8B%E5%85%A5%E9%97%A8/" class="article-date">
+  <time datetime="2020-01-19T14:35:34.000Z" itemprop="datePublished">2020-01-19</time>
+</a>
+        
+      </div>
+    
+
+    
+      
+
+
+
+
+    
+
+    <div class="article-entry" itemprop="articleBody">
+      
+
+
+      
+
+      
+        <p>React 是一个用于构建用户界面的 JAVASCRIPT 库。</p>
+<p>React 主要用于构建UI，很多人认为 React 是 MVC 中的 V（视图）。</p>
+<p>React 起源于 Facebook 的内部项目，用来架设 Instagram 的网站，并于 2013 年 5 月开源。</p>
+<p>React 拥有较高的性能，代码逻辑非常简单，越来越多的人已开始关注和使用它。</p>
+<a id="more"></a>
+
+<p>一、HTML 模板</p>
+<p>使用 React 的网页源码，结构大致如下。</p>
+<pre><code>&lt;!DOCTYPE html&gt;
+&lt;html lang=&quot;en&quot;&gt;
+&lt;head&gt;
+    &lt;meta charset=&quot;UTF-8&quot;&gt;
+    &lt;title&gt;Title&lt;/title&gt;
+    &lt;script src=&quot;../build/react.js&quot;&gt;&lt;/script&gt;
+    &lt;script src=&quot;../build/react-dom.js&quot;&gt;&lt;/script&gt;
+    &lt;script src=&quot;../build/browser.min.js&quot;&gt;&lt;/script&gt;
+&lt;/head&gt;
+&lt;body&gt;
+    &lt;div id=&quot;example&quot;&gt;&lt;/div&gt;
+    &lt;script type=&quot;text/babel&quot;&gt;
+        // ** Our code goes here! **
+    &lt;/script&gt;
+&lt;/body&gt;
+&lt;/html&gt;</code></pre><p>上面代码有两个地方需要注意。首先，最后一个 <script> 标签的 type 属性为 text/babel 。这是因为 React 独有的 JSX 语法，跟 JavaScript 不兼容。凡是使用 JSX 的地方，都要加上 type="text/babel"</p>
+<p>其次，上面代码一共用了三个库： react.js 、react-dom.js 和 Browser.js ，它们必须首先加载。其中，react.js 是 React 的核心库，react-dom.js 是提供与 DOM 相关的功能，Browser.js 的作用是将 JSX 语法转为 JavaScript 语法，这一步很消耗时间，实际上线的时候，应该将它放到服务器完成。</p>
+<p>$ babel src --out-dir build</p>
+<p>上面命令可以将 src 子目录的 js 文件进行语法转换，转码后的文件全部放在 build 子目录。</p>
+<p>二、ReactDOM.render()</p>
+<pre><code>ReactDOM.render 是 React 的最基本方法，用于将模板转为 HTML 语言，并插入指定的 DOM 节点。
+
+ReactDOM.render(
+
+  &lt;h1&gt;Hello, world!&lt;/h1&gt;,
+
+  document.getElementById(&apos;example&apos;)
+
+);</code></pre><p>上面代码将一个 h1 标题，插入 example 节点</p>
+<p>三、JSX 语法</p>
+<p>上一节的代码， HTML 语言直接写在 JavaScript 语言之中，不加任何引号，这就是 JSX 的语法，它允许 HTML 与 JavaScript 的混写</p>
+<pre><code>var names = [&apos;Alice&apos;, &apos;Emily&apos;, &apos;Kate&apos;];
+
+ReactDOM.render(
+
+  &lt;div&gt;
+
+  {
+
+    names.map(function (name) {
+
+      return &lt;div&gt;Hello, {name}!&lt;/div&gt;
+
+    })
+
+  }
+
+  &lt;/div&gt;,
+
+  document.getElementById(&apos;example&apos;)
+
+);</code></pre><p>上面代码体现了 JSX 的基本语法规则：遇到 HTML 标签（以 < 开头），就用 HTML 规则解析；遇到代码块（以 { 开头），就用 JavaScript 规则解析。</p>
+<p>JSX 允许直接在模板插入 JavaScript 变量。如果这个变量是一个数组，则会展开这个数组的所有成员。</p>
+<pre><code>var arr = [
+
+  &lt;h1&gt;Hello world!&lt;/h1&gt;,
+
+  &lt;h2&gt;React is awesome&lt;/h2&gt;,
+
+];
+
+ReactDOM.render(
+
+  &lt;div&gt;{arr}&lt;/div&gt;,
+
+  document.getElementById(&apos;example&apos;)
+
+);</code></pre><p>上面代码的arr变量是一个数组，结果 JSX 会把它的所有成员，添加到模板</p>
+<p>四、组件</p>
+<p>React 允许将代码封装成组件（component），然后像插入普通 HTML 标签一样，在网页中插入这个组件。React.createClass 方法就用于生成一个组件类。</p>
+<pre><code>var HelloMessage = React.createClass({
+
+  render: function() {
+
+    return &lt;h1&gt;Hello {this.props.name}&lt;/h1&gt;;
+
+  }
+
+});
+
+ReactDOM.render(
+
+  &lt;HelloMessage name=&quot;John&quot; /&gt;,
+
+  document.getElementById(&apos;example&apos;)
+
+);</code></pre><p>上面代码中，变量 HelloMessage 就是一个组件类。模板插入 <HelloMessage /> 时，会自动生成 HelloMessage 的一个实例（下文的"组件"都指组件类的实例）。所有组件类都必须有自己的 render 方法，用于输出组件。</p>
+<p>注意，组件类的第一个字母必须大写，否则会报错，比如HelloMessage不能写成helloMessage。另外，组件类只能包含一个顶层标签，否则也会报错。</p>
+<pre><code>var HelloMessage = React.createClass({
+
+  render: function() {
+
+    return &lt;h1&gt;
+
+      Hello {this.props.name}
+
+    &lt;/h1&gt;&lt;p&gt;
+
+      some text
+
+    &lt;/p&gt;;
+
+  }
+
+});</code></pre><p>上面代码会报错，因为HelloMessage组件包含了两个顶层标签：h1和p。</p>
+<p>组件的用法与原生的 HTML 标签完全一致，可以任意加入属性，比如 <HelloMessage name="John"> ，就是 HelloMessage 组件加入一个 name 属性，值为 John。组件的属性可以在组件类的 this.props 对象上获取，比如 name 属性就可以通过 this.props.name 读取。</p>
+<p>添加组件属性，有一个地方需要注意，就是 class 属性需要写成 className ，for 属性需要写成 htmlFor ，这是因为 class 和 for 是 JavaScript 的保留字。</p>
+<p>五、this.props.children</p>
+<p>this.props 对象的属性与组件的属性一一对应，但是有一个例外，就是 this.props.children 属性。它表示组件的所有子节点。</p>
+<pre><code>var NotesList = React.createClass({
+
+  render: function() {
+
+    return (
+
+      &lt;ol&gt;
+
+      {
+
+        React.Children.map(this.props.children, function (child) {
+
+          return &lt;li&gt;{child}&lt;/li&gt;;
+
+        })
+
+      }
+
+      &lt;/ol&gt;
+
+    );
+
+  }
+
+});
+
+
+
+ReactDOM.render(
+
+  &lt;NotesList&gt;
+
+    &lt;span&gt;hello&lt;/span&gt;
+
+    &lt;span&gt;world&lt;/span&gt;
+
+  &lt;/NotesList&gt;,
+
+  document.body
+
+);</code></pre><p>上面代码的 NoteList 组件有两个 span 子节点，它们都可以通过 this.props.children 读取</p>
+<p>这里需要注意， this.props.children 的值有三种可能：如果当前组件没有子节点，它就是 undefined ;如果有一个子节点，数据类型是 object ；如果有多个子节点，数据类型就是 array 。所以，处理 this.props.children 的时候要小心。</p>
+<p>React 提供一个工具方法 React.Children 来处理 this.props.children 。我们可以用 React.Children.map 来遍历子节点，而不用担心 this.props.children 的数据类型是 undefined 还是 object。更多的 React.Children 的方法，请参考官方文档。</p>
+<p>六、PropTypes</p>
+<p>组件的属性可以接受任意值，字符串、对象、函数等等都可以。有时，我们需要一种机制，验证别人使用组件时，提供的参数是否符合要求。</p>
+<p>组件类的PropTypes属性，就是用来验证组件实例的属性是否符合要求。</p>
+<pre><code>var MyTitle = React.createClass({
+
+  propTypes: {
+
+    title: React.PropTypes.string.isRequired,
+
+  },
+
+  render: function() {
+
+     return &lt;h1&gt; {this.props.title} &lt;/h1&gt;;
+
+   }
+
+});</code></pre><p>上面的Mytitle组件有一个title属性。PropTypes 告诉 React，这个 title 属性是必须的，而且它的值必须是字符串。现在，我们设置 title 属性的值是一个数值。</p>
+<pre><code>var data = 123;
+
+ReactDOM.render(
+
+  &lt;MyTitle title={data} /&gt;,
+
+  document.body
+
+);</code></pre><p>这样一来，title属性就通不过验证了。控制台会显示一行错误信息。</p>
+<p>Warning: Failed propType: Invalid prop <code>title</code> of type <code>number</code> supplied to <code>MyTitle</code>, expected <code>string</code>.</p>
+<p>更多的PropTypes设置，可以查看官方文档。</p>
+<p>此外，getDefaultProps 方法可以用来设置组件属性的默认值。</p>
+<pre><code>var MyTitle = React.createClass({
+
+  getDefaultProps : function () {
+
+    return {
+
+      title : &apos;Hello World&apos;
+
+    };
+
+  },
+
+  render: function() {
+
+     return &lt;h1&gt; {this.props.title} &lt;/h1&gt;;
+
+   }
+
+});
+
+ReactDOM.render(
+
+  &lt;MyTitle /&gt;,
+
+  document.body
+
+);</code></pre><p>上面代码会输出"Hello World"。</p>
+<p>七、获取真实的DOM节点</p>
+<p>组件并不是真实的 DOM 节点，而是存在于内存之中的一种数据结构，叫做虚拟 DOM （virtual DOM）。只有当它插入文档以后，才会变成真实的 DOM 。根据 React 的设计，所有的 DOM 变动，都先在虚拟 DOM 上发生，然后再将实际发生变动的部分，反映在真实 DOM上，这种算法叫做 DOM diff ，它可以极大提高网页的性能表现。</p>
+<p>但是，有时需要从组件获取真实 DOM 的节点，这时就要用到 ref 属性。</p>
+<pre><code>var MyComponent = React.createClass({
+
+  handleClick: function() {
+
+    this.refs.myTextInput.focus();
+
+  },
+
+  render: function() {
+
+    return (
+
+      &lt;div&gt;
+
+        &lt;input type=&quot;text&quot; ref=&quot;myTextInput&quot; /&gt;
+
+        &lt;input type=&quot;button&quot; value=&quot;Focus the text input&quot; onClick={this.handleClick} /&gt;
+
+      &lt;/div&gt;
+
+    );
+
+  }
+
+});
+
+ReactDOM.render(
+
+  &lt;MyComponent /&gt;,
+
+  document.getElementById(&apos;example&apos;)
+
+);</code></pre><p>上面代码中，组件 MyComponent 的子节点有一个文本输入框，用于获取用户的输入。这时就必须获取真实的 DOM 节点，虚拟 DOM 是拿不到用户输入的。为了做到这一点，文本输入框必须有一个 ref 属性，然后 this.refs.[refName] 就会返回这个真实的 DOM 节点。</p>
+<p>需要注意的是，由于 this.refs.[refName] 属性获取的是真实 DOM ，所以必须等到虚拟 DOM 插入文档以后，才能使用这个属性，否则会报错。上面代码中，通过为组件指定 Click 事件的回调函数，确保了只有等到真实 DOM 发生 Click 事件之后，才会读取 this.refs.[refName] 属性。</p>
+<p>React 组件支持很多事件，除了 Click 事件以外，还有 KeyDown 、Copy、Scroll 等，完整的事件清单请查看官方文档。</p>
+<p>八、this.state</p>
+<p>组件免不了要与用户互动，React 的一大创新，就是将组件看成是一个状态机，一开始有一个初始状态，然后用户互动，导致状态变化，从而触发重新渲染 UI。</p>
+<pre><code>var LikeButton = React.createClass({
+
+  getInitialState: function() {
+
+    return {liked: false};
+
+  },
+
+  handleClick: function(event) {
+
+    this.setState({liked: !this.state.liked});
+
+  },
+
+  render: function() {
+
+    var text = this.state.liked ? &apos;like&apos; : &apos;haven\&apos;t liked&apos;;
+
+    return (
+
+      &lt;p onClick={this.handleClick}&gt;
+
+        You {text} this. Click to toggle.
+
+      &lt;/p&gt;
+
+    );
+
+  }
+
+});
+
+ReactDOM.render(
+
+  &lt;LikeButton /&gt;,
+
+  document.getElementById(&apos;example&apos;)
+
+);</code></pre><p>上面代码是一个 LikeButton 组件，它的 getInitialState 方法用于定义初始状态，也就是一个对象，这个对象可以通过 this.state 属性读取。当用户点击组件，导致状态变化，this.setState 方法就修改状态值，每次修改以后，自动调用 this.render 方法，再次渲染组件。</p>
+<p>由于 this.props 和 this.state 都用于描述组件的特性，可能会产生混淆。一个简单的区分方法是，this.props 表示那些一旦定义，就不再改变的特性，而 this.state 是会随着用户互动而产生变化的特性。</p>
+<p>九、表单</p>
+<p>用户在表单填入的内容，属于用户跟组件的互动，所以不能用 this.props 读取。</p>
+<pre><code>var Input = React.createClass({
+
+  getInitialState: function() {
+
+    return {value: &apos;Hello!&apos;};
+
+  },
+
+  handleChange: function(event) {
+
+    this.setState({value: event.target.value});
+
+  },
+
+  render: function () {
+
+    var value = this.state.value;
+
+    return (
+
+      &lt;div&gt;
+
+        &lt;input type=&quot;text&quot; value={value} onChange={this.handleChange} /&gt;
+
+        &lt;p&gt;{value}&lt;/p&gt;
+
+      &lt;/div&gt;
+
+    );
+
+  }
+
+});
+
+
+
+ReactDOM.render(&lt;Input/&gt;, document.body);</code></pre><p>上面代码中，文本输入框的值，不能用 this.props.value 读取，而要定义一个 onChange 事件的回调函数，通过 event.target.value 读取用户输入的值。textarea 元素、select元素、radio元素都属于这种情况，更多介绍请参考官方文档。</p>
+<p>十、组件的生命周期</p>
+<p>组件的生命周期分成三个状态：</p>
+<p>Mounting：已插入真实 DOM</p>
+<p>Updating：正在被重新渲染</p>
+<p>Unmounting：已移出真实 DOM</p>
+<p>React 为每个状态都提供了两种处理函数，will 函数在进入状态之前调用，did 函数在进入状态之后调用，三种状态共计五种处理函数。</p>
+<p>componentWillMount()</p>
+<p>componentDidMount()</p>
+<p>componentWillUpdate(object nextProps, object nextState)</p>
+<p>componentDidUpdate(object prevProps, object prevState)</p>
+<p>componentWillUnmount()</p>
+<p>此外，React 还提供两种特殊状态的处理函数。</p>
+<p>componentWillReceiveProps(object nextProps)：已加载组件收到新的参数时调用</p>
+<p>shouldComponentUpdate(object nextProps, object nextState)：组件判断是否重新渲染时调用</p>
+<p>这些方法的详细说明，可以参考官方文档。下面是一个例子。</p>
+<pre><code>var Hello = React.createClass({
+
+  getInitialState: function () {
+
+    return {
+
+      opacity: 1.0
+
+    };
+
+  },
+
+
+
+  componentDidMount: function () {
+
+    this.timer = setInterval(function () {
+
+      var opacity = this.state.opacity;
+
+      opacity -= .05;
+
+      if (opacity &lt; 0.1) {
+
+        opacity = 1.0;
+
+      }
+
+      this.setState({
+
+        opacity: opacity
+
+      });
+
+    }.bind(this), 100);
+
+  },
+
+
+
+  render: function () {
+
+    return (
+
+      &lt;div style={{opacity: this.state.opacity}}&gt;
+
+        Hello {this.props.name}
+
+      &lt;/div&gt;
+
+    );
+
+  }
+
+});
+
+
+
+ReactDOM.render(
+
+  &lt;Hello name=&quot;world&quot;/&gt;,
+
+  document.body
+
+);</code></pre><p>上面代码在hello组件加载以后，通过 componentDidMount 方法设置一个定时器，每隔100毫秒，就重新设置组件的透明度，从而引发重新渲染。</p>
+<p>另外，组件的style属性的设置方式也值得注意，不能写成</p>
+<pre><code>style=&quot;opacity:{this.state.opacity};&quot;</code></pre><p>而要写成</p>
+<pre><code>style={{opacity: this.state.opacity}}</code></pre><p>这是因为 React 组件样式是一个对象，所以第一重大括号表示这是 JavaScript 语法，第二重大括号表示样式对象。</p>
+<p>十一、Ajax</p>
+<p>组件的数据来源，通常是通过 Ajax 请求从服务器获取，可以使用 componentDidMount 方法设置 Ajax 请求，等到请求成功，再用 this.setState 方法重新渲染 UI。</p>
+<pre><code>var UserGist = React.createClass({
+
+  getInitialState: function() {
+
+    return {
+
+      username: &apos;&apos;,
+
+      lastGistUrl: &apos;&apos;
+
+    };
+
+  },
+
+  componentDidMount: function() {
+
+    $.get(this.props.source, function(result) {
+
+      var lastGist = result[0];
+
+      if (this.isMounted()) {
+
+        this.setState({
+
+          username: lastGist.owner.login,
+
+          lastGistUrl: lastGist.html_url
+
+        });
+
+      }
+
+    }.bind(this));
+
+  },
+
+
+
+  render: function() {
+
+    return (
+
+      &lt;div&gt;
+
+        {this.state.username}&apos;s last gist is
+
+        &lt;a href={this.state.lastGistUrl}&gt;here&lt;/a&gt;.
+
+      &lt;/div&gt;
+
+    );
+
+  }
+
+});
+
+
+
+ReactDOM.render(
+
+  &lt;UserGist source=&quot;https://api.github.com/users/octocat/gists&quot; /&gt;,
+
+  document.body
+
+);</code></pre><p>上面代码使用 jQuery 完成 Ajax 请求，这是为了便于说明。React 本身没有任何依赖，完全可以不用jQuery，而使用其他库。</p>
+<p>我们甚至可以把一个Promise对象传入组件</p>
+<pre><code>ReactDOM.render(
+
+  &lt;RepoList
+
+promise={$.getJSON(&apos;https://api.github.com/search/repositories?q=javascript&amp;sort=stars&apos;)}
+
+  /&gt;,
+
+  document.body
+
+);</code></pre><p>上面代码从Github的API抓取数据，然后将Promise对象作为属性，传给RepoList组件。</p>
+<p>如果Promise对象正在抓取数据（pending状态），组件显示"正在加载"；如果Promise对象报错（rejected状态），组件显示报错信息；如果Promise对象抓取数据成功（fulfilled状态），组件显示获取的数据。</p>
+<pre><code>var RepoList = React.createClass({
+
+  getInitialState: function() {
+
+    return { loading: true, error: null, data: null};
+
+  },
+
+  componentDidMount() {
+
+    this.props.promise.then(
+
+      value =&gt; this.setState({loading: false, data: value}),
+
+      error =&gt; this.setState({loading: false, error: error}));
+
+  },
+
+  render: function() {
+
+    if (this.state.loading) {
+
+      return &lt;span&gt;Loading...&lt;/span&gt;;
+
+    }
+
+    else if (this.state.error !== null) {
+
+      return &lt;span&gt;Error: {this.state.error.message}&lt;/span&gt;;
+
+    }
+
+    else {
+
+      var repos = this.state.data.items;
+
+      var repoList = repos.map(function (repo) {
+
+        return (
+
+          &lt;li&gt;
+
+            &lt;a href={repo.html_url}&gt;{repo.name}&lt;/a&gt; ({repo.stargazers_count} stars) &lt;br/&gt; {repo.description}
+
+          &lt;/li&gt;
+
+        );
+
+      });
+
+      return (
+
+        &lt;main&gt;
+
+          &lt;h1&gt;Most Popular JavaScript Projects in Github&lt;/h1&gt;
+
+          &lt;ol&gt;{repoList}&lt;/ol&gt;
+
+        &lt;/main&gt;
+
+      );
+
+    }
+
+  }
+
+});</code></pre>
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://vera0720.github.io/2020/01/19/react%E7%B3%BB%E5%88%97%E4%B9%8B%E5%85%A5%E9%97%A8/" data-id="ckp1zpvw000261pr91ezra8e6"
+         class="article-share-link">Share</a>
+      
+    </footer>
+
+  </div>
+
+  
+    
+  <nav class="article-nav">
+    
+      <a href="/2020/02/01/react%E5%8E%9F%E7%90%86%E8%A7%A3%E6%9E%90%E7%B3%BB%E5%88%97%E4%B9%8BsetState/" class="article-nav-link">
+        <strong class="article-nav-caption">Newer posts</strong>
+        <div class="article-nav-title">
+          
+            react原理解析之setState
+          
+        </div>
+      </a>
+    
+    
+      <a href="/2020/01/03/%E5%87%BD%E6%95%B0%E6%9F%AF%E9%87%8C%E5%8C%96/" class="article-nav-link">
+        <strong class="article-nav-caption">Olde posts</strong>
+        <div class="article-nav-title">函数柯里化</div>
+      </a>
+    
+  </nav>
+
+
+  
+
+  
+    
+  
+
+</article>
+
+
+
+</section>
+  <footer class="footer">
+  <div class="outer">
+    <ul class="list-inline">
+      <li>&copy; 2021 今天天气晴朗</li>
+      <li>Author <span>Vera</span></li>
+    </ul>
+  </div>
+</footer>
+
+</main>
+
+<aside class="sidebar sidebar-specter">
+  
+    <button class="navbar-toggle"></button>
+<nav class="navbar">
+  
+    <div class="logo">
+      <a href="/"><img src="/images/headImg.jpeg" alt="今天天气晴朗"></a>
+    </div>
+  
+  <ul class="nav nav-main">
+    
+      <li class="nav-item">
+        <a class="nav-item-link" href="/">Home</a>
+      </li>
+    
+      <li class="nav-item">
+        <a class="nav-item-link" href="/archives">Archives</a>
+      </li>
+    
+      <li class="nav-item">
+        <a class="nav-item-link" href="/gallery">Gallery</a>
+      </li>
+    
+      <li class="nav-item">
+        <a class="nav-item-link" href="/about">About</a>
+      </li>
+    
+    <li class="nav-item">
+      <a class="nav-item-link nav-item-search" title="Search">
+        <i class="fe fe-search"></i>
+        Search
+      </a>
+    </li>
+  </ul>
+</nav>
+<nav class="navbar navbar-bottom">
+  <ul class="nav">
+    <li class="nav-item">
+      <div class="totop" id="totop">
+  <i class="fe fe-rocket"></i>
+</div>
+    </li>
+    <li class="nav-item">
+      
+    </li>
+  </ul>
+</nav>
+<div class="search-form-wrap">
+  <div class="local-search local-search-plugin">
+  <input type="search" id="local-search-input" class="local-search-input" placeholder="Search...">
+  <div id="local-search-result" class="local-search-result"></div>
+</div>
+</div>
+  </aside>
+  
+<script src="/js/jquery-2.0.3.min.js"></script>
+
+
+<script src="/js/jquery.justifiedGallery.min.js"></script>
+
+
+<script src="/js/lazyload.min.js"></script>
+
+
+<script src="/js/busuanzi-2.3.pure.min.js"></script>
+
+
+  
+<script src="/fancybox/jquery.fancybox.min.js"></script>
+
+
+
+
+  
+<script src="/js/tocbot.min.js"></script>
+
+  <script>
+    // Tocbot_v4.7.0  http://tscanlin.github.io/tocbot/
+    tocbot.init({
+      tocSelector: '.tocbot',
+      contentSelector: '.article-entry',
+      headingSelector: 'h1, h2, h3, h4, h5, h6',
+      hasInnerContainers: true,
+      scrollSmooth: true,
+      positionFixedSelector: '.tocbot',
+      positionFixedClass: 'is-position-fixed',
+      fixedSidebarOffset: 'auto',
+    });
+  </script>
+
+
+
+<script src="/js/ocean.js"></script>
+
+
+</body>
+</html>

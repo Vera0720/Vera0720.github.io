@@ -1,0 +1,306 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  
+  
+  
+    <meta name="description" content="治愈系少女">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <title>
+    css系列之弹性盒模型 |
+    
+    今天天气晴朗</title>
+  
+    <link rel="shortcut icon" href="/favicon.ico">
+  
+  
+<link rel="stylesheet" href="/css/style.css">
+
+  
+    
+<link rel="stylesheet" href="/fancybox/jquery.fancybox.min.css">
+
+  
+  
+<script src="/js/pace.min.js"></script>
+
+<meta name="generator" content="Hexo 4.2.0"></head>
+
+<body>
+<main class="content">
+  <section class="outer">
+  
+
+<article id="post-css系列之弹性盒模型" class="article article-type-post" itemscope itemprop="blogPost" data-scroll-reveal>
+
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
+  
+    <h1 class="article-title" itemprop="name">
+      css系列之弹性盒模型
+    </h1>
+  
+  
+
+
+
+
+      </header>
+    
+
+    
+      <div class="article-meta">
+        <a href="/2017/03/29/css%E7%B3%BB%E5%88%97%E4%B9%8B%E5%BC%B9%E6%80%A7%E7%9B%92%E6%A8%A1%E5%9E%8B/" class="article-date">
+  <time datetime="2017-03-29T11:34:00.000Z" itemprop="datePublished">2017-03-29</time>
+</a>
+        
+      </div>
+    
+
+    
+      
+
+
+
+
+    
+
+    <div class="article-entry" itemprop="articleBody">
+      
+
+
+      
+
+      
+        <p>盒模型有两种,一种是W3C标准盒模型,一种是怪异盒模型.</p>
+<p>W3C盒模型的宽度和高度,指的是内容的宽度和高度</p>
+<p>怪异盒模型的宽度和高度,指的是内容+padding+border</p>
+<p>怪异盒模型适用IE6及以前的版本,通过去掉docutype来开启怪异模式</p>
+<p>这个问题在前端面试中出现的频率很高,为css3中的重中之重</p>
+<p>弹性盒模型应用范围很广,在web移动开发以及布局都有极其重要的地位</p>
+<a id="more"></a>
+
+<p>首先来看下面一段代码</p>
+<p>HTML代码如下</p>
+<pre><code>&lt;div id=&quot;main&quot;&gt;
+    &lt;div id=&quot;div1&quot;&gt;div1&lt;/div&gt;
+    &lt;div id=&quot;div2&quot;&gt;div2&lt;/div&gt;
+    &lt;div id=&quot;div3&quot;&gt;div3&lt;/div&gt;
+&lt;/div&gt;</code></pre><p>css代码如下</p>
+<pre><code>#div1,#div2,#div3{
+    height: 300px;
+}
+#div1{
+    background: #ff0000;
+}
+#div2{
+    background: #00ff00;
+}
+#div3{
+    background: #ffff00;
+}</code></pre><p>此时运行的结果显示</p>
+<p><img src="/image/%E5%BC%B9%E6%80%A7%E7%9B%92%E6%A8%A1%E5%9E%8B/1.png" alt="图1"> </p>
+<p>然后在css样式加上</p>
+<pre><code>#main{
+    display: -webkit-box;
+}</code></pre><p>运行结果如图</p>
+<p><img src="/image/%E5%BC%B9%E6%80%A7%E7%9B%92%E6%A8%A1%E5%9E%8B/2.png" alt="图2"> </p>
+<p>div是块级元素,没加-webkit-box时,会以块级元素方式排列.当我们在父元素上加-webkit-box时,会变成以上这种方式排列,也可以通过-webkit-box-orient:vertical来实现块级元素排列方式</p>
+<p>CSS部分样式改变如下</p>
+<pre><code>#main{
+    display: -webkit-box;
+}
+#div1,#div2,#div3{
+    height: 300px;
+    -webkit-box-flex: 1;
+}</code></pre><p>运行结果为</p>
+<p><img src="/image/%E5%BC%B9%E6%80%A7%E7%9B%92%E6%A8%A1%E5%9E%8B/3.png" alt="图3"> </p>
+<p>当改变浏览器大小时</p>
+<p><img src="/image/%E5%BC%B9%E6%80%A7%E7%9B%92%E6%A8%A1%E5%9E%8B/4.png" alt="图4"> </p>
+<p>改变每一个div的-webkit-box-flex的值</p>
+<pre><code>#main{
+    display: -webkit-box;
+}
+#div1,#div2,#div3{
+    height: 300px;
+    /*-webkit-box-flex: 1;*/
+}
+#div1{
+    background: #ff0000;
+    -webkit-box-flex: 1;
+}
+#div2{
+    background: #00ff00;
+    -webkit-box-flex: 2;
+}
+#div3{
+    background: #ffff00;
+    -webkit-box-flex: 3;
+}</code></pre><p>运行如图所示</p>
+<p><img src="/image/%E5%BC%B9%E6%80%A7%E7%9B%92%E6%A8%A1%E5%9E%8B/5.png" alt="图5"> </p>
+<p>所以,-webkit-box-flex是将父元素动态分成几份,即使改变浏览器的大小,所占份数也不会改变</p>
+<p>CSS代码改变如下</p>
+<pre><code>#main{
+    display: -webkit-box;
+    margin-left: 200px;
+}</code></pre><p>运行结果</p>
+<p><img src="/image/%E5%BC%B9%E6%80%A7%E7%9B%92%E6%A8%A1%E5%9E%8B/6.png" alt="图6"> </p>
+<p>由此可知,弹性盒模型是将父元素剩余空间分份,将父元素的剩余空间进行动态分布.</p>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://vera0720.github.io/2017/03/29/css%E7%B3%BB%E5%88%97%E4%B9%8B%E5%BC%B9%E6%80%A7%E7%9B%92%E6%A8%A1%E5%9E%8B/" data-id="ckp1zpvv0000f1pr9bukccuj4"
+         class="article-share-link">Share</a>
+      
+  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/css/" rel="tag">css</a></li></ul>
+
+    </footer>
+
+  </div>
+
+  
+    
+  <nav class="article-nav">
+    
+      <a href="/2017/05/28/%E8%B7%A8%E5%9F%9F%E9%97%AE%E9%A2%98%E7%9A%84%E8%A7%A3%E5%86%B3%E6%96%B9%E6%A1%88/" class="article-nav-link">
+        <strong class="article-nav-caption">Newer posts</strong>
+        <div class="article-nav-title">
+          
+            跨域问题的解决方案
+          
+        </div>
+      </a>
+    
+    
+      <a href="/2017/03/14/php%E7%B3%BB%E5%88%97%E4%B9%8BCI%E6%A1%86%E6%9E%B6/" class="article-nav-link">
+        <strong class="article-nav-caption">Olde posts</strong>
+        <div class="article-nav-title">php系列之CI框架</div>
+      </a>
+    
+  </nav>
+
+
+  
+
+  
+    
+  
+
+</article>
+
+
+
+</section>
+  <footer class="footer">
+  <div class="outer">
+    <ul class="list-inline">
+      <li>&copy; 2021 今天天气晴朗</li>
+      <li>Author <span>Vera</span></li>
+    </ul>
+  </div>
+</footer>
+
+</main>
+
+<aside class="sidebar sidebar-specter">
+  
+    <button class="navbar-toggle"></button>
+<nav class="navbar">
+  
+    <div class="logo">
+      <a href="/"><img src="/images/headImg.jpeg" alt="今天天气晴朗"></a>
+    </div>
+  
+  <ul class="nav nav-main">
+    
+      <li class="nav-item">
+        <a class="nav-item-link" href="/">Home</a>
+      </li>
+    
+      <li class="nav-item">
+        <a class="nav-item-link" href="/archives">Archives</a>
+      </li>
+    
+      <li class="nav-item">
+        <a class="nav-item-link" href="/gallery">Gallery</a>
+      </li>
+    
+      <li class="nav-item">
+        <a class="nav-item-link" href="/about">About</a>
+      </li>
+    
+    <li class="nav-item">
+      <a class="nav-item-link nav-item-search" title="Search">
+        <i class="fe fe-search"></i>
+        Search
+      </a>
+    </li>
+  </ul>
+</nav>
+<nav class="navbar navbar-bottom">
+  <ul class="nav">
+    <li class="nav-item">
+      <div class="totop" id="totop">
+  <i class="fe fe-rocket"></i>
+</div>
+    </li>
+    <li class="nav-item">
+      
+    </li>
+  </ul>
+</nav>
+<div class="search-form-wrap">
+  <div class="local-search local-search-plugin">
+  <input type="search" id="local-search-input" class="local-search-input" placeholder="Search...">
+  <div id="local-search-result" class="local-search-result"></div>
+</div>
+</div>
+  </aside>
+  
+<script src="/js/jquery-2.0.3.min.js"></script>
+
+
+<script src="/js/jquery.justifiedGallery.min.js"></script>
+
+
+<script src="/js/lazyload.min.js"></script>
+
+
+<script src="/js/busuanzi-2.3.pure.min.js"></script>
+
+
+  
+<script src="/fancybox/jquery.fancybox.min.js"></script>
+
+
+
+
+  
+<script src="/js/tocbot.min.js"></script>
+
+  <script>
+    // Tocbot_v4.7.0  http://tscanlin.github.io/tocbot/
+    tocbot.init({
+      tocSelector: '.tocbot',
+      contentSelector: '.article-entry',
+      headingSelector: 'h1, h2, h3, h4, h5, h6',
+      hasInnerContainers: true,
+      scrollSmooth: true,
+      positionFixedSelector: '.tocbot',
+      positionFixedClass: 'is-position-fixed',
+      fixedSidebarOffset: 'auto',
+    });
+  </script>
+
+
+
+<script src="/js/ocean.js"></script>
+
+
+</body>
+</html>

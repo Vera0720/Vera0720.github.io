@@ -1,0 +1,361 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  
+  
+  
+    <meta name="description" content="治愈系少女">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <title>
+    js基础系列之bind原理 |
+    
+    今天天气晴朗</title>
+  
+    <link rel="shortcut icon" href="/favicon.ico">
+  
+  
+<link rel="stylesheet" href="/css/style.css">
+
+  
+    
+<link rel="stylesheet" href="/fancybox/jquery.fancybox.min.css">
+
+  
+  
+<script src="/js/pace.min.js"></script>
+
+<meta name="generator" content="Hexo 4.2.0"></head>
+
+<body>
+<main class="content">
+  <section class="outer">
+  
+
+<article id="post-js基础系列之bind原理" class="article article-type-post" itemscope itemprop="blogPost" data-scroll-reveal>
+
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
+  
+    <h1 class="article-title" itemprop="name">
+      js基础系列之bind原理
+    </h1>
+  
+  
+
+
+
+
+      </header>
+    
+
+    
+      <div class="article-meta">
+        <a href="/2018/07/04/js%E5%9F%BA%E7%A1%80%E7%B3%BB%E5%88%97%E4%B9%8Bbind%E5%8E%9F%E7%90%86/" class="article-date">
+  <time datetime="2018-07-04T08:23:55.000Z" itemprop="datePublished">2018-07-04</time>
+</a>
+        
+      </div>
+    
+
+    
+      
+    <div class="tocbot"></div>
+
+
+
+
+
+    
+
+    <div class="article-entry" itemprop="articleBody">
+      
+
+
+      
+
+      
+        <p>bind() 函数会创建一个新函数（称为绑定函数），新函数与被调函数（绑定函数的目标函数）具有相同的函数体（在 ECMAScript 5 规范中内置的call属性）。当目标函数被调用时 this 值绑定到 bind() 的第一个参数，该参数不能被重写。绑定函数被调用时，bind() 也接受预设的参数提供给原函数。一个绑定函数也能使用new操作符创建对象：这种行为就像把原函数当成构造器。提供的 this 值被忽略，同时调用时的参数被提供给模拟函数。</p>
+<a id="more"></a>
+
+<h3 id="思路"><a href="#思路" class="headerlink" title="思路"></a>思路</h3><pre><code>var value = 2;
+
+var foo = {
+    value: 1
+};
+
+function bar(name, age) {
+    return {
+        value: this.value,
+        name: name,
+        age: age
+    }
+};
+
+bar.call(foo, &quot;Jack&quot;, 20); // 直接执行了函数
+// {value: 1, name: &quot;Jack&quot;, age: 20}
+
+var bindFoo1 = bar.bind(foo, &quot;Jack&quot;, 20); // 返回一个函数
+bindFoo1();
+// {value: 1, name: &quot;Jack&quot;, age: 20}
+
+var bindFoo2 = bar.bind(foo, &quot;Jack&quot;); // 返回一个函数
+bindFoo2(20);
+// {value: 1, name: &quot;Jack&quot;, age: 20}</code></pre><p>通过上述代码可以看出bind有如下特性：<br>1、可以指定this<br>2、返回一个函数<br>3、可以传入参数<br>4、柯里化</p>
+<h3 id="第一步"><a href="#第一步" class="headerlink" title="第一步"></a>第一步</h3><ul>
+<li>针对第一点作用域绑定，这里可以使用apply或者call方法来实现，考虑到参数的个数，还是用apply方便些</li>
+<li>针对第二点因为bind方法不会立即执行函数，需要返回一个待执行的函数（这里用到闭包，可以返回一个函数）return function(){}</li>
+</ul>
+<pre><code>// 第一版
+Function.prototype.bind2 = function(context) {
+    var self = this; // this 指向调用者
+    return function () { // 实现第 2点
+        return self.apply(context); // 实现第 1 点
+    }
+}</code></pre><h3 id="第二步"><a href="#第二步" class="headerlink" title="第二步"></a>第二步</h3><ul>
+<li>对于第3点，使用arguments获取参数数组并作为self.apply()的第二个参数。</li>
+<li>对于第4点，获取返回函数的参数，然后同第3点的参数合并成一个参数数组，并作为self.apply()的第二个参数。</li>
+</ul>
+<pre><code>// 第二版
+Function.prototype.bind2 = function (context) {
+
+    var self = this;
+    // 实现第3点，因为第1个参数是指定的this,所以只截取第1个之后的参数
+    // arr.slice(begin); 即 [begin, end]
+    var args = Array.prototype.slice.call(arguments, 1); 
+
+    return function () {
+        // 实现第4点，这时的arguments是指bind返回的函数传入的参数
+        // 即 return function 的参数
+        var bindArgs = Array.prototype.slice.call(arguments);
+        return self.apply( context, args.concat(bindArgs) );
+    }
+}</code></pre><h3 id="模拟实现第三步"><a href="#模拟实现第三步" class="headerlink" title="模拟实现第三步"></a>模拟实现第三步</h3><p>有一个难点，bind有以下一个特性</p>
+<ul>
+<li>一个绑定函数也能使用new操作符创建对象：这种行为就像把原函数当成构造器，提供的this值被忽略，同时调用时的参数被提供给模拟函数。</li>
+</ul>
+<p>来个例子：</p>
+<pre><code>var value = 2;
+var foo = {
+    value: 1
+};
+function bar(name, age) {
+    this.habit = &apos;shopping&apos;;
+    console.log(this.value);
+    console.log(name);
+    console.log(age);
+}
+bar.prototype.friend = &apos;kevin&apos;;
+
+var bindFoo = bar.bind(foo, &apos;Jack&apos;);
+var obj = new bindFoo(20);
+// undefined
+// Jack
+// 20
+
+obj.habit;
+// shopping
+
+obj.friend;
+// kevin</code></pre><p>上面例子中，运行结果this.value 输出为undefined，这不是全局value也不是foo对象中的value，这说明bind的this对象失效了，new的实现中生成一个新的对象，这个时候的this指向的是obj。</p>
+<p>这里可以通过修改返回函数的原型来实现，代码如下：</p>
+<pre><code>// 第三版
+Function.prototype.bind2 = function (context) {
+    var self = this;
+    var args = Array.prototype.slice.call(arguments, 1);
+
+    var fBound = function () {
+        var bindArgs = Array.prototype.slice.call(arguments);
+
+        // 当作为构造函数时，this 指向实例，此时 this instanceof fBound 结果为 true，可以让实例获得来自绑定函数的值，即上例中实例会具有 habit 属性。
+        // 当作为普通函数时，this 指向 window，此时结果为 false，将绑定函数的 this 指向 context,即为你想绑定的那个对象上
+       return self.apply(
+            this instanceof fBound ? this : context, 
+            args.concat(bindArgs)
+        );
+    }
+    // 修改返回函数的 prototype 为绑定函数的 prototype，实例就可以继承绑定函数的原型中的值，即上例中 obj 可以获取到 bar 原型上的 friend。
+    fBound.prototype = this.prototype;
+    return fBound;
+}</code></pre><h3 id="第四步"><a href="#第四步" class="headerlink" title="第四步"></a>第四步</h3><p>上面实现中 fBound.prototype = this.prototype有一个缺点，直接修改 fBound.prototype 的时候，也会直接修改 this.prototype。</p>
+<p>上面的例子中</p>
+<pre><code>obj.__proto__.friend = &quot;Kitty&quot;; // 修改原型
+
+bar.prototype.friend; // Kitty 返回错误，这里被修改了 ，应该还是返回kevin</code></pre><p>解决方案是用一个空对象作为中介，把 fBound.prototype 赋值为空对象的实例（原型式继承）</p>
+<pre><code>var fNOP = function () {};            // 创建一个空对象
+fNOP.prototype = this.prototype;     // 空对象的原型指向绑定函数的原型
+fBound.prototype = new fNOP();        // 空对象的实例赋值给 fBound.prototype</code></pre><p>也可以使用Object.create生成一个新对象（Object.create方法创建一个新对象，使用现有的对象来提供新创建的对象的<strong>proto</strong>。）</p>
+<pre><code>fBound.prototype = Object.create(this.prototype);</code></pre><p>最后加上如果调用 bind 的不是函数，这时候需要抛出异常</p>
+<pre><code>Function.prototype.bind2 = function (context) {
+    if (typeof this !== &quot;function&quot;) {
+      throw new Error(&quot;Function.prototype.bind - what is trying to be bound is not callable&quot;);
+    }
+    var self = this;
+    var args = Array.prototype.slice.call(arguments, 1);
+
+    var fBound = function () {
+        var bindArgs = Array.prototype.slice.call(arguments);
+        return self.apply(
+            this instanceof fNOP ? this : context, 
+            args.concat(bindArgs)
+        );
+    }
+    fBound.prototype = Object.create(this.prototype);
+    return fBound;
+}</code></pre>
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://vera0720.github.io/2018/07/04/js%E5%9F%BA%E7%A1%80%E7%B3%BB%E5%88%97%E4%B9%8Bbind%E5%8E%9F%E7%90%86/" data-id="ckp1zpvvf00141pr90wc9cl63"
+         class="article-share-link">Share</a>
+      
+  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/js/" rel="tag">js</a></li></ul>
+
+    </footer>
+
+  </div>
+
+  
+    
+  <nav class="article-nav">
+    
+      <a href="/2018/11/13/js%E5%9F%BA%E7%A1%80%E7%B3%BB%E5%88%97%E4%B9%8B%E7%BB%A7%E6%89%BF/" class="article-nav-link">
+        <strong class="article-nav-caption">Newer posts</strong>
+        <div class="article-nav-title">
+          
+            js基础系列之继承
+          
+        </div>
+      </a>
+    
+    
+      <a href="/2018/06/22/js%E5%9F%BA%E7%A1%80%E7%B3%BB%E5%88%97%E4%B9%8Bthis%E8%A7%A3%E6%9E%90/" class="article-nav-link">
+        <strong class="article-nav-caption">Olde posts</strong>
+        <div class="article-nav-title">js基础系列之this解析</div>
+      </a>
+    
+  </nav>
+
+
+  
+
+  
+    
+  
+
+</article>
+
+
+
+</section>
+  <footer class="footer">
+  <div class="outer">
+    <ul class="list-inline">
+      <li>&copy; 2021 今天天气晴朗</li>
+      <li>Author <span>Vera</span></li>
+    </ul>
+  </div>
+</footer>
+
+</main>
+
+<aside class="sidebar sidebar-specter">
+  
+    <button class="navbar-toggle"></button>
+<nav class="navbar">
+  
+    <div class="logo">
+      <a href="/"><img src="/images/headImg.jpeg" alt="今天天气晴朗"></a>
+    </div>
+  
+  <ul class="nav nav-main">
+    
+      <li class="nav-item">
+        <a class="nav-item-link" href="/">Home</a>
+      </li>
+    
+      <li class="nav-item">
+        <a class="nav-item-link" href="/archives">Archives</a>
+      </li>
+    
+      <li class="nav-item">
+        <a class="nav-item-link" href="/gallery">Gallery</a>
+      </li>
+    
+      <li class="nav-item">
+        <a class="nav-item-link" href="/about">About</a>
+      </li>
+    
+    <li class="nav-item">
+      <a class="nav-item-link nav-item-search" title="Search">
+        <i class="fe fe-search"></i>
+        Search
+      </a>
+    </li>
+  </ul>
+</nav>
+<nav class="navbar navbar-bottom">
+  <ul class="nav">
+    <li class="nav-item">
+      <div class="totop" id="totop">
+  <i class="fe fe-rocket"></i>
+</div>
+    </li>
+    <li class="nav-item">
+      
+    </li>
+  </ul>
+</nav>
+<div class="search-form-wrap">
+  <div class="local-search local-search-plugin">
+  <input type="search" id="local-search-input" class="local-search-input" placeholder="Search...">
+  <div id="local-search-result" class="local-search-result"></div>
+</div>
+</div>
+  </aside>
+  
+<script src="/js/jquery-2.0.3.min.js"></script>
+
+
+<script src="/js/jquery.justifiedGallery.min.js"></script>
+
+
+<script src="/js/lazyload.min.js"></script>
+
+
+<script src="/js/busuanzi-2.3.pure.min.js"></script>
+
+
+  
+<script src="/fancybox/jquery.fancybox.min.js"></script>
+
+
+
+
+  
+<script src="/js/tocbot.min.js"></script>
+
+  <script>
+    // Tocbot_v4.7.0  http://tscanlin.github.io/tocbot/
+    tocbot.init({
+      tocSelector: '.tocbot',
+      contentSelector: '.article-entry',
+      headingSelector: 'h1, h2, h3, h4, h5, h6',
+      hasInnerContainers: true,
+      scrollSmooth: true,
+      positionFixedSelector: '.tocbot',
+      positionFixedClass: 'is-position-fixed',
+      fixedSidebarOffset: 'auto',
+    });
+  </script>
+
+
+
+<script src="/js/ocean.js"></script>
+
+
+</body>
+</html>

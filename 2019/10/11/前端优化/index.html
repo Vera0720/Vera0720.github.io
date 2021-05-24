@@ -1,0 +1,267 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  
+  
+  
+    <meta name="description" content="治愈系少女">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <title>
+    前端优化系列之首屏优化 |
+    
+    今天天气晴朗</title>
+  
+    <link rel="shortcut icon" href="/favicon.ico">
+  
+  
+<link rel="stylesheet" href="/css/style.css">
+
+  
+    
+<link rel="stylesheet" href="/fancybox/jquery.fancybox.min.css">
+
+  
+  
+<script src="/js/pace.min.js"></script>
+
+<meta name="generator" content="Hexo 4.2.0"></head>
+
+<body>
+<main class="content">
+  <section class="outer">
+  
+
+<article id="post-前端优化" class="article article-type-post" itemscope itemprop="blogPost" data-scroll-reveal>
+
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
+  
+    <h1 class="article-title" itemprop="name">
+      前端优化系列之首屏优化
+    </h1>
+  
+  
+
+
+
+
+      </header>
+    
+
+    
+      <div class="article-meta">
+        <a href="/2019/10/11/%E5%89%8D%E7%AB%AF%E4%BC%98%E5%8C%96/" class="article-date">
+  <time datetime="2019-10-11T02:41:33.000Z" itemprop="datePublished">2019-10-11</time>
+</a>
+        
+      </div>
+    
+
+    
+      
+    <div class="tocbot"></div>
+
+
+
+
+
+    
+
+    <div class="article-entry" itemprop="articleBody">
+      
+
+
+      
+
+      
+        <p>最近有个需求，就是首屏访问的时候速度很慢，产品想让我们优化到1秒内打开，所以大概用了一个星期的时间，搞定了优化。<br>原则上多使用内存，缓存或者其他方法，减少CPU计算，减少网络请求，减少IO操作（硬盘读写）</p>
+<a id="more"></a>
+
+<p>首先考虑到从输入URL到页面加载完成，完整的链路过程。<br>DNS解析-&gt;TCP连接-&gt;HTTP请求-&gt;HTTP响应-&gt;渲染<br><img src="/image/%E5%89%8D%E7%AB%AF%E4%BC%98%E5%8C%96/1.jpg" alt="1.png"></p>
+<h2 id="http层面优化"><a href="#http层面优化" class="headerlink" title="http层面优化"></a>http层面优化</h2><p>减少cookie<br>coockie内的有关信息是通过HTTP文件头来在web服务器和浏览器之间进行交流的。</p>
+<p>使用http缓存<br>HTTP缓存有多种规则，根据是否需要重新向服务器发起请求来分类，一般分为强制缓存和对比缓存，强制缓存判断HTTP首部字段：cache-control,Expires.Expires是一个绝对时间，即服务器时间。浏览器检查当前时间，如果还没到失效时间就直接使用缓存文件，但是该方法存在一个问题，服务器时间和客户端时间可能不一致。Cache-control中的max-age保存一个相对时间，例如cache-control:max-age = 484200,表示浏览器收到文件后，缓存在484200s内有效，如果同时存在cache-control和Expires，浏览器总是优先使用cache-control.<br>对比缓存通过HTTP的last-modified,Etag字段进行判断，last-modified是第一次请求资源时，服务器返回的字段，表示最后一次更新的时间，下次浏览器请求资源时就发送if-modified-since字段，服务器用本地Last-modified时间与if-modified-since时间比较，如果不一致就认为缓存已过期并返回新资源给浏览器，如果时间一致就发送304状态码，让浏览器继续使用缓存。Etag：资源的实体标志（哈西字符串），当资源内容更新时Etag会改变，服务器会判断Etag是否发生变化，如果变化则返回新资源。</p>
+<p><img src="/image/%E8%BE%93%E5%85%A5url%E4%BC%9A%E5%8F%91%E7%94%9F%E4%BB%80%E4%B9%88/3.jpg" alt="3"></p>
+<h2 id="资源优化"><a href="#资源优化" class="headerlink" title="资源优化"></a>资源优化</h2><p>图片优化<br>jpeg/jpg:体积小，有损压缩，一般背景图，轮播图会用得到，缺点不支持透明，压缩过后有些图片会模糊<br>png:无损压缩，支持透明，小logo并且颜色丰富的时候会用到，但是它体积较大<br>svg:无限放大不失真，体积更小，压缩性更强，兼容性好，但渲染成本高<br>base64:编码，可减少请求次数，非常小的小icon,但base64编码后，图片会膨胀为原来大小的3/4<br>按照需求选择更适合的图片<br>同时避免image标签的src为空，因为浏览器加载到image标签发现它空，就会以为自己没加载到，会再次请求一遍。</p>
+<p>体积优化<br>压缩静态资源：合并打包的js、css文件体积一般会比较大，一些图片也会比较大，这个时候必须要压缩处理。<br>编写高效率的CSS：减少深层次嵌套，减少元素选择器使用等等</p>
+<p>资源加载优化<br>静态资源部署cdn<br>按需加载，同域名内的文件充分的进行压缩<br>资源预加载，通过prefetch/preload</p>
+<pre><code>// 实行prefetch，注意只有webpack 4版本才支持prefetch功能。
+import(
+    /* webpackPrefetch: true */
+    /*webpackChunkName: &apos;topic&apos;*/
+    &quot;../topic&quot;
+  )</code></pre><blockquote>
+<p>webpack的动态import()需要指定包命，如果不在注释中说明包名，那么用了几次import() , webpack就会给同一个文件打包多少次。使得我们prefetch的文件和路由中要用到的文件并不是同一个文件。</p>
+</blockquote>
+<h2 id="渲染优化"><a href="#渲染优化" class="headerlink" title="渲染优化"></a>渲染优化</h2><p>DOM节点优化<br>太多不利于seo，也不利于渲染</p>
+<p>懒加载<br>最常见的场景是在图片的懒加载中，先用一种loading的图片占位，然后再用异步的方式加载图片。等真正图片加载完成后就填充进图片节点中去。</p>
+<p>动态加载<br>动态加载脚本就是利用javascript代码来加载脚本，通常是手工创建script元素，然后等到HTML文档解析完毕后插入到文档中去。这样就可以很好地控制脚本加载的时机，从而避免阻塞问题。</p>
+<pre><code>function loadJS(src) {
+  const script = document.createElement(&apos;script&apos;);
+  script.src = src;
+  document.getElementsByTagName(&apos;head&apos;)[0].appendChild(script);
+}
+loadJS(&apos;http://example.com/scq000.js&apos;);</code></pre><p>未来所需组件预加载</p>
+<p>减少重排重绘<br>当DOM的变化引发了元素几何属性的变化，比如改变元素的宽高，元素的位置，导致浏览器不得不重新计算元素的几何属性，并重新构建渲染树，这个过程称为“重排”。完成重排后，要将重新构建的渲染树渲染到屏幕上，这个过程就是“重绘”。<br>简单的说，重排负责元素的几何属性更新，重绘负责元素的样式更新。而且，重排必然带来重绘，但是重绘未必带来重排。比如，改变某个元素的背景，这个就不涉及元素的几何属性，所以只发生重绘。<br>触发重排和重绘的情况：<br>添加、删除、更新 DOM 节点<br>display: none 隐藏一个 DOM 节点-触发重排和重绘<br>通过 visibility: hidden 隐藏一个 DOM 节点-只触发重绘，因为没有几何变化<br>移动或者给页面中的 DOM 节点添加动画<br>添加一个样式表，调整样式属性<br>用户行为，例如调整窗口大小，改变字号，或者滚动。<br>解决方法：<br>让该元素脱离文档流-&gt;对其进行多重改变-&gt;将元素带回文档中</p>
+<h2 id="打包优化"><a href="#打包优化" class="headerlink" title="打包优化"></a>打包优化</h2><p>mini-css-extract-plugin提取css<br>new OptimizeCSSAssetsPlugin()压缩css<br>cdn<br>splitChunks</p>
+<blockquote>
+<p>提取webpack的runtime代码到单独manifest的文件<br> 所有静态依赖第三方库被分割到同一个文件中,通过cacheGroup<br> 多入口情况下：被多次引用的自研发模块统一放到一个文件中，便于多个入口共享，整一个common<br> 配置缓存，new webpack.HashedModuleIdsPlugin()<br> 多入口情况下：在new HtmlWebpackPlugin下的chunks写如对应页面的引用模块名字</p>
+</blockquote>
+<p>5.路由按需加载（webpackchunkname）</p>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://vera0720.github.io/2019/10/11/%E5%89%8D%E7%AB%AF%E4%BC%98%E5%8C%96/" data-id="ckp1zpvvz00231pr95yb48lys"
+         class="article-share-link">Share</a>
+      
+  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/js/" rel="tag">js</a></li></ul>
+
+    </footer>
+
+  </div>
+
+  
+    
+  <nav class="article-nav">
+    
+      <a href="/2019/10/20/es6%E7%B3%BB%E5%88%97%E4%B9%8Bpromise/" class="article-nav-link">
+        <strong class="article-nav-caption">Newer posts</strong>
+        <div class="article-nav-title">
+          
+            es6系列之promise
+          
+        </div>
+      </a>
+    
+    
+      <a href="/2019/08/20/vue%E7%B3%BB%E5%88%97%E4%B9%8Bkeep-alive/" class="article-nav-link">
+        <strong class="article-nav-caption">Olde posts</strong>
+        <div class="article-nav-title">vue系列之keep-alive</div>
+      </a>
+    
+  </nav>
+
+
+  
+
+  
+    
+  
+
+</article>
+
+
+
+</section>
+  <footer class="footer">
+  <div class="outer">
+    <ul class="list-inline">
+      <li>&copy; 2021 今天天气晴朗</li>
+      <li>Author <span>Vera</span></li>
+    </ul>
+  </div>
+</footer>
+
+</main>
+
+<aside class="sidebar sidebar-specter">
+  
+    <button class="navbar-toggle"></button>
+<nav class="navbar">
+  
+    <div class="logo">
+      <a href="/"><img src="/images/headImg.jpeg" alt="今天天气晴朗"></a>
+    </div>
+  
+  <ul class="nav nav-main">
+    
+      <li class="nav-item">
+        <a class="nav-item-link" href="/">Home</a>
+      </li>
+    
+      <li class="nav-item">
+        <a class="nav-item-link" href="/archives">Archives</a>
+      </li>
+    
+      <li class="nav-item">
+        <a class="nav-item-link" href="/gallery">Gallery</a>
+      </li>
+    
+      <li class="nav-item">
+        <a class="nav-item-link" href="/about">About</a>
+      </li>
+    
+    <li class="nav-item">
+      <a class="nav-item-link nav-item-search" title="Search">
+        <i class="fe fe-search"></i>
+        Search
+      </a>
+    </li>
+  </ul>
+</nav>
+<nav class="navbar navbar-bottom">
+  <ul class="nav">
+    <li class="nav-item">
+      <div class="totop" id="totop">
+  <i class="fe fe-rocket"></i>
+</div>
+    </li>
+    <li class="nav-item">
+      
+    </li>
+  </ul>
+</nav>
+<div class="search-form-wrap">
+  <div class="local-search local-search-plugin">
+  <input type="search" id="local-search-input" class="local-search-input" placeholder="Search...">
+  <div id="local-search-result" class="local-search-result"></div>
+</div>
+</div>
+  </aside>
+  
+<script src="/js/jquery-2.0.3.min.js"></script>
+
+
+<script src="/js/jquery.justifiedGallery.min.js"></script>
+
+
+<script src="/js/lazyload.min.js"></script>
+
+
+<script src="/js/busuanzi-2.3.pure.min.js"></script>
+
+
+  
+<script src="/fancybox/jquery.fancybox.min.js"></script>
+
+
+
+
+  
+<script src="/js/tocbot.min.js"></script>
+
+  <script>
+    // Tocbot_v4.7.0  http://tscanlin.github.io/tocbot/
+    tocbot.init({
+      tocSelector: '.tocbot',
+      contentSelector: '.article-entry',
+      headingSelector: 'h1, h2, h3, h4, h5, h6',
+      hasInnerContainers: true,
+      scrollSmooth: true,
+      positionFixedSelector: '.tocbot',
+      positionFixedClass: 'is-position-fixed',
+      fixedSidebarOffset: 'auto',
+    });
+  </script>
+
+
+
+<script src="/js/ocean.js"></script>
+
+
+</body>
+</html>

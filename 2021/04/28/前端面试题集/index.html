@@ -1,0 +1,2394 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  
+  
+  
+    <meta name="description" content="治愈系少女">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <title>
+    前端面试题集 |
+    
+    今天天气晴朗</title>
+  
+    <link rel="shortcut icon" href="/favicon.ico">
+  
+  
+<link rel="stylesheet" href="/css/style.css">
+
+  
+    
+<link rel="stylesheet" href="/fancybox/jquery.fancybox.min.css">
+
+  
+  
+<script src="/js/pace.min.js"></script>
+
+<meta name="generator" content="Hexo 4.2.0"></head>
+
+<body>
+<main class="content">
+  <section class="outer">
+  
+
+<article id="post-前端面试题集" class="article article-type-post" itemscope itemprop="blogPost" data-scroll-reveal>
+
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
+  
+    <h1 class="article-title" itemprop="name">
+      前端面试题集
+    </h1>
+  
+  
+
+
+
+
+      </header>
+    
+
+    
+      <div class="article-meta">
+        <a href="/2021/04/28/%E5%89%8D%E7%AB%AF%E9%9D%A2%E8%AF%95%E9%A2%98%E9%9B%86/" class="article-date">
+  <time datetime="2021-04-28T14:30:22.000Z" itemprop="datePublished">2021-04-28</time>
+</a>
+        
+      </div>
+    
+
+    
+      
+    <div class="tocbot"></div>
+
+
+
+
+
+    
+
+    <div class="article-entry" itemprop="articleBody">
+      
+
+
+      
+
+      
+        <p>按照分类整理了一波面试题，后续会慢慢补充答案的。</p>
+<a id="more"></a>
+
+<h2 id="Nginx"><a href="#Nginx" class="headerlink" title="Nginx"></a>Nginx</h2><h3 id="负载均衡"><a href="#负载均衡" class="headerlink" title="负载均衡"></a>负载均衡</h3><p>用户—internet—-负载—&gt;可用区1/2/3—&gt;数据库<br>健康检查：消除单点故障<br>弹性伸缩：根据流量弹性伸缩<br>多可用区部署：跨区容灾</p>
+<h3 id="nginx"><a href="#nginx" class="headerlink" title="nginx"></a>nginx</h3><p>特点：<br>更快：单次请求会有更快的相应<br>高扩展：由多个不同功能，层次，类型且耦合极低的模块组成<br>高可靠：稳定，简单，每个woker相对独立，master进程在一个worker出错的时候会快速建立新的worker<br>低内存消耗：1万哥费活跃HTTP keep-alive连接在nginx消耗2.5M内存<br>单机支持10万以上并发</p>
+<h3 id="配置"><a href="#配置" class="headerlink" title="配置"></a>配置</h3><p>http模块设置<br>    http{<br>        gzip on<br>        upstream {</p>
+<pre><code>    }
+    server{
+        listen XXX:XX
+        location / {
+            root /usr/local/nginx
+            alias /usr/local/conf/nginx
+            index index html
+            try_files
+            eror_page 404
+        }
+    }
+}</code></pre><p>网络连接设置<br>读取http头超时时间 client_header_timeout <time><br>读取http包体超时时间 client_body_timeout <time><br>发送响应的超时时间 send_timeout <time><br>不使用4次tcp关闭而是直接想用户发送RST重置包 reset_timeout_connection on|off<br>keepalive_disable<br>keepalive_timeout <n><br>keepalive_requests <n></p>
+<h3 id="反向代理"><a href="#反向代理" class="headerlink" title="反向代理"></a>反向代理</h3><p>正向代理：代理用户<br>反向代理：代理服务端接受用户请求<br><img src="/image/%E5%89%8D%E7%AB%AF%E9%9D%A2%E8%AF%95%E9%A2%98%E9%9B%86/9.jpg" alt="9"></p>
+<h2 id="网络"><a href="#网络" class="headerlink" title="网络"></a>网络</h2><h3 id="http报文结构"><a href="#http报文结构" class="headerlink" title="http报文结构"></a>http报文结构</h3><p>报文一般包括了：通用头部，请求/响应头部，请求/响应体<br>通用头部:</p>
+<pre><code>Request Url: 请求的web服务器地址
+
+Request Method: 请求方式（Get、POST、OPTIONS、PUT、HEAD、DELETE、CONNECT、TRACE）
+
+Status Code: 请求的返回状态码，如200代表成功
+
+Remote Address: 请求的远程服务器地址（会转为IP）</code></pre><p>请求/响应头部</p>
+<pre><code>请求头
+Accept: 接收类型，表示浏览器支持的MIME类型
+（对标服务端返回的Content-Type）
+Accept-Encoding：浏览器支持的压缩类型,如gzip等,超出类型不能接收
+Content-Type：客户端发送出去实体内容的类型
+Cache-Control: 指定请求和响应遵循的缓存机制，如no-cache
+If-Modified-Since：对应服务端的Last-Modified，用来匹配看文件是否变动，只能精确到1s之内，http1.0中
+Expires：缓存控制，在这个时间内不会请求，直接使用缓存，http1.0，而且是服务端时间
+Max-age：代表资源在本地缓存多少秒，有效时间内不会请求，而是使用缓存，http1.1中
+If-None-Match：对应服务端的ETag，用来匹配文件内容是否改变（非常精确），http1.1中
+Cookie: 有cookie并且同域访问时会自动带上
+Connection: 当浏览器与服务器通信时对于长连接如何进行处理,如keep-alive
+Host：请求的服务器URL
+Origin：最初的请求是从哪里发起的（只会精确到端口）,Origin比Referer更尊重隐私
+Referer：该页面的来源URL(适用于所有类型的请求，会精确到详细页面地址，csrf拦截常用到这个字段)
+User-Agent：用户客户端的一些必要信息，如UA头部等
+
+响应头
+Access-Control-Allow-Headers: 服务器端允许的请求Headers
+Access-Control-Allow-Methods: 服务器端允许的请求方法
+Access-Control-Allow-Origin: 服务器端允许的请求Origin头部（譬如为*）
+Content-Type：服务端返回的实体内容的类型
+Date：数据从服务器发送的时间
+Cache-Control：告诉浏览器或其他客户，什么环境可以安全的缓存文档
+Last-Modified：请求资源的最后修改时间
+Expires：应该在什么时候认为文档已经过期,从而不再缓存它
+Max-age：客户端的本地资源应该缓存多少秒，开启了Cache-Control后有效
+ETag：请求变量的实体标签的当前值
+Set-Cookie：设置和页面关联的cookie，服务器通过这个头部把cookie传给客户端
+Keep-Alive：如果客户端有keep-alive，服务端也会有响应（如timeout=38）
+Server：服务器的一些相关信息</code></pre><p>ps:插一句cookie的交互<br><img src="/image/%E5%89%8D%E7%AB%AF%E9%9D%A2%E8%AF%95%E9%A2%98%E9%9B%86/5.jpg" alt="5"><br>请求/响应实体<br>请求实体中会将一些需要的参数都放入进入（用于post请求），一般响应实体中，就是放服务端需要传给客户端的内容</p>
+<h3 id="输入url发生了什么"><a href="#输入url发生了什么" class="headerlink" title="输入url发生了什么"></a>输入url发生了什么</h3><h4 id="浏览器的进程和线程"><a href="#浏览器的进程和线程" class="headerlink" title="浏览器的进程和线程"></a>浏览器的进程和线程</h4><h5 id="什么是进程和线程"><a href="#什么是进程和线程" class="headerlink" title="什么是进程和线程"></a>什么是进程和线程</h5><p><strong>进程：进程是拥有资源和独立运行的最小单位，也是程序执行的最小单位。</strong></p>
+<ul>
+<li>啥意思呢这是？举个例子，爸爸打算今天给你蒸猪肉大葱馅儿的包子，爸爸准备了面，肉，葱，调料，爸爸还在网上搜索了一篇如何包包子的食谱。</li>
+<li>食谱就是程序。</li>
+<li>爸爸就是处理器</li>
+<li>面粉，肉，大葱等等原料就是输入数据</li>
+<li>进程就是爸爸看食谱，准备原料以及包好包子上锅蒸等所有动作的总和。</li>
+</ul>
+<p><strong>线程：线程（thread）是操作系统能够进行运算调度的最小单位，它被包含在进程之中，是进程中的实际运作单位。</strong></p>
+<ul>
+<li>啥意思呢这是？我们再举个例子，有一串作业需要写。</li>
+<li>如果你一个人按顺序写，这就是单线程。</li>
+<li>你找了好几个人同时帮你写，给大家布置任务，这叫创建线程。</li>
+<li>你负责调度他们，你叫主线程，给你写作业的这些人，是子线程，你们合起来叫多线程</li>
+<li>这些人写的时候，每个人用的纸和笔都是共享的，这叫多线程资源共享。</li>
+<li>这些人在都需要橡皮，可是橡皮只有一个，这叫冲突。</li>
+<li>解决冲突的办法有很多，比如排队等候、等上一个人用完后喊你，这叫线程同步。</li>
+<li>你跟大家说可以开始写了，不然他们就等着啥也不干，这叫启动线程。</li>
+<li>如果小王写的作业非常重要，你可能会在旁边看着他写一会儿，这叫线程参与。</li>
+</ul>
+<h5 id="进程和线程的关系"><a href="#进程和线程的关系" class="headerlink" title="进程和线程的关系"></a>进程和线程的关系</h5><p>进程中，任何一个线程的的出错都会导致进程的崩溃<br>线程之间共享进程中的数据<br>当一个进程关闭之后，操作系统会回收进程所占用的内存<br>进程之间的内容相互隔离</p>
+<h5 id="单进程浏览器"><a href="#单进程浏览器" class="headerlink" title="单进程浏览器"></a>单进程浏览器</h5><p>单进程浏览器是指浏览器的所有功能运行在同一个进程里。很容易理解，任何一个线程出错，都会导致整个浏览器的崩溃。一个页面的执行时间长，可能会导致所有页面都点不了。内存无法全部回收也会导致内存泄漏。并且很容易被脚本攻击。</p>
+<h5 id="多进程浏览器"><a href="#多进程浏览器" class="headerlink" title="多进程浏览器"></a>多进程浏览器</h5><p>最新的 Chrome浏览器包括：1个浏览器主进程、1个GPU进程、1个网络进程、多个渲染进程和多个插件进程。其实就是当你启动浏览器的时候，此时至少有1 个浏览器主进程、1个GPU进程、1个网络进程，1个渲染进程的运行，当你打开两个tab页的时候，就是1个浏览器主进程、1个GPU进程、1个网络进程，2个渲染进程。如果打开的页面有运行插件的话，还需要再加上1个插件进程。</p>
+<ul>
+<li><p>浏览器进程。主要负责界面显示、用户交互、子进程管理，同时提供存储等功能。</p>
+</li>
+<li><p>渲染进程。核心任务是将 HTML、CSS 和 JavaScript 转换为用户可以与之交互的网页，排版引擎 Blink 和 JavaScript 引擎 V8 都是运行在该进程中，默认情况下，Chrome 会为每个 Tab 标签创建一个渲染进程。出于安全考虑，渲染进程都是运行在沙箱模式下。</p>
+</li>
+<li><p>GPU 进程。其实，Chrome 刚开始发布的时候是没有 GPU 进程的。而 GPU 的使用初衷是为了实现 3D CSS 的效果，只是随后网页、Chrome 的 UI 界面都选择采用 GPU 来绘制，这使得 GPU 成为浏览器普遍的需求。最后，Chrome 在其多进程架构上也引入了 GPU 进程。</p>
+</li>
+<li><p>网络进程。主要负责页面的网络资源加载，之前是作为一个模块运行在浏览器进程里面的，直至最近才独立出来，成为一个单独的进程。</p>
+</li>
+<li><p>插件进程。主要是负责插件的运行，因插件易崩溃，所以需要通过插件进程来隔离，以保证插件进程崩溃不会对浏览器和页面造成影响。</p>
+</li>
+</ul>
+<h4 id="解析网址会发生什么"><a href="#解析网址会发生什么" class="headerlink" title="解析网址会发生什么"></a>解析网址会发生什么</h4><h5 id="解析url"><a href="#解析url" class="headerlink" title="解析url"></a>解析url</h5><p>输入URL后，浏览器会解析出协议、主机、端口、路径等信息，并构造一个HTTP请求。</p>
+<h5 id="浏览器缓存"><a href="#浏览器缓存" class="headerlink" title="浏览器缓存"></a>浏览器缓存</h5><p>浏览器发送请求前，根据请求头的expires和cache-control判断是否命中（包括是否过期）强缓存策略，如果命中，直接从缓存获取资源，并不会发送请求。如果没有命中，则进入下一步。<br>没有命中强缓存规则，浏览器会发送请求，根据请求头的last-modified和etag判断是否命中协商缓存，如果命中，直接从缓存获取资源。如果没有命中，则进入下一步。<br>如果前两步都没有命中，则直接从服务端获取资源。<br><img src="https://p3-juejin.byteimg.com/tos-cn-i-k3u1fbpfcp/d92b25f4404c43459e07e133638fe4fa~tplv-k3u1fbpfcp-watermark.image" alt=""></p>
+<p>html页面禁用缓存的设置如下：</p>
+<pre><code>&lt;meta http-equiv=&quot;pragma&quot; content=&quot;no-cache&quot;&gt;
+// 仅有IE浏览器才识别的标签，不一定会在请求字段加上Pragma，但的确会让当前页面每次都发新请求
+&lt;meta http-equiv=&quot;cache-control&quot; content=&quot;no-cache&quot;&gt;
+// 其他主流浏览器识别的标签
+&lt;meta http-equiv=&quot;expires&quot; content=&quot;0&quot;&gt;
+// 仅有IE浏览器才识别的标签，该方式仅仅作为知会IE缓存时间的标记，你并不能在请求或响应报文中找到Expires字段
+html设置缓存如下：
+&lt;meta http-equiv=&quot;Cache-Control&quot; content=&quot;max-age=7200&quot; /&gt;
+// 其他主流浏览器识别的标签
+&lt;meta http-equiv=&quot;Expires&quot; content=&quot;Mon, 20 Aug 2018 23:00:00 GMT&quot; /&gt;
+// 仅有IE浏览器才识别的标签</code></pre><p>我们经常在浏览器控制台能看到Service Worker，Memory Cache，Disk Cache，Push Cache这几种，其实他们是将缓存存起来的不同方式，对应不同位置。</p>
+<ul>
+<li>Service Worker<br>Service Worker是运行在浏览器背后的独立线程，一般可以用来实现缓存功能。使用Service Worker的话，传输协议必须为HTTPS。因为Service Worker中涉及到请求拦截，所以必须使用HTTPS协议来保障安全。Service Worker 的缓存与浏览器其他内建的缓存机制不同，它可以让我们自由控制缓存哪些文件、如何匹配缓存、如何读取缓存，并且缓存是持续性的。</li>
+</ul>
+<p>Service Worker 实现缓存功能一般分为三个步骤：首先需要先注册Service Worker，然后监听到install事件以后就可以缓存需要的文件，那么在下次用户访问的时候就可以通过拦截请求的方式查询是否存在缓存，存在缓存的话就可以直接读取缓存文件，否则就去请求数据。</p>
+<p>当Service Worker没有命中缓存的时候，我们需要去调用fetch函数获取数据。也就是说，如果我们没有在Service Worker命中缓存的话，会根据缓存查找优先级去查找数据。但是不管我们是从Memory Cache中还是从网络请求中获取的数据，浏览器都会显示我们是从Service Worker中获取的内容。</p>
+<ul>
+<li>Memory Cache<br>Memory Cache也就是内存中的缓存，主要包含的是当前中页面中已经抓取到的资源,例如页面上已经下载的样式、脚本、图片等。读取内存中的数据肯定比磁盘快,内存缓存虽然读取高效，可是缓存持续性很短，会随着进程的释放而释放。 一旦我们关闭Tab页面，内存中的缓存也就被释放了。那么既然内存缓存这么高效，我们是不是能让数据都存放在内存中呢？这是不可能的。计算机中的内存一定比硬盘容量小得多，操作系统需要精打细算内存的使用，所以能让我们使用的内存必然不多。</li>
+</ul>
+<p>需要注意的事情是，内存缓存在缓存资源时并不关心返回资源的HTTP缓存头Cache-Control是什么值，同时资源的匹配也并非仅仅是对URL做匹配，还可能会对Content-Type，CORS等其他特征做校验。</p>
+<ul>
+<li><p>Disk Cache<br>Disk Cache也就是存储在硬盘中的缓存，读取速度慢点，但是什么都能存储到磁盘中，比之Memory Cache胜在容量和存储时效性上。</p>
+</li>
+<li><p>Push Cache<br>Push Cache（推送缓存）是 HTTP/2 中的内容，当以上三种缓存都没有命中时，它才会被使用。它只在会话（Session）中存在，一旦会话结束就被释放，并且缓存时间也很短暂，在Chrome浏览器中只有5分钟左右，同时它也并非严格执行HTTP头中的缓存指令。</p>
+</li>
+</ul>
+<p>所有的资源都能被推送，并且能够被缓存，但是Edge和Safari浏览器支持相对比较差；可以推送no-cache和no-store的资源；一旦连接被关闭，Push Cache 就被释放；多个页面可以使用同一个HTTP/2的连接，也就可以使用同一个Push Cache。这主要还是依赖浏览器的实现而定，出于对性能的考虑，有的浏览器会对相同域名但不同的tab标签使用同一个HTTP连接；Push Cache 中的缓存只能被使用一次；浏览器可以拒绝接受已经存在的资源推送；你可以给其他域名推送资源。</p>
+<h5 id="DNS解析"><a href="#DNS解析" class="headerlink" title="DNS解析"></a>DNS解析</h5><p>DNS管理主机名和IP地址间的对应关系。</p>
+<p>域名解析的过程实际是将域名还原为IP地址的过程。首先浏览器先检查本地hosts文件是否有这个网址映射关系，如果有就调用这个IP地址映射，完成域名解析。如果没找到则会查找本地DNS解析器缓存，如果查找到则返回。如果还是没有找到则会查找本地DNS服务器，如果查找到则返回。最后迭代查询，按根域服务器 -&gt;顶级域（.cn）-&gt;第二层域（hb.cn） -&gt;子域（ <a href="http://www.hb.cn" target="_blank" rel="noopener">www.hb.cn</a> ）的顺序找到IP地址。</p>
+<h4 id="TCP传输"><a href="#TCP传输" class="headerlink" title="TCP传输"></a>TCP传输</h4><h5 id="TCP建立连接"><a href="#TCP建立连接" class="headerlink" title="TCP建立连接"></a>TCP建立连接</h5><ul>
+<li>第一次握手： 建立连接时，客户端发送syn包（syn=j）到服务器，并进入SYN_SENT状态，等待服务器确认；</li>
+<li>第二次握手： 服务器收到syn包，必须确认客户的SYN（ack=j+1），同时自己也发送一个SYN包（syn=k），即SYN+ACK包，此时服务器进入SYN_RECV状态；</li>
+<li>第三次握手： 客户端收到服务器的SYN+ACK包，向服务器发送确认包ACK(ack=k+1），此包发送完毕，客户端和服务器进入ESTABLISHED（TCP连接成功）状态，完成三次握手。</li>
+<li>完成三次握手，客户端与服务器开始传送数据。</li>
+</ul>
+<p><img src="https://p9-juejin.byteimg.com/tos-cn-i-k3u1fbpfcp/b3bcbb1aaeb941249e9ae76032152b84~tplv-k3u1fbpfcp-watermark.image" alt=""></p>
+<h5 id="传输数据"><a href="#传输数据" class="headerlink" title="传输数据"></a>传输数据</h5><p>建立好连接后，会发起HTTP请求，每个发过去的包都会经历下图的过程。</p>
+<p><img src="https://p9-juejin.byteimg.com/tos-cn-i-k3u1fbpfcp/58071636045b4f548c2a7c7bd86a5712~tplv-k3u1fbpfcp-watermark.image" alt=""></p>
+<h5 id="解析响应数据"><a href="#解析响应数据" class="headerlink" title="解析响应数据"></a>解析响应数据</h5><p>服务器接收并解析请求，将请求转发到服务程序，服务程序读取完整请求并准备HTTP响应，服务器将响应报文又是一顿封包，再次经历了上图的过程，通过TCP发还给浏览器。浏览器接收到请求。</p>
+<h4 id="浏览器渲染"><a href="#浏览器渲染" class="headerlink" title="浏览器渲染"></a>浏览器渲染</h4><ul>
+<li><p>构建dom树<br>因为浏览器无法直接理解和使用HTML，所以需要将HTML转换为浏览器能够理解的结构——DOM树</p>
+</li>
+<li><p>样式计算<br>1.把 CSS 转换为浏览器能够理解的结构，当渲染引擎接收到 CSS 文本时，会执行一个转换操作，将 CSS 文本转换为浏览器可以理解的结构——styleSheets。<br>2.转换样式表中的属性值，使其标准化。<br>3.计算出 DOM 树中每个节点的具体样式。样式计算阶段的目的是为了计算出 DOM 节点中每个元素的具体样式，在计算过程中需要遵守 CSS 的继承和层叠两个规则。<br>CSS 样式来源主要有三种：通过 link 引用的外部 CSS 文件</p>
+</li>
+<li><p>布局阶段<br>1.创建布局树，在显示之前，我们还要额外地构建一棵只包含可见元素布局树。<br>遍历 DOM 树中的所有可见节点，并把这些节点加到布局树中；<br>而不可见的节点会被布局树忽略掉。<br>2.布局计算</p>
+</li>
+<li><p>分层<br>浏览器的页面实际上被分成了很多图层，这些图层叠加后合成了最终的页面<br><img src="https://p1-juejin.byteimg.com/tos-cn-i-k3u1fbpfcp/ac5bb588f4b943eaac8c9cc7a31ae0c3~tplv-k3u1fbpfcp-watermark.image" alt=""><br>渲染引擎为特定的节点创建新的图层条件是什么？<br>1.拥有层叠上下文属性的元素会被提升为单独的一层。<br><img src="https://p3-juejin.byteimg.com/tos-cn-i-k3u1fbpfcp/3decdf0a553146698a85bc2f377feaa0~tplv-k3u1fbpfcp-watermark.image" alt=""><br>2.需要剪裁（clip）的地方也会被创建为图层。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">&lt;style&gt;</span><br><span class="line">      div &#123;</span><br><span class="line">            width: 200;</span><br><span class="line">            height: 200;</span><br><span class="line">            overflow:auto;</span><br><span class="line">            background: gray;</span><br><span class="line">        &#125; </span><br><span class="line">&lt;&#x2F;style&gt;</span><br><span class="line">&lt;body&gt;</span><br><span class="line">    &lt;div &gt;</span><br><span class="line">        &lt;p&gt;所以元素有了层叠上下文的属性或者需要被剪裁，那么就会被提升成为单独一层，你可以参看下图：&lt;&#x2F;p&gt;</span><br><span class="line">        &lt;p&gt;从上图我们可以看到，document层上有A和B层，而B层之上又有两个图层。这些图层组织在一起也是一颗树状结构。&lt;&#x2F;p&gt;</span><br><span class="line">        &lt;p&gt;图层树是基于布局树来创建的，为了找出哪些元素需要在哪些层中，渲染引擎会遍历布局树来创建层树（Update LayerTree）。&lt;&#x2F;p&gt; </span><br><span class="line">    &lt;&#x2F;div&gt;</span><br><span class="line">&lt;&#x2F;body&gt;</span><br></pre></td></tr></table></figure>
+<p>在这里我们把 div 的大小限定为 200 * 200 像素，而 div 里面的文字内容比较多，文字所显示的区域肯定会超出 200 * 200 的面积，这时候就产生了剪裁，渲染引擎会把裁剪文字内容的一部分用于显示在 div 区域，下图是运行时的执行结果：</p>
+</li>
+</ul>
+<p><img src="https://p6-juejin.byteimg.com/tos-cn-i-k3u1fbpfcp/778254c20b53477ca80e66d8f3ec55b0~tplv-k3u1fbpfcp-watermark.image" alt=""></p>
+<p>出现这种裁剪情况的时候，渲染引擎会为文字部分单独创建一个层，如果出现滚动条，滚动条也会被提升为单独的层。你可以参考下图：<br><img src="https://p9-juejin.byteimg.com/tos-cn-i-k3u1fbpfcp/fef0abfb42694a24a1fab18ed4c0dae3~tplv-k3u1fbpfcp-watermark.image" alt=""></p>
+<ul>
+<li><p>图层绘制<br>渲染引擎实现图层的绘制：会把一个图层的绘制拆分成很多小的绘制指令，然后再把这些指令按照顺序组成一个待绘制列表。</p>
+</li>
+<li><p>栅格化（raster）操作<br><img src="https://p9-juejin.byteimg.com/tos-cn-i-k3u1fbpfcp/d6d8dd4865e346cfa3f90396c7e257a9~tplv-k3u1fbpfcp-watermark.image" alt=""><br>当图层的绘制列表准备好之后，主线程会把该绘制列表提交（commit）给合成线程，那么接下来合成线程是怎么工作的呢？<br>通常一个页面可能很大，但是用户只能看到其中的一部分，我们把用户可以看到的这个部分叫做视口（viewport）。在有些情况下，有的图层可以很大，比如有的页面你使用滚动条要滚动好久才能滚动到底部，但是通过视口，用户只能看到页面的很小一部分，所以在这种情况下，要绘制出所有图层内容的话，就会产生太大的开销，而且也没有必要。基于这个原因，合成线程会将图层划分为图块（tile），这些图块的大小通常是 256x256 或者 512x512。</p>
+</li>
+</ul>
+<p><img src="https://p9-juejin.byteimg.com/tos-cn-i-k3u1fbpfcp/99488863b98c4dd5b5373bf96bb8234d~tplv-k3u1fbpfcp-watermark.image" alt=""></p>
+<p>然后合成线程会按照视口附近的图块来优先生成位图，实际生成位图的操作是由栅格化来执行的。所谓栅格化，是指将图块转换为位图。而图块是栅格化执行的最小单位。渲染进程维护了一个栅格化的线程池，所有的图块栅格化都是在线程池内执行的，运行方式如下图所示：</p>
+<p><img src="https://p9-juejin.byteimg.com/tos-cn-i-k3u1fbpfcp/b65280349d2e42c6b57cbcbf7ba6fd5b~tplv-k3u1fbpfcp-watermark.image" alt=""></p>
+<p>通常，栅格化过程都会使用 GPU 来加速生成，使用 GPU 生成位图的过程叫快速栅格化，或者 GPU 栅格化，生成的位图被保存在 GPU 内存中。GPU 操作是运行在 GPU 进程中，如果栅格化操作使用了 GPU，那么最终生成位图的操作是在 GPU 中完成的，这就涉及到了跨进程操作。渲染进程把生成图块的指令发送给 GPU，然后在 GPU 中执行生成图块的位图，并保存在 GPU 的内存中。参考下图：</p>
+<p><img src="https://p6-juejin.byteimg.com/tos-cn-i-k3u1fbpfcp/46ea482d0aa040048e3b150b5c320ea2~tplv-k3u1fbpfcp-watermark.image" alt=""></p>
+<ul>
+<li>合成和显示</li>
+</ul>
+<p>一旦所有图块都被光栅化，合成线程就会生成一个绘制图块的命令——“DrawQuad”，然后将该命令提交给浏览器进程。浏览器进程里面有一个叫 viz 的组件，用来接收合成线程发过来的 DrawQuad 命令，然后根据 DrawQuad 命令，将其页面内容绘制到内存中，最后再将内存显示在屏幕上。到这里，经过这一系列的阶段，编写好的 HTML、CSS、JavaScript 等文件，经过浏览器就会显示出漂亮的页面了。</p>
+<ul>
+<li><p>渲染流水线大总结</p>
+<p>结合上图，一个完整的渲染流程大致可总结为如下：</p>
+<ul>
+<li>渲染进程将 HTML 内容转换为能够读懂的 DOM 树结构。</li>
+<li>渲染引擎将 CSS 样式表转化为浏览器可以理解的 styleSheets，计算出 DOM 节点的样式。</li>
+<li>创建布局树，并计算元素的布局信息。</li>
+<li>对布局树进行分层，并生成分层树。</li>
+<li>为每个图层生成绘制列表，并将其提交到合成线程。</li>
+<li>合成线程将图层分成图块，并在光栅化线程池中将图块转换成位图。</li>
+<li>合成线程发送绘制图块命令 DrawQuad 给浏览器进程。</li>
+<li>浏览器进程根据 DrawQuad 消息生成页面，并显示到显示器上。</li>
+</ul>
+</li>
+</ul>
+<blockquote>
+<p>重排：更新了元素的几何属性 <img src="https://p6-juejin.byteimg.com/tos-cn-i-k3u1fbpfcp/ba0095586d4e4d4fb889b9a3e899a313~tplv-k3u1fbpfcp-watermark.image" alt="">从上图可以看出，如果你通过 JavaScript 或者 CSS 修改元素的几何位置属性，例如改变元素的宽度、高度等，那么浏览器会触发重新布局，解析之后的一系列子阶段，这个过程就叫重排。无疑，重排需要更新完整的渲染流水线，所以开销也是最大的。</p>
+</blockquote>
+<blockquote>
+<p>重绘：更新元素的绘制属性 <img src="https://p1-juejin.byteimg.com/tos-cn-i-k3u1fbpfcp/5f6a3675ab2148a29c5c4f358ef806fe~tplv-k3u1fbpfcp-watermark.image" alt=""> 如果修改了元素的背景颜色，那么布局阶段将不会被执行，因为并没有引起几何位置的变换，所以就直接进入了绘制阶段，然后执行之后的一系列子阶段，这个过程就叫重绘。相较于重排操作，重绘省去了布局和分层阶段，所以执行效率会比重排操作要高一些。</p>
+</blockquote>
+<blockquote>
+<p>直接合成阶段:更改一个既不要布局也不要绘制的属性 <img src="https://p6-juejin.byteimg.com/tos-cn-i-k3u1fbpfcp/9214ba11a19840d8b5308c529b9adc20~tplv-k3u1fbpfcp-watermark.image" alt=""> 在上图中，我们使用了 CSS 的 transform 来实现动画效果，这可以避开重排和重绘阶段，直接在非主线程上执行合成动画操作。这样的效率是最高的，因为是在非主线程上合成，并没有占用主线程的资源，另外也避开了布局和绘制两个子阶段，所以相对于重绘和重排，合成能大大提升绘制效率。</p>
+</blockquote>
+<h4 id="关闭TCP连接"><a href="#关闭TCP连接" class="headerlink" title="关闭TCP连接"></a>关闭TCP连接</h4><p><img src="https://p6-juejin.byteimg.com/tos-cn-i-k3u1fbpfcp/85471745621b4f85b839d432c689a00f~tplv-k3u1fbpfcp-watermark.image" alt=""></p>
+<h4 id="串起来！"><a href="#串起来！" class="headerlink" title="串起来！"></a>串起来！</h4><ul>
+<li><p>打开浏览器，此时各个进程间运行如下图<br><img src="https://p9-juejin.byteimg.com/tos-cn-i-k3u1fbpfcp/182bebe293a24db68703a1c0804056c8~tplv-k3u1fbpfcp-watermark.image" alt=""></p>
+</li>
+<li><p>浏览器进程接收到用户输入的URL请求。</p>
+</li>
+<li><p>浏览器进程通过进程间通信将该URL转发给网络进程，在网络进程中发起真正的URL请求。</p>
+</li>
+<li><p>网络进程接收到url请求后检查本地缓存是否缓存了该请求资源，如果有则将该资源返回给浏览器进程。</p>
+</li>
+<li><p>如果没有，网络进程向web服务器发起http请求（网络请求），请求流程如下：</p>
+<ul>
+<li>进行DNS解析，获取服务器ip地址，端口</li>
+<li>利用ip地址和服务器建立tcp连接</li>
+<li>构建请求头信息</li>
+<li>发送请求头信息</li>
+<li>服务器响应后，网络进程接收响应头和响应信息，并解析响应内容<br>详细的请求部分如图所示<br><img src="https://p3-juejin.byteimg.com/tos-cn-i-k3u1fbpfcp/84a4645776524ae5a321d89b26755004~tplv-k3u1fbpfcp-watermark.image" alt=""><br>详细的浏览器缓存如图所示<br><img src="https://p3-juejin.byteimg.com/tos-cn-i-k3u1fbpfcp/d92b25f4404c43459e07e133638fe4fa~tplv-k3u1fbpfcp-watermark.image" alt=""></li>
+</ul>
+</li>
+<li><p>网络进程解析响应流程；</p>
+<ul>
+<li>检查状态码，如果是301/302重定向，从Location自动中读取地址，重新开始，如果是200，则继续处理请求。</li>
+<li>200响应处理：检查响应类型Content-Type，如果是字节流类型，则将该请求提交给下载管理器，该导航流程结束，不再进行后续的渲染，如果是html则将数据转发给浏览器进程，并通知浏览器进程准备渲染。</li>
+</ul>
+</li>
+<li><p>浏览器进程检查当前url是否和之前打开的渲染进程根域名是否相同，如果相同，则复用原来的进程，如果不同，则开启新的渲染进程。</p>
+</li>
+<li><p>渲染进程准备好后，浏览器进程接收到网络进程的响应头数据之后，发送“提交导航”消息到渲染进程。提交导航就是指浏览器进程将网络进程接收到的HTML数据提交给渲染进程。</p>
+</li>
+<li><p>渲染进程接收到“提交导航”的消息后，和网络进程建立数据管道，开始准备接收HTML数据。</p>
+</li>
+<li><p>等文档数据传输完成之后，渲染进程会返回“确认提交”的消息给浏览器进程，这是告诉浏览器进程：“已经准备好接受和解析页面数据了”。</p>
+</li>
+<li><p>浏览器进程接收到渲染进程“提交文档”的消息之后，便开始移除之前旧的文档，然后更新浏览器进程中的页面状态，包括了安全状态、地址栏的URL、前进后退的历史状态，并更新Web页面。</p>
+</li>
+<li><p>一旦文档被提交，渲染进程便开始页面解析和子资源加载了</p>
+<blockquote>
+<p>这其中，用户发出 URL 请求到页面开始解析的这个过程，就叫做导航。</p>
+</blockquote>
+</li>
+</ul>
+<h3 id="五层因特尔协议栈"><a href="#五层因特尔协议栈" class="headerlink" title="五层因特尔协议栈"></a>五层因特尔协议栈</h3><p>1.应用层(dns,http) DNS解析成IP并发送http请求</p>
+<p>2.传输层(tcp,udp) 建立tcp连接（三次握手）</p>
+<p>3.网络层(IP,ARP) IP寻址</p>
+<p>4.数据链路层(PPP) 封装成帧</p>
+<p>5.物理层(利用物理介质传输比特流) 物理传输（然后传输的时候通过双绞线，电磁波等各种介质）</p>
+<h3 id="http1-0-2-0"><a href="#http1-0-2-0" class="headerlink" title="http1.0,2.0"></a>http1.0,2.0</h3><h4 id="2-0"><a href="#2-0" class="headerlink" title="2.0"></a>2.0</h4><p>1.多路复用<br>HTTP2.0的多路复用和HTTP1.X中的长连接复用有什么区别？<br>HTTP/1.* 一次请求-响应，建立一个连接，用完关闭；每一个请求都要建立一个连接；<br>HTTP/1.1 Pipeling解决方式为，若干个请求排队串行化单线程处理，后面的请求等待前面请求的返回才能获得执行机会，一旦有某请求超时等，后续请求只能被阻塞，毫无办法，也就是人们常说的线头阻塞；<br>HTTP/2多个请求可同时在一个连接上并行执行。某个请求任务耗时严重，不会影响到其它连接的正常执行；<br>具体如图：</p>
+<p>HTTP 性能优化的关键并不在于高带宽，而是低延迟。TCP 连接会随着时间进行自我「调谐」，起初会限制连接的最大速度，如果数据成功传输，会随着时间的推移提高传输的速度。这种调谐则被称为 TCP 慢启动。由于这种原因，让原本就具有突发性和短时性的 HTTP 连接变的十分低效。<br>HTTP/2 通过让所有数据流共用同一个连接，可以更有效地使用 TCP 连接，让高带宽也能真正的服务于 HTTP 的性能提升。<br>2.二进制分帧</p>
+<h3 id="CDN原理"><a href="#CDN原理" class="headerlink" title="CDN原理"></a>CDN原理</h3><p>内容分发网络。原理是广泛采用各种缓存服务器，将这些缓存服务器分布到用户访问相对集中的地区或网络中，在用户访问网站时，利用全局负载技术将用户的访问指向距离最近的工作正常的缓存服务器上，由缓存服务器直接响应用户请求。<br><img src="/image/%E5%89%8D%E7%AB%AF%E9%9D%A2%E8%AF%95%E9%A2%98%E9%9B%86/6.png" alt="6"><br>1.用户在浏览器中输入要访问的域名。<br>2.浏览器向DNS服务器请求对域名进行解析。由于CDN对域名解析进行了调整，DNS服务器会最终将域名的解析权交给CNAME指向的CDN专用DNS服务器。<br>3.CDN的DNS服务器将CDN的负载均衡设备IP地址返回给用户。<br>4.用户向CDN的负载均衡设备发起内容URL访问请求。<br>5.CDN负载均衡设备会为用户选择一台合适的缓存服务器提供服务。<br>选择的依据包括：<br>根据用户IP地址，判断哪一台服务器距离用户最近；<br>根据用户所请求的URL中携带的内容名称，判断哪一台服务器上有用户所需内容；<br>查询各个服务器的负载情况，判断哪一台服务器的负载较小。<br>基于以上这些依据的综合分析之后，负载均衡设置会把缓存服务器的IP地址返回给用户。<br>6.用户向缓存服务器发出请求。<br>7.缓存服务器响应用户请求，将用户所需内容传送到用户。<br>8.如果这台缓存服务器上并没有用户想要的内容，而负载均衡设备依然将它分配给了用户，那么这台服务器就要向它的上一级缓存服务器请求内容，直至追溯到网站的源服务器将内容拉取到本地。</p>
+<h3 id="DNS"><a href="#DNS" class="headerlink" title="DNS"></a>DNS</h3><h4 id="DNS解析-1"><a href="#DNS解析-1" class="headerlink" title="DNS解析"></a>DNS解析</h4><p>首先浏览器先检查本地hosts文件是否有这个网址映射关系，如果有就调用这个IP地址映射，完成域名解析。<br>如果没找到则会查找本地DNS解析器缓存，如果查找到则返回。<br>如果还是没有找到则会查找本地DNS服务器，如果查找到则返回。<br>最后迭代查询，按根域服务器 -&gt;顶级域（.cn）-&gt;第二层域（hb.cn） -&gt;子域（ <a href="http://www.hb.cn" target="_blank" rel="noopener">www.hb.cn</a> ）的顺序找到IP地址。<br>本地DNS服务器缓存结果，返回给用户，缓存在系统中</p>
+<h4 id="Local-DNS有什么缺陷"><a href="#Local-DNS有什么缺陷" class="headerlink" title="Local DNS有什么缺陷"></a>Local DNS有什么缺陷</h4><p>1.DNS劫持:DNS劫持会导致端上网络连接失败或者DNS解析失败<br>2.DNS解析过慢:递归查询和迭代查询两种</p>
+<blockquote>
+<p>递归查询：如果主机所询问的本地域名服务器不知道被查询域名的 IP 地址，那么本地域名服务器就以 DNS 客户的身份，向其他根域名服务器继续发出查询请求报文，而不是让该主机自己进行下一步的查询。<br>迭代查询：当根域名服务器收到本地域名服务器发出的迭代查询请求报文时，要么给出所要查询的 IP 地址，要么告诉本地域名服务器：你下一步应当向哪一个域名服务器进行查询。然后让本地域名服务器进行后续的查询，而不是替本地域名服务器进行后续的查询。<br>递归模式会导致DNS服务器流量很大，所以现在大多数采用迭代模式。</p>
+</blockquote>
+<h4 id="DNS优化"><a href="#DNS优化" class="headerlink" title="DNS优化"></a>DNS优化</h4><p>1.DNS Prefetching（启动预解析）</p>
+<pre><code>// html
+&lt;meta http-equiv=&quot;x-dns-prefetch-control&quot; content=&quot;on&quot;&gt;
+// 对特定域名预解析
+&lt;link rel=”dns-prefetch” href=”//fonts.googleapis.com”&gt;
+// 服务器
+X-DNS-Prefetch-Control = on</code></pre><p>2.HttpDns<br>安全，由于httpdns使用http或者https协议通过ip直连的方式进行解析，绕过了运营商的Local DNS，避免了域名劫持<br>快速，通过预解析机制，将热点域名提前解析，网络连接时直接缓存获取</p>
+<h2 id="CSS"><a href="#CSS" class="headerlink" title="CSS"></a>CSS</h2><h3 id="盒模型"><a href="#盒模型" class="headerlink" title="盒模型"></a>盒模型</h3><blockquote>
+<p>标准盒模型及怪异盒模型，box-sizing:content-box/border-box</p>
+</blockquote>
+<pre><code>// 标准盒模型，实际宽为200+1*2+10*2
+.content-box{
+    box-sizing:content-box;
+    width:200px;
+    height:200px;
+    border:1px solid #000;
+    padding:10px;
+}
+// 怪异盒模型,实际宽为200（10*2+1*2+178）
+.content-box{
+    box-sizing:border-box;
+    width:200px;
+    height:200px;
+    border:1px solid #000;
+    padding:10px;
+    margin:10px;
+}</code></pre><h3 id="flex"><a href="#flex" class="headerlink" title="flex"></a>flex</h3><blockquote>
+<p>弹性盒模型，不兼容ie9以下</p>
+</blockquote>
+<pre><code>1.容器基本属性：
+- flex-direction(主轴方向的排列方法):row/row-reverse/column/column-reverse
+- flex-wrap: wrap/no-wrap/wrap-reverse
+- flex-flow: &lt;flex-direction&gt;  &lt;flex-wrap&gt;;
+- justify-content（项目在主轴上的对齐方式）: center/flex-start/flex-end/space-between/space-around
+- align-items（项目在交叉上的对齐方式）: center/flex-start/flex-end/baseline（项目的第一行文字的基线对齐）/stretch（如果项目未设置高度或设为auto，将占满整个容器的高度。）
+- align-content（定义了多根轴线的对齐方式。如果项目只有一根轴线，该属性不起作用）: flex-start | flex-end | center | space-between | space-around | stretch
+2. 项目基本属性
+- order:定义项目的排列顺序。数值越小，排列越靠前，默认为0。
+- flex-grow:定义项目的放大比例，默认为0，即如果存在剩余空间，也不放大。
+- flex-shrink:项目的缩小比例，默认为1，即如果空间不足，该项目将缩小。0为原有大小
+- flex-basis: 在分配多余空间之前，项目占据的主轴空间 &lt;length&gt; | auto
+- flex:flex-grow, flex-shrink 和 flex-basis的简写，默认值为0 1 auto
+- align-self:单个项目有与其他项目不一样的对齐方式，可覆盖align-items属性。</code></pre><h3 id="input的placeholder"><a href="#input的placeholder" class="headerlink" title="input的placeholder"></a>input的placeholder</h3><blockquote>
+</blockquote>
+<pre><code>css选择:input::placeholder
+垂直居中:line-height: normal</code></pre><h3 id="rem原理"><a href="#rem原理" class="headerlink" title="rem原理"></a>rem原理</h3><blockquote>
+<p>本质是等比缩放，一般是基于宽度。一般是通过两种方式来设置</p>
+</blockquote>
+<pre><code>1.sass
+
+$width: 750; /* ui图的宽度 */
+
+@function px2rem($px) {
+  @return #{$px/$width*100}rem;
+}
+
+p {
+  width: px2rem(100);
+}
+
+2.head头里计算根结点字体大小
+
+window.onresize = function () {
+    resetFontSize()
+};
+function resetFontSize() {
+    document.documentElement.style.fontSize = document.documentElement.clientWidth / 3.75 + &apos;px&apos;;
+}
+resetFontSize()</code></pre><h3 id="box-show"><a href="#box-show" class="headerlink" title="box-show"></a>box-show</h3><pre><code>box-shadow: h-shadow v-shadow blur(模糊距离) spread(阴影的大小) color inset;</code></pre><p>单边阴影主要是改变阴影的大小，配合水平和垂直位移</p>
+<h3 id="水平垂直居中"><a href="#水平垂直居中" class="headerlink" title="水平垂直居中"></a>水平垂直居中</h3><blockquote>
+<p>可以通过flex布局，position+margin/transform:translate(-50%,-50%)</p>
+</blockquote>
+<h3 id="动画"><a href="#动画" class="headerlink" title="动画"></a>动画</h3><blockquote>
+<p>animation/transition/transform</p>
+</blockquote>
+<pre><code>// animation
+@keyframes actWith {
+    from {
+        background: red;
+    }
+    to{
+        background: yellow;
+    }
+}
+@keyframes actWith {
+    10% {
+        background: red;
+    }
+    50%{
+        background: yellow;
+    }
+    100%{
+        background: blue;
+    }
+}
+div {
+    animation: actWith 5s;          
+    // animation: name duration timing-function（line,ease...） delay iteration-count direction fill-mode play-state;
+}
+
+// transition 需要事件的触发
+// transition: property duration timing-function delay;
+div{
+    // transform  旋转rotate、扭曲skew、缩放scale和移动translate以及矩阵变形matrix
+    transform:rotate(7deg);
+}</code></pre><h3 id="定位"><a href="#定位" class="headerlink" title="定位"></a>定位</h3><blockquote>
+<p>static(不同里文档流，默认)，relative(相对与原有本身位置，不脱离文档流)，absolute(相对非static已定位最近父元素,脱离文档流)，fixed(相对与当前浏览器窗口，脱离文档流)</p>
+</blockquote>
+<h3 id="BFC"><a href="#BFC" class="headerlink" title="BFC"></a>BFC</h3><blockquote>
+<p>BFC是一个独立的布局环境，其中的元素布局是不受外界的影响，并且在一个BFC中，块盒与行盒（行盒由一行中所有的内联元素所组成）都会垂直的沿着其父元素的边框排列。</p>
+</blockquote>
+<pre><code>- 布局规则
+1.内部的Box会在垂直方向，一个接一个地放置。
+2.Box垂直方向的距离由margin决定。属于同一个BFC的两个相邻Box的margin会发生重叠。   
+3.每个盒子（块盒与行盒）的margin box的左边，与包含块border box的左边相接触(对于从左往右的格式化，否则相反)。即使存在浮动也是如此。
+4.BFC的区域不会与float box重叠。
+5.BFC就是页面上的一个隔离的独立容器，容器里面的子元素不会影响到外面的元素。反之也如此。
+- 如何创建BFC
+1.float非none
+2.position非statcic,relative
+3.overflow非visible
+4.display的值为table-call,inline-block,flex,table-caption,inline-flex</code></pre><h3 id="margin折叠"><a href="#margin折叠" class="headerlink" title="margin折叠"></a>margin折叠</h3><blockquote>
+<p>在CSS中，【两个或多个】 【毗邻】 的 【普通流】 中的盒子（可能是父子元素，也可能是兄弟元素）在 【垂直方向】 上的外边距会发生叠加，这种形成的外边距称之为外边距叠加。</p>
+</blockquote>
+<pre><code>.parent1 {
+    width: 100px;
+    height: 100px;
+    background: yellow;
+    margin-bottom: 20px;
+}
+.parent2 {
+    width: 100px;
+    height: 300px;
+    margin-top: 30px;
+    background: blue;
+    margin-bottom: 30px;
+}
+.parent3 {
+    width: 100px;
+    height: 100px;
+    background: green;
+    margin-top: 50px;
+
+}
+.child {
+    background: red;
+    height: 20px;
+    margin-top: 50px;
+    margin-bottom: 60px;
+}
+.parent-2{
+    width: 100px;
+    height: 500px;
+    background: black;
+}
+.child-2{
+    width: 100px;
+    height: 100px;
+    margin-top: 50px;
+    background: bisque;
+}
+
+&lt;div class=&quot;parent1&quot;&gt;&lt;/div&gt;
+&lt;div class=&quot;parent2&quot;&gt;
+    &lt;div class=&quot;child&quot;&gt;&lt;/div&gt;
+    &lt;div class=&quot;child&quot;&gt;&lt;/div&gt;
+    &lt;div class=&quot;child&quot;&gt;&lt;/div&gt;
+&lt;/div&gt;
+&lt;div class=&quot;parent3&quot;&gt;&lt;/div&gt;
+&lt;div class=&quot;parent-2&quot;&gt;
+    &lt;div class=&quot;child-2&quot;&gt;&lt;/div&gt;
+&lt;/div&gt;</code></pre><h3 id="让图文不可复制"><a href="#让图文不可复制" class="headerlink" title="让图文不可复制"></a>让图文不可复制</h3><p>user-select: none;</p>
+<h3 id="复制在粘贴板上加一段话"><a href="#复制在粘贴板上加一段话" class="headerlink" title="复制在粘贴板上加一段话"></a>复制在粘贴板上加一段话</h3><p>1、答案区域监听copy事件，并阻止这个事件的默认行为。<br>2、获取选中的内容（window.getSelection()）加上版权信息，然后设置到剪切板（clipboarddata.setData()）。</p>
+<h2 id="Html"><a href="#Html" class="headerlink" title="Html"></a>Html</h2><h3 id="DOM事件流"><a href="#DOM事件流" class="headerlink" title="DOM事件流"></a>DOM事件流</h3><p>事件捕获，处于目标阶段，事件冒泡<br>通过addlisterner(fun,true/false)<br>e.target是事件触发的元素，event.currentTarget指向事件绑定的元素（就是冒泡啥的触发可用event.currentTarget来追踪）</p>
+<h3 id="DOM0级事件与DOM2级事件"><a href="#DOM0级事件与DOM2级事件" class="headerlink" title="DOM0级事件与DOM2级事件"></a>DOM0级事件与DOM2级事件</h3><p>DOM0级事件就是找到这个元素，绑定他。取消事件就直接设为null就行了<br>DOM2级事件就是找到这个元素，监听他的事件。取消事件就直接removeaddListerner</p>
+<h3 id="浏览器渲染原理"><a href="#浏览器渲染原理" class="headerlink" title="浏览器渲染原理"></a>浏览器渲染原理</h3><p>1、构建DOM树<br>2、CSS标记，构成层叠样式表模型CSSOM<br>3、将DOM和CSSOM合并为渲染树(rendering tree)<br>4、渲染树布局，布局阶段会从渲染树的根节点开始遍历，由于渲染树的每个节点都是一个Render Object对象，包含宽高，位置，背景色等样式信息。所以浏览器就可以通过这些样式信息来确定每个节点对象在页面上的确切大小和位置，布局阶段的输出就是我们常说的盒子模型，它会精确地捕获每个元素在屏幕内的确切位置与大小。<br>5、渲染树绘制</p>
+<h3 id="各种宽高"><a href="#各种宽高" class="headerlink" title="各种宽高"></a>各种宽高</h3><p>offsetTop：元素到offsetParent（距离元素最近的一个具有定位的祖宗元素或table, table cell 或body）顶部的距离<br>offsetHeight:不算border的高度<br>scrollHeight：算上内部元素本身高度的总高度，就是里面撑开了，即时看不见，也能计算到高度里<br>scrollTop:滚动条具体顶部的高度</p>
+<h2 id="JS"><a href="#JS" class="headerlink" title="JS"></a>JS</h2><h3 id="v8引擎了解么，一段js执行的时候发生了什么"><a href="#v8引擎了解么，一段js执行的时候发生了什么" class="headerlink" title="v8引擎了解么，一段js执行的时候发生了什么"></a>v8引擎了解么，一段js执行的时候发生了什么</h3><p>1.js首先会创建一个执行栈<br>2.创建阶段：创建一个全局执行上下文，push到栈里，对所有变量分配内存附一个初始值<br>3.执行阶段：一行行执行代码，为初始化的变量赋真实的值<br>4.如果这段代码中存在function的声明和调用，那么JS引擎会创建一个函数执行上下文，并push到执行栈中<br>5.有一种特殊情况是，在子函数执行的过程中，父函数已经return了，这种情况下，JS引擎会将父函数的上下文从执行栈中移除，与此同时，JS引擎会为还在执行的子函数上下文创建一个闭包，这个闭包里保存了父函数内声明的变量及其赋值，子函数仍然能够在其上下文中访问并使用这边变量/常量。当子函数执行完毕，JS引擎才会将子函数的上下文及闭包一并从执行栈中移除。<br>6.当异步调用代码触发时，JS引擎会将需要异步执行的代码移出调用栈，直到等待到返回结果，JS引擎会立即将与之对应的回调函数push进任务队列中等待被调用，当调用(执行)栈中已经没有需要被执行的代码时，JS引擎会立刻将任务队列中的回调函数逐个push进调用栈并执行。这个过程我们也称之为事件循环。</p>
+<h3 id="es6"><a href="#es6" class="headerlink" title="es6"></a>es6</h3><h4 id="es6的新增语法"><a href="#es6的新增语法" class="headerlink" title="es6的新增语法"></a>es6的新增语法</h4><p>let/const/promise/解构/filter/set/map</p>
+<h4 id="let与var的区别，为什么不能变量提升，重复复值，const为什么在有些情况下可以改变"><a href="#let与var的区别，为什么不能变量提升，重复复值，const为什么在有些情况下可以改变" class="headerlink" title="let与var的区别，为什么不能变量提升，重复复值，const为什么在有些情况下可以改变"></a>let与var的区别，为什么不能变量提升，重复复值，const为什么在有些情况下可以改变</h4><p>let 的「创建」过程被提升了，但是初始化没有提升。<br>var 的「创建」和「初始化」都被提升了。<br>function 的「创建」「初始化」和「赋值」都被提升了。</p>
+<p>如果let x = d ;抱错，x 变量就将永远处于 created 状态。<br>你无法再次对 x 进行初始化（初始化只有一次机会，而那次机会你失败了）。<br>由于 x 无法被初始化，所以 x 永远处在暂时死区</p>
+<p>let 声明会提升到块顶部<br>从块顶部到该变量的初始化语句，这块区域叫做 TDZ（临时死区）<br>如果你在 TDZ 内使用该变量，JS 就会报错</p>
+<p>const是赋值本身不可变，对象的地址不可变，但可以对对象增加修改删除属性</p>
+<h3 id="promise"><a href="#promise" class="headerlink" title="promise"></a>promise</h3><h4 id="promise的常用api"><a href="#promise的常用api" class="headerlink" title="promise的常用api"></a>promise的常用api</h4><p>then,catch,resolve,reject,all,race</p>
+<h4 id="如何实现一个带休眠的promise"><a href="#如何实现一个带休眠的promise" class="headerlink" title="如何实现一个带休眠的promise"></a>如何实现一个带休眠的promise</h4><p>直接在promise里写settimeout延迟2秒触发reject<br>新建一个定时任务，通过.race，让两个promise进行比较</p>
+<h4 id="如何实现两个接口的链式调用"><a href="#如何实现两个接口的链式调用" class="headerlink" title="如何实现两个接口的链式调用"></a>如何实现两个接口的链式调用</h4><p>return一个promise用.then调用，也可以用async,await</p>
+<h4 id="事件循环"><a href="#事件循环" class="headerlink" title="事件循环"></a>事件循环</h4><h4 id="promise原理"><a href="#promise原理" class="headerlink" title="promise原理"></a>promise原理</h4><h4 id="promise-all实现原理"><a href="#promise-all实现原理" class="headerlink" title="promise.all实现原理"></a>promise.all实现原理</h4><pre><code>Promise.all = function (promise) {
+    return new Promise((resolve, reject) =&gt; {
+        let index = 0
+        let result = []
+        if (promise.length === 0) {
+            resolve(result)
+        } else {
+            function processValue(i, data) {
+                result[i] = data
+                if (++index === promise.length) {
+                    resolve(result)
+                }
+            }
+            for (let i = 0; i &lt; promise.length; i++) {
+                Promise.resolve(promise[i]).then((data) =&gt; {
+                    processValue(i, data)
+                }, (err) =&gt; {
+                    reject(err)
+                    return
+                })
+            }
+        }
+    })
+}</code></pre><h4 id="promise-race原理"><a href="#promise-race原理" class="headerlink" title="promise.race原理"></a>promise.race原理</h4><pre><code>function myPromiseRace(promiseArr){
+    return new Promise((resolve,reject) =&gt; {
+        if(!Array.isArray(promiseArr)) throw(&apos;参数必须为数组&apos;)
+        let len = promiseArr.length
+        for(let i = 0; i &lt; len; i++){
+            Promise.resolve(promiseArr[i]).then(val =&gt; {
+                resolve(val)
+            }).catch(err =&gt; {
+                reject(err)
+            })
+        }
+
+    })
+
+
+}</code></pre><h4 id="promise-finally"><a href="#promise-finally" class="headerlink" title="promise.finally"></a>promise.finally</h4><p>finally 特点：不接收任何参数;finally 本质上是 then 方法的特例 </p>
+<pre><code>Promise.prototype.finally = function (callback) {
+  let P = this.constructor
+  return this.then(
+    value  =&gt; P.resolve(callback()).then(() =&gt; value),
+    reason =&gt; P.resolve(callback()).then(() =&gt; { throw reason })
+  )
+}</code></pre><h4 id="then-a-b-与then-a-catch-b-一样么"><a href="#then-a-b-与then-a-catch-b-一样么" class="headerlink" title="then(a,b)与then(a).catch(b)一样么"></a>then(a,b)与then(a).catch(b)一样么</h4><p>在then里发生错误的时候，不会被then的第二个函数捕获。</p>
+<h3 id="数组"><a href="#数组" class="headerlink" title="数组"></a>数组</h3><h4 id="数组的方法"><a href="#数组的方法" class="headerlink" title="数组的方法"></a>数组的方法</h4><p>push,pop,shift,unshift,splice,slice,indexof,concat,join,sort,reverse,fiflter,map,foreach,find</p>
+<h4 id="数组的哪些方法能够改变原数组"><a href="#数组的哪些方法能够改变原数组" class="headerlink" title="数组的哪些方法能够改变原数组"></a>数组的哪些方法能够改变原数组</h4><p>pop,push,shift,unshift,sort,reverse,splice</p>
+<h4 id="实现一个数组的深拷贝和浅拷贝"><a href="#实现一个数组的深拷贝和浅拷贝" class="headerlink" title="实现一个数组的深拷贝和浅拷贝"></a>实现一个数组的深拷贝和浅拷贝</h4><pre><code>// 浅拷贝
+let shallowClone = function (obj) {
+    // 不是对象的话，return
+    if(typeof obj != &apos;object&apos; || !obj){
+        return obj
+    }
+
+    // 根据类型判断应该新建一个数组还是对象
+    let newObj = obj instanceof Array ? [] : {}
+    // 遍历obj，只有obj的属性才拷贝
+    for(let key in obj){
+        if(obj.hasOwnProperty(key)){
+            newObj[key] = obj[key]
+        }
+    }
+    return newObj
+}
+// 深拷贝
+let deepClone = function (obj) {
+    // 不是对象的话，return
+    if(typeof obj != &apos;object&apos; || !obj){
+        return obj
+    }
+
+    // 根据类型判断应该新建一个数组还是对象
+    let newObj = obj instanceof Array ? [] : {}
+    // 遍历obj，obj所有的属性都拷贝
+    for(let key in obj){
+        if(obj.hasOwnProperty(key)){
+            newObj[key] = deepClone(obj[key])
+        }
+    }
+    return newObj
+}</code></pre><h4 id="查找数组中最大的一个数"><a href="#查找数组中最大的一个数" class="headerlink" title="查找数组中最大的一个数"></a>查找数组中最大的一个数</h4><p>1.Math.max(…arr)<br>2.for<br>3.sort/sort+reserve</p>
+<h4 id="数组去重"><a href="#数组去重" class="headerlink" title="数组去重"></a>数组去重</h4><ul>
+<li>indexOf</li>
+</ul>
+<pre><code>let newArr = []
+arr.forEach(function(item){
+     if(newArr.indexOf(item) == -1){
+        newArr.push(item)
+     }
+})
+// 不能过滤掉 NaN、Object</code></pre><ul>
+<li>for</li>
+</ul>
+<pre><code>let newArr=[];
+for (let i = 0; i &lt; arr.length; i++) {
+    for (let j = i+1; j &lt; arr.length; j++) {
+        if(arr[i]===arr[j]){
+            ++i;
+        }
+    }
+    newArr.push(arr[i]);
+}
+// 不能过滤掉 NaN、Object</code></pre><ul>
+<li>filter</li>
+</ul>
+<pre><code>let newArr = arr.filter((x, index, self)=&gt;{
+  // x : 数组每一项的值
+  // index: 每一项的下标
+  // self: 当前数组
+  return self.indexOf(x)===index
+})
+// 不能过滤掉 NaN、Object</code></pre><ul>
+<li>map</li>
+</ul>
+<pre><code>let newArr = []
+let map = new Map()
+for(let i = 0; i &lt; arr.length; i++) {
+    if(!map.has(arr[i])) {
+        map.set(arr[i])
+        newArr.push(arr[i])
+    }
+}
+console.log(newArr)
+// 无法过滤对象</code></pre><ul>
+<li>set</li>
+</ul>
+<pre><code>new Set(arr)
+// 无法过滤对象</code></pre><ul>
+<li>includes</li>
+</ul>
+<pre><code>let newArr = []
+arr.forEach(function(item){
+    if(!newArr.includes(item)){
+        newArr.push(item)
+    }
+})
+console.log(newArr)
+// 无法过滤对象</code></pre><ul>
+<li>利用对象的key</li>
+</ul>
+<pre><code>let obj = {}
+let newArr = []
+for(let i = 0; i &lt; arr.length; i++) {
+    if(!obj[arr[i]]){
+        obj[arr[i]] = 1
+        newArr.push(arr[i])
+    }
+}
+console.log(newArr)
+// nan，object都能过滤掉，但是会把‘nan’和nan视为同一个</code></pre><h3 id="Object-is"><a href="#Object-is" class="headerlink" title="== === Object.is"></a>== === Object.is</h3><p>==因为是值比较，故而在一些情况下会自动做类型转换再比较。也就是常说的js隐式转换。<br>===比较时，就是类型和值的比较了<br>ps:=== 运算符（和== 运算符）将数字值 -0 和 +0 视为相等，并认为 Number.NaN 不等于 NaN。<br>Object.is<br>    两个值都是 undefined<br>    两个值都是 null<br>    两个值都是 true 或者都是 false<br>    两个值是由相同个数的字符按照相同的顺序组成的字符串<br>    两个值指向同一个对象<br>    两个值都是数字并且<br>    都是正零 +0<br>    都是负零 -0<br>    都是 NaN<br>    都是除零和 NaN 外的其它同一个数字</p>
+<h3 id="事件委托"><a href="#事件委托" class="headerlink" title="事件委托"></a>事件委托</h3><pre><code>function delegate(element, eventType, selector, fn) {
+     element.addEventListener(eventType, e =&gt; {
+       let el = e.target
+       while (!el.matches(selector)) {
+         if (element === el) {
+           el = null
+           break
+         }
+         el = el.parentNode
+       }
+       el &amp;&amp; fn.call(el, e, el)
+     })
+     return element
+   }</code></pre><h3 id="this"><a href="#this" class="headerlink" title="this"></a>this</h3><p>1.判断this的绑定：new,call/apply/bind,对象调用，默认绑定<br>2.使用new调用函数发生构造函数调用时，执行以下操作<br>创建一个全新的对象—&gt;这个新对象会被执行prototype链接—&gt;这个新对象会绑定到函数调用的this—&gt;如果函数中没有返回其他的对象，那么new表达式中的函数调用会自动返回这个新对象<br>3.apply,call,bind的区别</p>
+<pre><code>// call
+// 传入 call 的第一个参数是 this 指向的对象，根据隐式绑定的规则，我们知道 obj.foo(), foo() 中的 this 指向 obj;因此我们可以这样调用函数 thisArgs.func(...args)
+
+Function.prototype.call = function(thisArg, args) {
+    // this指向调用call的对象
+    if (typeof this !== &apos;function&apos;) { // 调用call的若不是函数则报错
+        throw new TypeError(&apos;Error&apos;)
+    }
+    thisArg = thisArg || window
+    thisArg.fn = this   // 将调用call函数的对象添加到thisArg的属性中
+    const result = thisArg.fn(...[...arguments].slice(1)) // 执行该属性
+    delete thisArg.fn   // 删除该属性
+    return result
+}
+
+// bind
+Function.prototype.bind2 = function (context) {
+    if (typeof this !== &quot;function&quot;) {
+      throw new Error(&quot;Function.prototype.bind - what is trying to be bound is not callable&quot;);
+    }
+    var self = this;
+    var args = Array.prototype.slice.call(arguments, 1);
+
+    var fBound = function () {
+        var bindArgs = Array.prototype.slice.call(arguments);
+        return self.apply(
+            this instanceof fNOP ? this : context, 
+            args.concat(bindArgs)
+        );
+    }
+    fBound.prototype = Object.create(this.prototype);
+    return fBound;
+}</code></pre><h3 id="闭包"><a href="#闭包" class="headerlink" title="闭包"></a>闭包</h3><p>定义：定义在函数内部的函数，函数内部持有外部变量的引用<br>用途：读取函数内部的变量；让变量一直存储，不会被回收；方便调用上下文的局部变量，利于封装，函数式编程，compose curry；模块模式，可以定义私有的变量函数，同时也可以提供给外部api；</p>
+<h3 id="继承"><a href="#继承" class="headerlink" title="继承"></a>继承</h3><ul>
+<li>原型链继承</li>
+</ul>
+<pre><code>function Father() {
+    this.color = [&apos;color1&apos;,&apos;color2&apos;]
+}
+Father.prototype.getColor = function () {
+    return this.color
+}
+function Son() {
+
+}
+
+Son.prototype = new Father()
+
+let instance = new Son()
+instance.color.push(&apos;color3&apos;)
+console.log(instance.color) // [&apos;color1&apos;,&apos;color2&apos;,&apos;color3&apos;]
+
+let instance2 = new Son()
+console.log(instance2.color) // [&apos;color1&apos;,&apos;color2&apos;,&apos;color3&apos;]
+
+let instance3 = new Father()
+
+console.log(instance3.color) // [&apos;color1&apos;,&apos;color2&apos;]</code></pre><p>问题:如果是包含引用类型的原型属性会被所有实例共享；创建子类型的实例，不能向父类型的构造函数中传参</p>
+<ul>
+<li>借用构造函数继承</li>
+</ul>
+<pre><code>function Father() {
+    this.color = [&apos;color1&apos;,&apos;color2&apos;]
+}
+function Son() {
+    Father.call(this) // 在子类型中调用父类型的构造函数，每一个实例创建的时候都会走到这里，相当与每个实例都有一个color的副本
+}
+
+let instance = new Son()
+instance.color.push(&apos;color3&apos;)
+console.log(instance.color) // [&apos;color1&apos;,&apos;color2&apos;,&apos;color3&apos;]
+
+let instance2 = new Son()
+console.log(instance2.color) // [&apos;color1&apos;,&apos;color2&apos;]
+
+let instance3 = new Father()
+console.log(instance3.color) // [&apos;color1&apos;,&apos;color2&apos;]</code></pre><p>问题:没啥复用性了，所有的东西都放构造函数里了</p>
+<ul>
+<li>组合继承</li>
+</ul>
+<pre><code>function Father(name) {
+    this.name = name
+    this.color = [&apos;color1&apos;,&apos;color2&apos;]
+}
+Father.prototype.sayName = function () {
+    console.log(this.name)
+}
+function Son(name,age) {
+    Father.call(this,name)
+    this.age = age
+}
+Son.prototype = new Father()
+Son.prototype.sayAge = function () {
+    console.log(this.age)
+}
+
+let instance = new Son(&apos;wangyuqing&apos;,&apos;23&apos;)
+instance.color.push(&apos;color3&apos;)
+console.log(instance.color) // [&apos;color1&apos;,&apos;color2&apos;,&apos;color3&apos;]
+instance.sayName()
+instance.sayAge()
+
+let instance2 = new Son(&apos;chenjun&apos;,25)
+console.log(instance2.color) // [&apos;color1&apos;,&apos;color2&apos;,&apos;color3&apos;]
+instance2.sayName()
+instance2.sayAge()</code></pre><p>解决了原型链和借用构造函数的缺点</p>
+<ul>
+<li>原型式继承</li>
+</ul>
+<pre><code>let person = {
+   name:&apos;person&apos;,
+   family:[&apos;mother&apos;,&apos;me&apos;]
+}
+let person1 = Object.create(person)
+person1.name = &apos;person1&apos;
+person1.family.push(&apos;father&apos;)
+console.log(person1.name)
+console.log(person1.family)
+
+let person2 = Object.create(person)
+person2.name = &apos;person2&apos;
+console.log(person2.name)
+console.log(person2.family)
+
+console.log(person.name)</code></pre><p>问题：和原型链继承一样，实例会对引用类型的属性进行共享</p>
+<ul>
+<li>寄生式继承</li>
+</ul>
+<pre><code>function creatAnthor(data){
+    let clone = Object.create(data)
+    clone.sayHi = function () {
+        console.log(&apos;hi&apos;)
+    }
+    return clone
+}
+let person = {
+    name:&apos;person&apos;,
+    family:[&apos;mother&apos;,&apos;me&apos;]
+}
+let person1 = creatAnthor(person)
+person1.sayHi()
+person1.name = &apos;person1&apos;
+person1.family.push(&apos;father&apos;)
+console.log(person1.name)
+console.log(person1.family)
+
+let person2 = creatAnthor(person)
+person2.name = &apos;person2&apos;
+person2.sayHi()
+console.log(person2.name)
+console.log(person2.family)</code></pre><p>问题：和原型式继承基本一样，只是封装了一个方法返回了一个新对象，这个对象不仅有原来的data的属性和方法，还有自己的方法。其实就是在原型式继承上增强一下。与构造函数模式类似，会有做不到复用的情况。</p>
+<ul>
+<li>重中之重：寄生组合式继承</li>
+</ul>
+<pre><code>function Father(name) {
+    this.name = name
+    this.color = [&apos;color1&apos;,&apos;color2&apos;]
+}
+Father.prototype.sayName = function () {
+    console.log(this.name)
+}
+function Son(name,age) {
+    Father.call(this,name)
+    this.age = age
+}
+
+// Son.prototype = new Father()  组合继承的实现，会执行两次父类构造函数
+// -----新增-----
+// 其实就是把父类的原型指给子类的原型，但因为怕只想原型的过程中constructor丢失，就手动指一下
+let prototype = Object.create(Father.prototype) // 创建对象
+prototype.constructor = Son // 增强对象
+Son.prototype = prototype // 指定对象
+
+Son.prototype.sayAge = function () {
+    console.log(this.age)
+}
+
+let instance = new Son(&apos;wangyuqing&apos;,&apos;23&apos;)
+instance.color.push(&apos;color3&apos;)
+console.log(instance.color) // [&apos;color1&apos;,&apos;color2&apos;,&apos;color3&apos;]
+instance.sayName()
+instance.sayAge()
+
+let instance2 = new Son(&apos;chenjun&apos;,25)
+console.log(instance2.color) // [&apos;color1&apos;,&apos;color2&apos;,&apos;color3&apos;]
+instance2.sayName()
+instance2.sayAge()</code></pre><p>解决了执行两次父类构造函数的问题</p>
+<h3 id="原型"><a href="#原型" class="headerlink" title="原型"></a>原型</h3><pre><code>function Foo() {...};
+let f1 = new Foo();</code></pre><p>以上代码表示创建一个构造函数Foo()，并用new关键字实例化该构造函数得到一个实例化对象f1。这里稍微补充一下new操作符将函数作为构造器进行调用时的过程：函数被调用，然后新创建一个对象，并且成了函数的上下文（也就是此时函数内部的this是指向该新创建的对象，这意味着我们可以在构造器函数内部通过this参数初始化值），最后返回该新对象的引用，详细请看：详解JavaScript中的new操作符。虽然是简简单单的两行代码，然而它们背后的关系却是错综复杂的，如下图所示：<br><img src="/image/%E5%8E%9F%E5%9E%8B%E9%93%BE/1.png" alt="1"><br>①<strong>proto</strong>和constructor属性是对象所独有的；<br>② prototype属性是函数所独有的，因为函数也是一种对象，所以函数也拥有<strong>proto</strong>和constructor属性。<br><strong>proto</strong>属性的作用就是当访问一个对象的属性时，如果该对象内部不存在这个属性，那么就会去它的<strong>proto</strong>属性所指向的那个对象（父对象）里找，一直找，直到<strong>proto</strong>属性的终点null，再往上找就相当于在null上取值，会报错。通过<strong>proto</strong>属性将对象连接起来的这条链路即我们所谓的原型链。<br>prototype属性的作用就是让该函数所实例化的对象们都可以找到公用的属性和方法，即f1.<strong>proto</strong> === Foo.prototype。<br>constructor属性的含义就是指向该对象的构造函数，所有函数（此时看成对象了）最终的构造函数都指向Function。</p>
+<h3 id="模块"><a href="#模块" class="headerlink" title="模块"></a>模块</h3><ul>
+<li>commonjs<br>一个文件就是一个模块，拥有独立作用域，深拷贝。<br>运行时加载: CommonJS 模块就是对象；即在输入时是先加载整个模块，生成一个对象，然后再从这个对象上面读取方法，这种加载称为“运行时加载”。</li>
+<li>es6<br>模块内部函数改变了模块内的对象，外部导出使用的对象也跟着发生了变化<br>编译时加载: ES6 模块不是对象，而是通过 export 命令显式指定输出的代码，import时采用静态命令的形式。即在import时可以指定加载某个输出值，而不是加载整个模块，这种加载称为“编译时加载”。</li>
+<li>AMD规范<br>崇依赖前置，在定义模块的时候就要声明其依赖的模块,JS可以方便知道依赖模块是谁，立即加载<br>所有的模块都进行异步加载，模块加载不影响后面语句运行。<br>所有依赖某些模块的语句均放置在回调函数中。<br>提供全局define 函数（方法）来定义模块，require引入模块，exports导出模块。</li>
+<li>CMD规范<br>推崇就近依赖，只有在用到某个模块的时候再去require,需要使用把模块变为字符串解析一遍才知道依赖了那些模块。<h3 id="commonjs和es6模块的区别"><a href="#commonjs和es6模块的区别" class="headerlink" title="commonjs和es6模块的区别"></a>commonjs和es6模块的区别</h3>CommonJS 模块输出的是一个值的拷贝，ES6 模块输出的是值的引用。<br>CommonJS 模块是运行时加载，ES6 模块是编译时输出接口。<br>CommonJs 是单个值导出，ES6 Module可以导出多个<br>CommonJs 是动态语法可以写在判断里，ES6 Module 静态语法只能写在顶层<br>CommonJs 的 this 是当前模块，ES6 Module的 this 是 undefined</li>
+</ul>
+<h3 id="ajax"><a href="#ajax" class="headerlink" title="ajax"></a>ajax</h3><pre><code>let ajax = {
+    get:function (url,fn,async) {
+        let xhr=new XMLHttpRequest();
+        xhr.open(&apos;GET&apos;,url,async);
+        xhr.onreadystatechange = function () {
+            if(xhr.readyState === 4){
+                if(xhr.status === 200 || xhr.status === 304){
+                    fn.call(xhr.responseText);
+                }
+            }
+        }
+        xhr.send();
+    },
+    post:function (url,data,fn,async) {
+        let xhr = new XMLHttpRequest();
+        xhr.open(&apos;POST&apos;,url,async);
+        xhr.setRequestHeader(&apos;Content-type&apos;,&apos;application/x-www-form-urlencoded&apos;)
+        xhr.onreadystatechange = function () {
+            if(xhr.readyState === 4){
+                if(xhr.status === 200 || xhr.status === 304){
+                    fn.call(xhr.responseText);
+                }
+            }
+        }
+        xhr.send(data);
+    }
+}</code></pre><p>readyState<br>0：请求未初始化，还没有调用 open()。<br>1：请求已经建立，但是还没有发送，还没有调用 send()。<br>2：请求已发送，正在处理中（通常现在可以从响应中获取内容头）。<br>3：请求在处理中；通常响应中已有部分数据可用了，没有全部完成。<br>4：响应已完成；您可以获取并使用服务器的响应了。</p>
+<h2 id="VUE"><a href="#VUE" class="headerlink" title="VUE"></a>VUE</h2><h3 id="vue里为什么只有一个跟元素"><a href="#vue里为什么只有一个跟元素" class="headerlink" title="vue里为什么只有一个跟元素"></a>vue里为什么只有一个跟元素</h3><p>$mount传了一个el参数，这个参数可以是string类型，也可以是一个element元素，也就是dom节点,然后仅仅返回匹配指定选择器的第一个元素<br>Vue其实并不知道哪一个才是我们的入口，因为对于一个入口来讲，这个入口就是一个Vue类，Vue需要把这个入口里面的所有东西拿来渲染、处理，最后再重新插入到dom中。如果同时设置了多个入口，那么vue就不知道哪一个才是这个类。</p>
+<h3 id="vue响应式原理"><a href="#vue响应式原理" class="headerlink" title="vue响应式原理"></a>vue响应式原理</h3><p><img src="/image/%E5%89%8D%E7%AB%AF%E9%9D%A2%E8%AF%95%E9%A2%98%E9%9B%86/1.jpg" alt="1"><br>Observer : 它的作用是给对象的属性添加 getter 和 setter，用于依赖收集和派发更新<br>Dep : 用于收集当前响应式对象的依赖关系,每个响应式对象包括子对象都拥有一个 Dep 实例（里面 subs 是 Watcher 实例数组）,当数据有变更时,会通过 dep.notify()通知各个 watcher。<br>Watcher : 观察者对象 , 实例分为渲染 watcher (render watcher),计算属性 watcher (computed watcher),侦听器 watcher（user watcher）三种。watcher 中实例化了 dep 并向 dep.subs 中添加了订阅者,dep 通过 notify 遍历了 dep.subs 通知每个 watcher 更新。<br>compile : 主要做的事情是解析模板指令，将模板中的变量替换成数据，然后初始化渲染页面视图，并将每个指令对应的节点绑定更新函数，添加监听数据的订阅者，一旦数据有变动，收到通知，更新视图，</p>
+<pre><code>Object.defineProperty(obj, &quot;key&quot;, {
+  enumerable: false,    // 为 true 时，可枚举
+  configurable: false, // 为 true 时，该属性描述符才能够被改变
+  writable: false, // 为 true 时，value才能被赋值运算符改变
+  value: &quot;static&quot; // 该属性对应的值。可以是任何有效的 JavaScript 值（数值，对象，函数等）
+});</code></pre><h3 id="computed原理-computed-watcher"><a href="#computed原理-computed-watcher" class="headerlink" title="computed原理(computed-watcher)"></a>computed原理(computed-watcher)</h3><p>computed 本质是一个惰性求值的观察者。<br>computed 内部实现了一个惰性的 watcher,也就是 computed watcher,computed watcher 不会立刻求值,同时持有一个 dep 实例。<br>其内部通过 this.dirty 属性标记计算属性是否需要重新求值。<br>computed中初始化对各个属性生成的watcher的dirty和lazy都设置为了true<br>当 computed 的依赖状态发生改变时,就会通知这个惰性的 watcher,<br>computed watcher 通过 this.dep.subs.length 判断有没有订阅者,<br>有的话,会重新计算,然后对比新旧值,如果变化了,会重新渲染。 (Vue 想确保不仅仅是计算属性依赖的值发生变化，而是当计算属性最终计算的值发生变化时才会触发渲染 watcher 重新渲染，本质上是一种优化。)<br>没有的话,仅仅把 this.dirty = true。 (当计算属性依赖于其他数据时，属性并不会立即重新计算，只有之后其他地方需要读取属性的时候，它才会真正计算，即具备 lazy（懒计算）特性。)<br>在一次依赖收集期间，如果有其他依赖收集任务开始（比如：当前 computed 计算属性嵌套其他 computed 计算属性），那么将会把当前 target 暂存到 targetStack，先进行其他 target 的依赖收集，当嵌套的依赖收集任务完成后，将 target 恢复为上一层的 Watcher，并继续做依赖收集</p>
+<pre><code>var vm = new Vue({
+  el: &apos;#example&apos;,
+  data: {
+    message: &apos;Hello&apos;
+  },
+  computed: {
+    // 计算属性的 getter
+    reversedMessage: function () {
+      // `this` 指向 vm 实例
+      return this.message.split(&apos;&apos;).reverse().join()
+    }
+  }
+})
+vm.reversedMessage // =&gt;  olleH
+vm.message = &apos;World&apos; // 
+vm.reversedMessage // =&gt;  dlroW
+
+1.初始化 data和computed,分别代理其set以及get方法, 对data中的所有属性生成唯一的dep实例。
+2.对computed中的reversedMessage生成唯一watcher,并保存在vm._computedWatchers中
+3.访问 reversedMessage，设置Dep.target指向reversedMessage的watcher,调用该属性具体方法reversedMessage。
+4.方法中访问this.message，即会调用this.message代理的get方法，将this.message的dep加入reversedMessage的watcher,同时该dep中的subs添加这个watcher
+5.设置vm.message = &apos;World&apos;，调用message代理的set方法触发dep的notify方法&apos;
+6.因为是computed属性，只是将watcher中的dirty设置为true
+7.最后一步vm.reversedMessage，访问其get方法时，得知reversedMessage的watcher.dirty为true,调用watcher.evaluate()方法获取新的值。</code></pre><h3 id="watcher原理（user-watcher）"><a href="#watcher原理（user-watcher）" class="headerlink" title="watcher原理（user-watcher）"></a>watcher原理（user-watcher）</h3><p>其实就是对watch的一种封装，不是数组直接使用watcher，是数组的话遍历所有数组，将每一项使用watcher包装。<br>参数immediate就以当前值立即执行一次回调函数<br>参数deep如果为true，其实就是增加一步，在Dep.target = null 前，递归的对它的子值进行依赖收集。<br>考虑到watch可能也会对一个函数进行监听，watcher会同时对这个函数里面依赖的响应式数据进行监听，this.getter = expOrFun</p>
+<h3 id="complier原理"><a href="#complier原理" class="headerlink" title="complier原理"></a>complier原理</h3><p>Vue complier 是将 template 转化成一个 render 字符串<br>解析器将模版解析成AST，parse过程中会触发钩子函数，比如标签开始，标签结束，解析文本，解析注释。构建AST层级就是通过一个栈来维护，这个栈也可以叫做DOM的深度<br>优化器遍历AST标记静态节点,diff过程跳过静态节点，提升性能。通过递归的方式从上到下标记静态节点，静态节点的特征是他的子节点必须是静态节点。标记完静态节点就开始标记静态跟节点，从上到下寻找碰到的第一个静态节点就是静态根节点。有两种情况特殊：如果一个静态根节点的子节点只有一个文本节点；如果静态跟节点没有子节点。不会把它标记成静态跟节点。优化成本大于收益<br>代码生成器将AST生成代码字符串。<code>_c(div,{attrs:{id:1}}, [_c(&#39;div&#39;)])</code> 还有_v _e</p>
+<h3 id="vm-set-实现原理"><a href="#vm-set-实现原理" class="headerlink" title="vm.$set()实现原理"></a>vm.$set()实现原理</h3><p>1.如果是数组的话，通过splice自动来触发响应<br>2.如果目标元素已经存在，说明已经是响应式数据了，直接改变值就行了<br>3.处理新增属性，如果target上有_ob_证明他是被监测的，直接调用definedReactive();ob.dep.notify()就行了;如果没有ob,直接更改值就行了</p>
+<pre><code>export function set(target: Array&lt;any&gt; | Object, key: any, val: any): any {
+    // target 为数组  
+    if (Array.isArray(target) &amp;&amp; isValidArrayIndex(key)) {
+        // 修改数组的长度, 避免索引&gt;数组长度导致splice()执行有误
+        target.length = Math.max(target.length, key);
+        // 利用数组的splice变异方法触发响应式
+        target.splice(key, 1, val);
+        return val;
+    }
+    // target为对象, key在target或者target.prototype上 且必须不能在 Object.prototype 上,直接赋值
+    if (key in target &amp;&amp; !(key in Object.prototype)) {
+        target[key] = val;
+        return val;
+    }
+    // 以上都不成立, 即开始给target创建一个全新的属性  // 获取Observer实例 
+    const ob = (target: any).__ob__;
+    // target 本身就不是响应式数据, 直接赋值 
+    if (!ob) {
+        target[key] = val;
+        return val;
+    }
+    // 进行响应式处理 
+    defineReactive(ob.value, key, val);
+    ob.dep.notify();
+    return val;
+}</code></pre><h3 id="on-off-emit-once原理"><a href="#on-off-emit-once原理" class="headerlink" title="$on,$off,$emit,$once原理"></a>$on,$off,$emit,$once原理</h3><pre><code>class Vue {
+    constructor() {
+        this._events = Object.create(null);
+    }
+
+    // 注册事件时，将回调函数收集起来，在触发函数时将收集起来的回调挨个触发一遍
+    $on(event, fn) {
+        if (Array.isArray(event)) {
+            event.map(item =&gt; {
+                this.$on(item, fn);
+            });
+        } else {
+            (this._events[event] || (this._events[event] = [])).push(fn);
+        }
+        return this;
+    }
+    // 只执行一次，所以思路就是通过$on监听，监听完了就用off把他删掉，手动触发一下回调即可。
+    $once(event, fn) {
+        function on() {
+            this.$off(event, on);
+            fn.apply(this, arguments);
+        }
+
+        on.fn = fn;
+        this.$on(event, on);
+        return this;
+    }
+    // 移除监听器
+    $off(event, fn) {
+        // 移除所有的监听器
+        if (!arguments.length) {
+            this._events = Object.create(null);
+            return this;
+        }
+        // 数组的情况下，每一项都移除一遍
+        if (Array.isArray(event)) {
+            event.map(item =&gt; {
+                this.$off(item, fn);
+            });
+            return this;
+        }
+        // 只提供事件，没提供具体的回调，那就把这个事件的所有监听删除
+        const cbs = this._events[event];
+        if (!cbs) {
+            return this;
+        }
+        if (!fn) {
+            this._events[event] = null;
+            return this;
+        }
+        // 最后一种情况，参数都齐了，循环监听器数组，找到一样的，删掉
+        let cb;
+        let i = cbs.length;
+            // 从后向前遍历。因为是删除元素，如果从前往后遍历，会遇到条过一个元素的情况
+        while (i--) {
+            cb = cbs[i];
+            if (cb === fn || cb.fn === fn) {
+                cbs.splice(i, 1);
+                break;
+            }
+        }
+        return this;
+    }
+    // 拿到事件监听的数组，循环数组，将参数传入回调函数中，依次触发。
+    $emit(event) {
+        let cbs = this._events[event];
+        if (cbs) {
+            const args = [].slice.call(arguments, 1);
+            cbs.map(item =&gt; {
+                args ? item.apply(this, args) : item.call(this);
+            });
+        }
+        return this;
+    }
+}</code></pre><h3 id="v-model实现的原理"><a href="#v-model实现的原理" class="headerlink" title="v-model实现的原理"></a>v-model实现的原理</h3><p>语法糖：</p>
+<pre><code>&lt;Hello v-model=&quot;name&quot;/&gt; 解析为
+&lt;Hello :value=&quot;name&quot; @change=&quot;data =&gt; name = data&quot;/&gt;
+
+&lt;input v-model=&quot;name&quot;/&gt; 解析为
+&lt;input :value=&quot;name&quot; @input=&quot;name = $event.target.value&quot;&gt;</code></pre><h3 id="vue生命周期"><a href="#vue生命周期" class="headerlink" title="vue生命周期"></a>vue生命周期</h3><p><img src="/image/%E5%89%8D%E7%AB%AF%E9%9D%A2%E8%AF%95%E9%A2%98%E9%9B%86/2.jpg" alt="2"></p>
+<h3 id="keep-alive原理"><a href="#keep-alive原理" class="headerlink" title="keep-alive原理"></a>keep-alive原理</h3><p>获取 keep-alive 包裹着的第一个子组件对象及其组件名<br>根据设定的 include/exclude（如果有）进行条件匹配,决定是否缓存。不匹配,直接返回组件实例<br>根据组件 ID 和 tag 生成缓存 Key,并在缓存对象中查找是否已缓存过该组件实例。如果存在,直接取出缓存值并更新该 key 在 this.keys 中的位置(更新 key 的位置是实现 LRU 置换策略的关键)<br>在 this.cache 对象中存储该组件实例并保存 key 值,之后检查缓存的实例数量是否超过 max 的设置值,超过则根据 LRU 置换策略删除最近最久未使用的实例（即是下标为 0 的那个 key）<br>最后组件实例的 keepAlive 属性设置为 true,这个在渲染和执行被包裹组件的钩子函数会用到,这里不细说</p>
+<p>当keep-alive组件激活时，触发activated，keep-alive组件停用时调用deactivated</p>
+<h3 id="new-Vue-实例中-data-可以直接是一个对象-为什么在-vue-组件中-data-必须是一个函数呢"><a href="#new-Vue-实例中-data-可以直接是一个对象-为什么在-vue-组件中-data-必须是一个函数呢" class="headerlink" title="new Vue()实例中,data 可以直接是一个对象,为什么在 vue 组件中,data 必须是一个函数呢?"></a>new Vue()实例中,data 可以直接是一个对象,为什么在 vue 组件中,data 必须是一个函数呢?</h3><p>因为组件是可以复用的,JS 里对象是引用关系,如果组件 data 是一个对象,那么子组件中的 data 属性值会互相污染,产生副作用。<br>所以一个组件的 data 选项必须是一个函数,因此每个实例可以维护一份被返回对象的独立的拷贝。new Vue 的实例是不会被复用的,因此不存在以上问题。</p>
+<h3 id="vue如何对数组进行重写监听的"><a href="#vue如何对数组进行重写监听的" class="headerlink" title="vue如何对数组进行重写监听的"></a>vue如何对数组进行重写监听的</h3><p>简单来说,Vue 通过原型拦截的方式重写了数组的 7 个方法，首先获取到这个数组的ob,也就是它的 Observer 对象,如果有新的值,就调用 observeArray 对新的值进行监听,然后手动调用 notify,通知 render watcher,执行 update</p>
+<pre><code>const arrayProto = Array.prototype;
+export const arrayMethods = Object.create(arrayProto);
+const methodsToPatch = [  &quot;push&quot;,  &quot;pop&quot;,  &quot;shift&quot;,  &quot;unshift&quot;,  &quot;splice&quot;,  &quot;sort&quot;,  &quot;reverse&quot;];
+/** * Intercept mutating methods and emit events */
+methodsToPatch.forEach(function(method) {  
+// cache original method  
+const original = arrayProto[method];  
+    def(arrayMethods, method, function mutator(...args) {    
+        const result = original.apply(this, args);    
+        const ob = this.__ob__;    
+        let inserted;    
+        switch (method) {      
+            case &quot;push&quot;:      
+            case &quot;unshift&quot;:        
+                inserted = args;        
+                break;      
+            case &quot;splice&quot;:        
+                inserted = args.slice(2);        
+                break;    
+        }    
+        if (inserted) ob.observeArray(inserted);    
+        // notify change    
+        ob.dep.notify();    
+        return result;  
+    });
+});
+/** * Observe a list of Array items. */
+Observer.prototype.observeArray = function observeArray(items) {  
+    for (var i = 0, l = items.length; i &lt; l; i++) {   
+        observe(items[i]);  
+    }
+};</code></pre><h3 id="watch和computed的区别"><a href="#watch和computed的区别" class="headerlink" title="watch和computed的区别"></a>watch和computed的区别</h3><p>computed是计算属性，类似与过滤器，对绑定在view上的数据进行处理，computed的属性不能在data里赋值,具有缓存性，页面重新渲染值不变化,计算属性会立即返回之前的计算结果，而不必再次执行函数<br>watch是一个观察动作，可以通过deep:true来进行深度监听。打印oldVal和newVal值一样的原因是它们索引同一个对象/数组，Vue 不会保留修改之前值的副本，深度监听的函数必须是handler，因为watcher里面对应的是对handler的调用.无缓存性，页面重新渲染时值不变化也会执行</p>
+<pre><code>watch:{
+     secondChange:{
+       handler(oldVal,newVal){
+         console.log(oldVal)
+         console.log(newVal)
+       },
+       deep:true
+     }
+   },</code></pre><p>监听对象单个属性</p>
+<pre><code>// 方法一：可以直接对用对象.属性的方法拿到属性
+data(){
+  return{
+    &apos;first&apos;:{
+      second:0
+    }
+  }
+},
+watch:{
+  first.second:function(newVal,oldVal){
+    console.log(newVal,oldVal);
+  }
+}
+
+// 方法二：watch如果想要监听对象的单个属性的变化,必须用computed作为中间件转化,因为computed可以取到对应的属性值
+data(){
+  return{
+    &apos;first&apos;:{
+      second:0
+    }
+  }
+},
+computed:{
+  secondChange(){
+    return this.first.second
+  }
+},
+watch:{
+  secondChange(){
+    console.log(&apos;second属性值变化了&apos;)
+  }
+},</code></pre><h3 id="diff-算法"><a href="#diff-算法" class="headerlink" title="diff 算法"></a>diff 算法</h3><p>diff 的实现主要通过两个方法，patchVnode 与 updateChildren。</p>
+<p>patchVnode 有两个参数，分别是老节点 oldVnode, 新节点 vnode。主要分五种情况：<br>if (oldVnode === vnode)，他们的引用一致，可以认为没有变化。<br>if(oldVnode.text !== null &amp;&amp; vnode.text !== null &amp;&amp; oldVnode.text !== vnode.text)，文本节点的比较，需要修改，则会调用Node.textContent = vnode.text。<br>if( oldCh &amp;&amp; ch &amp;&amp; oldCh !== ch ), 两个节点都有子节点，而且它们不一样，这样我们会调用 updateChildren 函数比较子节点，这是diff的核心，后边会讲到。<br>if (ch)，只有新的节点有子节点，调用createEle(vnode)，vnode.el已经引用了老的dom节点，createEle函数会在老dom节点上添加子节点。<br>if (oldCh)，新节点没有子节点，老节点有子节点，直接删除老节点。</p>
+<p>updateChildren<br>oldCh 和 newCh 各有两个头尾的变量 StartIdx 和 EndIdx ，它们的2个变量相互比较，一共有4种比较方式。如果 4 种比较都没匹配，如果设置了key，就会用key进行比较，在比较的过程中，变量会往中间靠，一旦 StartIdx &gt; EndIdx 表明 oldCh 和 newCh 至少有一个已经遍历完了，就会结束比较。</p>
+<h3 id="过滤器"><a href="#过滤器" class="headerlink" title="过滤器"></a>过滤器</h3><pre><code>&lt;!-- 在双花括号中 --&gt;
+{{ message | capitalize }}
+
+&lt;!-- 在 `v-bind` 中 --&gt;
+&lt;div v-bind:id=&quot;rawId | formatId&quot;&gt;&lt;/div&gt;
+
+filters: {
+  capitalize: function (value) {
+    if (!value) return &apos;&apos;
+    value = value.toString()
+    return value.charAt(0).toUpperCase() + value.slice(1)
+  }
+}</code></pre><h3 id="父子组件的通讯"><a href="#父子组件的通讯" class="headerlink" title="父子组件的通讯"></a>父子组件的通讯</h3><p>父子组件通信: props; $parent / $children; provide / inject ; ref ; $attrs / $listeners<br>兄弟组件通信: eventBus ; vuex<br>跨级通信: eventBus；Vuex；provide / inject 、$attrs / $listeners</p>
+<h3 id="localstorage怎么监听"><a href="#localstorage怎么监听" class="headerlink" title="localstorage怎么监听"></a>localstorage怎么监听</h3><p>同源的不同页面，监听事件就行了</p>
+<pre><code>window.addEventListener(&quot;storage&quot;, function (e) {
+        console.log(e.newValue);
+});</code></pre><p>同页面，对 localStorage 的 setItem 方法进行重写</p>
+<pre><code>var orignalSetItem = localStorage.setItem;
+localStorage.setItem = function(key,newValue){
+      var setItemEvent = new Event(&quot;setItemEvent&quot;);
+      setItemEvent.key = key;
+      setItemEvent.newValue = newValue;
+      window.dispatchEvent(setItemEvent);
+      orignalSetItem.apply(this,arguments);
+}
+window.addEventListener(&quot;setItemEvent&quot;, function (e) {
+    console.log(e.newValue);
+});
+localStorage.setItem(&quot;name&quot;,&quot;wang&quot;);</code></pre><p>在vue中</p>
+<pre><code>/**
+ * @param { number } type 1 localStorage 2 sessionStorage
+ * @param { string } key 键
+ * @param { string } data 要存储的数据
+ * @returns 
+ */
+// 如果报prototype无法被识别的错误，可以把原型方法挂在到__proto__
+Vue.prototype.$addStorageEvent = function (type, key, data) {
+    if (type === 1) {
+        // 创建一个StorageEvent事件
+        var newStorageEvent = document.createEvent(&apos;StorageEvent&apos;);
+        const storage = {
+            setItem: function (k, val) {
+                localStorage.setItem(k, val);
+                // 初始化创建的事件
+                newStorageEvent.initStorageEvent(&apos;setItem&apos;, false, false, k, null, val, null, null);
+                // 派发对象
+                window.dispatchEvent(newStorageEvent);
+            }
+        }
+        return storage.setItem(key, data);
+    } else {
+        // 创建一个StorageEvent事件
+        var newStorageEvent = document.createEvent(&apos;StorageEvent&apos;);
+        const storage = {
+            setItem: function (k, val) {
+                sessionStorage.setItem(k, val);
+                // 初始化创建的事件
+                newStorageEvent.initStorageEvent(&apos;setItem&apos;, false, false, k, null, val, null, null);
+                // 派发对象
+                window.dispatchEvent(newStorageEvent);
+            }
+        }
+        return storage.setItem(key, data);
+    }
+}
+二、组件中调用：
+
+this.$addStorageEvent(2, &quot;user_info&quot;, data);
+三、在另一个组件中的 mounted 钩子函数中监听：
+
+window.addEventListener(&apos;setItem&apos;, (e) =&gt; {
+  //获取参数
+     console.log(e);
+});</code></pre><h3 id="组件的类别"><a href="#组件的类别" class="headerlink" title="组件的类别"></a>组件的类别</h3><p>全局组件和局部组件<br>全局注册的组件，可以用在 Vue 实例的任意模板中。但是带来的隐患是，在 webpack 模块化构建时，即便你没有在项目中使用这个组件，依然会打包到最终的项目代码中。而局部组件，则需要在使用到的实例中注册该组件。</p>
+<h3 id="vue-router原理"><a href="#vue-router原理" class="headerlink" title="vue-router原理"></a>vue-router原理</h3><p>作为参数传入的字符串属性mode只是一个标记，用来指示实际起作用的对象属性history的实现类，两者对应关系如下：<br>‘history’:HTML5History<br>‘hash’:HashHistory<br>‘abstract’:AbstractHistory<br>在初始化对应的history之前，会对mode做一些校验：若浏览器不支持HTML5History方式（通过supportsPushState变量判断），则mode强制设为’hash’；若不是在浏览器环境下运行，则mode强制设为’abstract’<br>VueRouter类中的onReady(), push()等方法只是一个代理，实际是调用的具体history对象的对应方法，在init()方法中初始化时，也是根据history对象具体的类别执行不同操作</p>
+<ul>
+<li>HashHistory<br>hash虽然出现在URL中，但不会被包括在HTTP请求中。它是用来指导浏览器动作的，对服务器端完全无用，因此，改变hash不会重新加载页面<br>可以为hash的改变添加监听事件： window.addEventListener(“hashchange”, funcRef, false)<br>每一次改变hash（window.location.hash），都会在浏览器的访问历史中增加一个记录</li>
+</ul>
+<p>在全局install了router的插件，beforeCreate钩子中定义了响应式的_route属性，当通过$router.push() –&gt; HashHistory.push() 进行路由更改的时候，route值改变了，就触发render</p>
+<ul>
+<li>HTML5History<br>History interface是浏览器历史记录栈提供的接口，通过back(), forward(), go()等方法，我们可以读取浏览器历史记录栈的信息，进行各种跳转操作。从HTML5开始，History interface提供了两个新的方法：pushState(), replaceState()使得我们可以对浏览器历史记录栈进行修改：</li>
+</ul>
+<pre><code>window.history.pushState(stateObject, title, URL)
+window.history.replaceState(stateObject, title, URL)</code></pre><p>两种模式比较</p>
+<p>pushState设置的新URL可以是与当前URL同源的任意URL；而hash只可修改#后面的部分，故只可设置与当前同文档的URL<br>pushState设置的新URL可以与当前URL一模一样，这样也会把记录添加到栈中；而hash设置的新值必须与原来不一样才会触发记录添加到栈中<br>pushState通过stateObject可以添加任意类型的数据到记录中；而hash只可添加短字符串<br>pushState可额外设置title属性供后续使用    </p>
+<h3 id="vue-router实现路由懒加载"><a href="#vue-router实现路由懒加载" class="headerlink" title="vue-router实现路由懒加载"></a>vue-router实现路由懒加载</h3><p>1.import按需加载（官方写法）</p>
+<pre><code>const Foo = () =&gt; import(/* webpackChunkName: &quot;group-foo&quot; */ &apos;./Foo.vue&apos;)</code></pre><p>2.vue异步组件</p>
+<pre><code>{
+    path: &apos;/path&apos;,
+    name: &apos;componentName&apos;,
+    component: resolve =&gt; require([&apos;@/componentPath&apos;], resolve),
+}</code></pre><h3 id="动态加载路由"><a href="#动态加载路由" class="headerlink" title="动态加载路由"></a>动态加载路由</h3><pre><code>const router = new Router({
+  routes: [
+    {path: &apos;/&apos;, redirect: &apos;/home&apos;},
+  ]  
+})
+
+router.addRoutes([
+  {
+    path: &apos;/login&apos;,
+    name: &apos;login&apos;,
+    component: () =&gt; import(&apos;../components/Login.vue&apos;)
+  }
+])</code></pre><h3 id="路由守卫"><a href="#路由守卫" class="headerlink" title="路由守卫"></a>路由守卫</h3><p>全局前置守卫 beforeEach(to,from,next)<br>全局后置守卫 afterEach(to,from)<br>路由守卫 beforeEnter(to, from, next)<br>组件内守卫 beforeRouteEnter，beforeRouteUpdate，beforeRouteLeave</p>
+<h3 id="完整的路由导航解析流程"><a href="#完整的路由导航解析流程" class="headerlink" title="完整的路由导航解析流程"></a>完整的路由导航解析流程</h3><p>1.导航被触发。<br>2.在失活的组件里调用 beforeRouteLeave 守卫。<br>3.调用全局的 beforeEach 守卫。<br>4.在重用的组件里调用 beforeRouteUpdate 守卫 (2.2+)。<br>5.在路由配置里调用 beforeEnter。<br>6.解析异步路由组件。<br>7.在被激活的组件里调用 beforeRouteEnter。<br>8.调用全局的 beforeResolve 守卫 (2.5+)。<br>9.导航被确认。<br>10.调用全局的 afterEach 钩子。<br>11.触发 DOM 更新。<br>12.用创建好的实例调用 beforeRouteEnter 守卫中传给 next 的回调函数。</p>
+<h3 id="vue的频繁变化为什么只变化一次"><a href="#vue的频繁变化为什么只变化一次" class="headerlink" title="vue的频繁变化为什么只变化一次"></a>vue的频繁变化为什么只变化一次</h3><p>检测到数据变化,开启一个队列,在同一事件循环中缓冲所有数据改变<br>如果同一个 watcher (watcherId相同)被多次触发，只会被推入到队列中一次<br>不优化，每一个数据变化都会执行: setter-&gt;Dep-&gt;Watcher-&gt;update-&gt;run<br>优化后：执行顺序update -&gt; queueWatcher -&gt; 维护观察者队列（重复id的Watcher处理） -&gt; waiting标志位处理 -&gt; 处理$nextTick（在为微任务或者宏任务中异步更新DOM）</p>
+<h3 id="自定义指令"><a href="#自定义指令" class="headerlink" title="自定义指令"></a>自定义指令</h3><p>指令定义函数提供了几个钩子函数（可选）：<br>bind: 只调用一次，指令第一次绑定到元素时调用，可以定义一个在绑定时执行一次的初始化动作。<br>inserted: 被绑定元素插入父节点时调用（父节点存在即可调用，不必存在于 document 中）。<br>update: 被绑定元素所在的模板更新时调用，而不论绑定值是否变化。通过比较更新前后的绑定值。<br>componentUpdated: 被绑定元素所在模板完成一次更新周期时调用。<br>unbind: 只调用一次， 指令与元素解绑时调用。</p>
+<pre><code>Vue.directive(&apos;imgUrl&apos;, function (el, binding) {
+    el.style.backgroundColor = &apos;#FEFEFE&apos; //设置背景颜色
+    var img = new Image()
+    img.src = binding.value // binding.value 指令后的参数
+    img.onload = function () {
+        el.style.backgroundColor = &apos;&apos;
+        el.src = binding.value
+    }
+})</code></pre><h3 id="VUE和react怎样选择"><a href="#VUE和react怎样选择" class="headerlink" title="VUE和react怎样选择"></a>VUE和react怎样选择</h3><p>1.数据是不是可变的<br>react整体是函数式的思想，把组件设计成纯组件，状态和逻辑通过参数传入，所以在react中，是单向数据流，推崇结合immutable来实现数据不可变。react在setState之后会重新走渲染的流程，如果shouldComponentUpdate返回的是true，就继续渲染，如果返回了false，就不会重新渲染，PureComponent就是重写了shouldComponentUpdate，然后在里面作了props和state的浅层对比。<br>而vue的思想是响应式的，也就是基于是数据可变的，通过对每一个属性建立Watcher来监听，当属性变化的时候，响应式的更新对应的虚拟dom。<br>总之，react的性能优化需要手动去做，而vue的性能优化是自动的，但是vue的响应式机制也有问题，就是当state特别多的时候，Watcher也会很多，会导致卡顿，所以大型应用（状态特别多的）一般用react，更加可控。<br>2.通过js来操作一切，还是用各自的处理方式<br>vue有模版写法，更趋向于常规的开发模式，react的写法是全部基于js，适配现有项目难度较高<br>3.什么功能内置，什么交给社区去做<br>vue内置了很多功能，而react做的很少，很多都是由社区来完成的，vue追求的是开发的简单，而react更在乎方式是否正确。</p>
+<p>1.Vue 进行数据拦截/代理，它对侦测数据的变化更敏感、更精确，也间接对一些后续实现（比如 hooks，function based API）提供了很大的便利。这个我们后面会提到；React 推崇函数式，它直接进行局部重新刷新（或者重新渲染），这样更粗暴，但是更简单，让我们的开发回到了上古时代，就是刷新呗，前端开发非常简单。但是 React 并不知道什么时候“应该去刷新”，触发局部重新变化是由开发者手动调用 setState 完成。React setState 引起局部重新刷新。为了达到更好的性能，React 暴漏给开发者 shouldComponentUpdate 这个生命周期 hook，来避免不需要的重新渲染（相比之下，Vue 由于采用依赖追踪，默认就是优化状态：你动了多少数据，就触发多少更新，不多也不少，而 React 对数据变化毫无感知，它就提供 React.createElement 调用已生成 virtual dom）。另外 React 为了弥补不必要的更新，会对 setState 的行为进行合并操作。因此 setState 有时候会是异步更新，但并不是总是“异步”。这个设计上的差别，直接影响了 hooks 的实现和表现。React hook 底层是基于链表（Array）实现，每次组件被 render 的时候都会顺序执行所有的 hooks，因为底层是链表，每一个 hook 的 next 是指向下一个 hook 的，所以要求开发者不能在不同 hooks 调用中使用判断条件，因为 if 会导致顺序不正确，从而导致报错。相反，vue hook 只会被注册调用一次，vue 之所以能避开这些麻烦的问题，根本原因在于它对数据的响应是基于响应式的，是对数据进行了代理的。他不需要链表进行 hooks 记录，它对数据直接代理观察。但是 Vue 这种响应式的方案，也有自己的困扰。比如 useState() （实际上 evan 命名为 value()）返回的是一个 value wrapper （包装对象）。一个包装对象只有一个属性：.value ，该属性指向内部被包装的值。我们知道在 JavaScript 中，原始值类型如 string 和 number 是只有值，没有引用的。不管是使用 Object.defineProperty 还是 Proxy，我们无法追踪原始变量后续的变化。因此 Vue 不得不返回一个包装对象，不然对于基本类型，它无法做到数据的代理和拦截。这算是因为设计理念带来的一个非常非常微小的  side effect。</p>
+<h3 id="如何批量引入组件"><a href="#如何批量引入组件" class="headerlink" title="如何批量引入组件"></a>如何批量引入组件</h3><pre><code>// 引入所有需要的动态组件
+const requireComponent = require.context(
+  &quot;./&quot;, //组件所在目录的相对路径
+  true, //是否查询其子目录
+  /\w+\.vue$/ //匹配基础组件文件名的正则表达式
+);
+var comObj = {};
+requireComponent.keys().forEach(fileName =&gt; {
+  // 获取文件名
+  var names = fileName.split(&quot;/&quot;).pop().replace(/\.\w+$/, &quot;&quot;);
+  // 获取组件配置
+  const componentConfig = requireComponent(fileName);
+  // 若该组件是通过&quot;export default&quot;导出的，优先使用&quot;.default&quot;，否则退回到使用模块的根
+  comObj[names] = componentConfig.default || componentConfig;
+});</code></pre><h2 id="VUEX"><a href="#VUEX" class="headerlink" title="VUEX"></a>VUEX</h2><h3 id="vuex流程"><a href="#vuex流程" class="headerlink" title="vuex流程"></a>vuex流程</h3><p><img src="https://vuex.vuejs.org/vuex.png" alt="1"><br>在vue组件里面，通过dispatch来触发actions提交修改数据的操作。<br>然后再通过actions的commit来触发mutations来修改数据。<br>mutations接收到commit的请求，就会自动通过Mutate来修改state（数据中心里面的数据状态）里面的数据。<br>最后由store触发每一个调用它的组件的更新</p>
+<h3 id="核心概念"><a href="#核心概念" class="headerlink" title="核心概念"></a>核心概念</h3><ul>
+<li>state是存储的单一状态，是存储的基本数据。</li>
+<li>Getters是store的计算属性，对state的加工，是派生出来的数据。就像computed计算属性一样，getter返回的值会根据它的依赖被缓存起来，且只有当它的依赖值发生改变才会被重新计算。</li>
+<li>Mutations提交更改数据，使用store.commit方法更改state存储的状态。（mutations同步函数）</li>
+<li>Actions像一个装饰器，提交mutation，而不是直接变更状态。（actions可以包含任何异步操作）</li>
+<li>Module是store分割的模块，每个模块拥有自己的state、getters、mutations、actions。</li>
+</ul>
+<h3 id="vuex原理"><a href="#vuex原理" class="headerlink" title="vuex原理"></a>vuex原理</h3><p><img src="http://img1.sycdn.imooc.com/5d5813ab0001a8b910021104.png" alt="2"> </p>
+<pre><code>// src/store.js
+function resetStoreVM (store, state, hot) {
+  // 省略无关代码
+  Vue.config.silent = true
+  store._vm = new Vue({
+    data: {
+      $$state: state
+    },
+    computed
+  })
+}</code></pre><p>beforeCreate生命周期注入了设置this.$store这样一个对象<br>其本质就是将我们传入的state作为一个隐藏的vue组件的data,也就是说，我们的commit操作，本质上其实是修改这个组件的data值，结合上文的computed,修改被defineReactive代理的对象值后，会将其收集到的依赖的watcher中的dirty设置为true,等到下一次访问该watcher中的值后重新获取最新值。<br>这样就能解释了为什么vuex中的state的对象属性必须提前定义好，如果该state中途增加一个属性，因为该属性没有被defineReactive，所以其依赖系统没有检测到，自然不能更新<br>2.vuex里的getter和mutation action有什么区别<br>getter: Getters是store的计算属性，对state的加工，是派生出来的数据。就像computed计算属性一样，getter返回的值会根据它的依赖被缓存起来，且只有当它的依赖值发生改变才会被重新计算。<br>mutation: 同步操作，更改store的值<br>action：异步操作</p>
+<h2 id="REACT"><a href="#REACT" class="headerlink" title="REACT"></a>REACT</h2><ul>
+<li>react的生命周期<br>getSnapShotBeforeUpdate 获取更新前的dom，滚动，定位<br><img src="/image/%E5%89%8D%E7%AB%AF%E9%9D%A2%E8%AF%95%E9%A2%98%E9%9B%86/8.png" alt="8.png"><br>使用 static getDerivedStateFromError() 渲染备用 UI ，使用 componentDidCatch() 打印错误信息。<br>错误边界有两个作用:1.如果发生错误，显示回退UI。2.记录错误</li>
+<li>setState有时候是同步的？异步？批量更新<br>1.setState 只在合成事件和钩子函数中是“异步”的，在原生事件和 setTimeout 中都是同步的。<br>2.setState的“异步”并不是说内部由异步代码实现，其实本身执行的过程和代码都是同步的，只是合成事件和钩子函数的调用顺序在更新之前，导致在合成事件和钩子函数中没法立马拿到更新后的值，形式了所谓的“异步”，当然可以通过第二个参数 setState(partialState, callback) 中的callback拿到更新后的结果。<br>3.setState 的批量更新优化也是建立在“异步”（合成事件、钩子函数）之上的，在原生事件和setTimeout 中不会批量更新，在“异步”中如果对同一个值进行多次 setState ， setState 的批量更新策略会对其进行覆盖，取最后一次的执行，如果是同时 setState 多个不同的值，在更新时会对其进行合并批量更新。</li>
+<li>react 事件处理<br>react会将所有的事件都绑定在最外层(document)，使用统一的事件监听，并在冒泡阶段处理事件，当挂载或者卸载组件时，只需要在通过的在统一的事件监听位置增加或者删除对象，因此可以提高效率。<br>并且React并没有使用原生的浏览器事件，而是在基于Virtual DOM的基础上实现了合成事件<br>事件注册<br>React在组件加载(mount)和更新(update)时,其中的ReactDOMComponent会对传入的事件属性进行处理，对相关事件进行注册和存储。document中注册的事件不处理具体的事件，仅对事件进行分发。ReactBrowserEventEmitter作为事件注册入口，担负着事件注册和事件触发。注册事件的回调函数由EventPluginHub来统一管理，根据事件的类型(type)和组件标识(_rootNodeID)为key唯一标识事件并进行存储。<br>事件执行<br>事件执行时，document上绑定事件ReactEventListener.dispatchEvent会对事件进行分发，根据之前存储的类型(type)和组件标识(_rootNodeID)找到触发事件的组件。ReactEventEmitter利用EventPluginHub中注入(inject)的plugins(例如:SimpleEventPlugin、EnterLeaveEventPlugin)会将原生的DOM事件转化成合成的事件，然后批量执行存储的回调函，回调函数的执行分为两步，第一步是将所有的合成事件放到事件队列里面，第二步是逐个执行。需要注意的是，浏览器原生会为每个事件的每个listener创建一个事件对象，可以从这个事件对象获取到事件的引用。这会造成高额的内存分配，React在启动时就会为每种对象分配内存池，用到某一个事件对象时就可以从这个内存池进行复用，节省内存。</li>
+</ul>
+<h3 id="react-组件"><a href="#react-组件" class="headerlink" title="react 组件"></a>react 组件</h3><p>函数/无状态/展示组件：函数或无状态组件是一个纯函数，它可接受接受参数，并返回react元素。这些都是没有任何副作用的纯函数。这些组件没有状态或生命周期方法<br>类/有状态组件：类或有状态组件具有状态和生命周期方可能通过setState()方法更改组件的状态。类组件是通过扩展React创建的。它在构造函数中初始化，也可能有子组件<br>受控组件：受控组件是在 React 中处理输入表单的一种技术。表单元素通常维护它们自己的状态，而react则在组件的状态属性中维护状态。我们可以将两者结合起来控制输入表单。这称为受控组件。因此，在受控组件表单中，数据由React组件处理。<br>非受控组件：大多数情况下，建议使用受控组件。有一种称为非受控组件的方法可以通过使用Ref来处理表单数据。在非受控组件中，Ref用于直接从DOM访问表单值，而不是事件处理程序。也就是说，只能让用户控制，而不是程序控制<br>容器组件：容器组件是处理获取数据、订阅 redux 存储等的组件。它们包含展示组件和其他容器组件，但是里面从来没有html。比如一个列表，每一项都是一个组件，但整个列表可以做为一个容器组件</p>
+<blockquote>
+<p>mixin:就是用赋值的方式将mixin对象里的方法都挂载到原型上，来实现对对象的混入。缺点：由于Mixin过多会使得组件难以维护，在React ES6中Mixin不再被支持。</p>
+</blockquote>
+<pre><code>const mixin = function (obj,mixin) {
+ const newObj = obj;
+ newObj.prototype = Object.create(obj.prototype)
+ for(let prop in mixin){
+  if(mixin.hasOwnProperty(prop)){
+   newObj.prototype[prop] = mixin[prop]
+  }
+ }
+ return newObj
+}</code></pre><p>高阶组件：高阶组件是一个接替Mixin实现抽象组件公共功能的好方法。高阶组件其实是一个函数，接收一个组件作为参数，返回一个包装组件作为返回值，类似于高阶函数。高阶组件和装饰器就是一个模式，因此，高阶组件可以作为装饰器来使用。<br>优点：适用范围广，它不需要es6或者其它需要编译的特性，有函数的地方，就有HOC。Debug友好，它能够被React组件树显示，所以可以很清楚地知道有多少层，每层做了什么。<br>用法：<br>属性代理(Props Proxy): 高阶组件通过ComponentClass的props来进行相关操作。</p>
+<ol>
+<li>操作props</li>
+<li>通过refs访问组件实例</li>
+<li>提取state</li>
+<li>用其他元素包裹WrappedComponent，实现布局等目的<br>继承反转(Inheritance Inversion)): 高阶组件继承自ComponentClass<br>HOC继承了WrappedComponent，意味着可以访问到WrappedComponent的state，props，生命周期和render方法。如果在HOC中定义了与WrappedComponent同名方法，将会发生覆盖，就必须手动通过super进行调用。通过完全操作WrappedComponent的render方法返回的元素树，可以真正实现渲染劫持。这种思想具有较强的入侵性。</li>
+</ol>
+<p>创建组件：React.Component/function</p>
+<h3 id="Hook"><a href="#Hook" class="headerlink" title="Hook"></a>Hook</h3><p>Hook 是一些可以让你在函数组件里“钩入” React state 及生命周期等特性的函数。Hook 不能在 class 组件中使用 —— 这使得你不使用 class 也能使用 React。<br>useState通过在函数组件里调用它来给组件添加一些内部 state。React 会在重复渲染时保留这个 state。useState 会返回一对值：当前状态和一个让你更新它的函数，你可以在事件处理函数中或其他一些地方调用这个函数。它类似 class 组件的 this.setState，但是它不会把新的 state 和旧的 state 进行合并。<br>useEffect 就是一个 Effect Hook，给函数组件增加了操作副作用的能力。它跟 class 组件中的 componentDidMount、componentDidUpdate 和 componentWillUnmount 具有相同的用途，只不过被合并成了一个 API。</p>
+<h2 id="REDUX"><a href="#REDUX" class="headerlink" title="REDUX"></a>REDUX</h2><h3 id="redux原理"><a href="#redux原理" class="headerlink" title="redux原理"></a>redux原理</h3><p>提供 configureStore 让用户传入 store.reducer 和 store.state<br>提供 Provider 让用户划定全局 state 的作用范围<br>提供 connect 让组件被 Wrapper 接管<br>让 Wrapper 根据 selector 来获取局部的 state 并传给组件<br>让 Wrapper 根据 dispatchSelector 来获取对 dispatch 的封装，并传给组件<br>让 Wrapper 通过 store.subscribe 来监听 state 的变化，一旦自己依赖的 state 变化就强制 render 自己<br>组件可以从 props 里获取局部 state 以及 dispatch 的封装<br>组件调用 dispatch 后，会通过 reducer 获取 newState，以替换旧的 state</p>
+<h3 id="redux流程"><a href="#redux流程" class="headerlink" title="redux流程"></a>redux流程</h3><p>将需要修改的state都存入到store里，发起一个action用来描述发生了什么，用reducers描述action如何改变state tree 。创建store的时候需要传入reducer，真正能改变store中数据的是store.dispatch API。</p>
+<h3 id="applyMiddleware"><a href="#applyMiddleware" class="headerlink" title="applyMiddleware"></a>applyMiddleware</h3><p>1、applyMiddleware顾名思义，用于调用各种中间件；<br>2、applyMiddleware执行后，将所有入参中间件存入一个数组，并且返回一个闭包（闭包的概念不做累述）<br>3、闭包接受一个createStore作为入参并且执行后返回下一个闭包，createStore这个入参有没有很眼熟，没错，就是redux的createStore。<br>返回将所有中间件串联存入的dispatch，执行时从右向左执行，第一次的执行结果会返回给一下个，依次类推。</p>
+<h3 id="redux中间件"><a href="#redux中间件" class="headerlink" title="redux中间件"></a>redux中间件</h3><p>dispatch一个action之后，到达reducer之前，进行一些额外的操作，就需要用到middleware。你可以利用 Redux middleware 来进行日志记录、创建崩溃报告、调用异步接口或者路由等等。换言之，中间件都是对store.dispatch()的增强,dispath的时候在发出 Action 和执行 Reducer 这两步之间，添加了其他功能。</p>
+<pre><code>function createThunkMiddleware(extraArgument) {
+  return function({ dispatch, getState }) {
+    return function(next){
+      return function(action){
+        if (typeof action === &apos;function&apos;) {
+          return action(dispatch, getState, extraArgument);
+        }
+        return next(action);
+      };
+    }
+  }
+}</code></pre><p>redux-thunk最重要的思想，就是可以接受一个返回函数的action creator。如果这个action creator 返回的是一个函数，就执行它，如果不是，就按照原来的next(action)执行。因为这个action creator可以返回一个函数，那么就可以在这个函数中执行一些异步的操作</p>
+<h2 id="WEBPACK"><a href="#WEBPACK" class="headerlink" title="WEBPACK"></a>WEBPACK</h2><h3 id="什么是webpack"><a href="#什么是webpack" class="headerlink" title="什么是webpack"></a>什么是webpack</h3><p>webpack是一个打包工具，他的宗旨是一切静态资源皆可打包。规的开发方式，比如jquery,html,css静态网页开发已经落后了。现在是MVVM的时代，数据驱动界面。webpack它做的事情是，分析你的项目结构，找到JavaScript模块以及其它的一些浏览器不能直接运行的拓展语言（Scss，TypeScript等），并将其打包为合适的格式以供浏览器使用。</p>
+<h3 id="webpack核心概念"><a href="#webpack核心概念" class="headerlink" title="webpack核心概念"></a>webpack核心概念</h3><p>1.Entry（入口）：指示 webpack 应该使用哪个模块，来作为构建其内部依赖图的开始。进入入口起点后，webpack 会找出有哪些模块和库是入口起点（直接和间接）依赖的。<br>2.Output（出口）：告诉 webpack 在哪里输出它所创建的结果文件，以及如何命名这些文件，默认值为./dist。<br>3.Loader（模块转换器）：将所有类型的文件转换为 webpack 能够处理的有效模块，然后你就可以利用 webpack 的打包能力，对它们进行处理。<br>4.Plugins（插件）：在 Webpack 构建流程中的特定时机注入扩展逻辑来改变构建结果或做你想要的事情。<br>5.Module(模块)：开发者将程序分解成离散功能块，并称之为模块，在webpack里一个模块对应着一个文件，webpack会从配置的 Entry 开始递归找出所有依赖的模块。</p>
+<h3 id="webpack的构建流程是什么-从读取配置到输出文件这个过程尽量说全"><a href="#webpack的构建流程是什么-从读取配置到输出文件这个过程尽量说全" class="headerlink" title="webpack的构建流程是什么?从读取配置到输出文件这个过程尽量说全"></a>webpack的构建流程是什么?从读取配置到输出文件这个过程尽量说全</h3><p>webpack启动后会在entry里配置的module开始递归解析entry所依赖的所有module，每找到一个module, 就会根据配置的loader去找相应的转换规则，对module进行转换后在解析当前module所依赖的module，这些模块会以entry为分组，一个entry和所有相依赖的module也就是一个chunk，最后webpack会把所有chunk转换成文件输出，在整个流程中webpack会在恰当的时机执行plugin的逻辑<br>Webpack 的运行流程是一个串行的过程，从启动到结束会依次执行以下流程：<br>初始化参数：从配置文件和 Shell 语句中读取与合并参数，得出最终的参数；<br>开始编译：用上一步得到的参数初始化 Compiler 对象，加载所有配置的插件，执行对象的 run 方法开始执行编译；<br>确定入口：根据配置中的 entry 找出所有的入口文件；<br>编译模块：从入口文件出发，调用所有配置的 Loader 对模块进行翻译，再找出该模块依赖的模块，再递归本步骤直到所有入口依赖的文件都经过了本步骤的处理；<br>完成模块编译：在经过第4步使用 Loader 翻译完所有模块后，得到了每个模块被翻译后的最终内容以及它们之间的依赖关系；<br>输出资源：根据入口和模块之间的依赖关系，组装成一个个包含多个模块的 Chunk，再把每个 Chunk 转换成一个单独的文件加入到输出列表，这步是可以修改输出内容的最后机会；<br>输出完成：在确定好输出内容后，根据配置确定输出的路径和文件名，把文件内容写入到文件系统。<br>在以上过程中，Webpack 会在特定的时间点广播出特定的事件，插件在监听到感兴趣的事件后会执行特定的逻辑，并且插件可以调用 Webpack 提供的 API 改变 Webpack 的运行结果。</p>
+<h3 id="HRM"><a href="#HRM" class="headerlink" title="HRM"></a>HRM</h3><p>监听文件变化，打包到内存<br>简历websocket，将webpack编译打包各个状态告诉浏览器<br>devserver监听complie，done事件后，将新模块hash发送给各个浏览器端<br>浏览器暂存hash，收到ok后，把hash发给webpack，没有hot直接刷新<br>webpack拿到hash，验证请求模块代码<br>找到国企的以来和模块，删除增加新的模块<br>如果出错，刷新</p>
+<h3 id="自动刷新"><a href="#自动刷新" class="headerlink" title="自动刷新"></a>自动刷新</h3><p>文件监听，获取文件最后编辑时间，保存<br>如果获取的时间与最后保存的不一致，刷新<br>定时检查，发现变化先手机起来，收集一段时间在告诉监听者</p>
+<h3 id="Webpack与Grunt和Gulp的区别"><a href="#Webpack与Grunt和Gulp的区别" class="headerlink" title="Webpack与Grunt和Gulp的区别"></a>Webpack与Grunt和Gulp的区别</h3><p>Webpack的工作方式是：把你的项目当做一个整体，通过一个给定的主文件（如：index.js），Webpack将从这个文件开始找到你的项目的所有依赖文件，使用loaders处理它们，最后打包为一个（或多个）浏览器可识别的JavaScript文件。<br>Grunt和Gulp的工作方式是：基于任务和流（Task、Stream）的，在一个配置文件中，指明对某些文件进行类似编译，组合，压缩等任务的具体步骤，工具之后可以自动替你完成这些任务。<br>gulp和grunt需要开发者将整个前端构建过程拆分成多个Task，并合理控制所有Task的调用关系。webpack需要开发者找到入口，并需要清楚对于不同的资源应该使用什么Loader做何种解析和加工</p>
+<h3 id="loader"><a href="#loader" class="headerlink" title="loader"></a>loader</h3><p>1.什么是loader<br>Loader直译为”加载器”。Webpack将一切文件视为模块，但是webpack原生是只能解析js文件，如果想将其他文件也打包的话，就会用到loader。 所以Loader的作用是让webpack拥有了加载和解析非JavaScript文件的能力<br>2.常见的locader<br>file-loader：把文件输出到一个文件夹中，在代码中通过相对 URL 去引用输出的文件<br>url-loader：和 file-loader 类似，但是能在文件很小的情况下以 base64 的方式把文件内容注入到代码中去<br>source-map-loader：加载额外的 Source Map 文件，以方便断点调试<br>image-loader：加载并且压缩图片文件<br>babel-loader：把 ES6 转换成 ES5<br>css-loader：加载 CSS，支持模块化、压缩、文件导入等特性<br>style-loader：把 CSS 代码注入到 JavaScript 中，通过 DOM 操作去加载 CSS。<br>eslint-loader：通过 ESLint 检查 JavaScript 代码<br>3.loader原理<br>loader的执行顺序和代码书写的顺序是相反的，即：最后一个loader最先执行，第一个loader最后执行<br>第一个执行的loader会接收源文件做为参数，下一次执行的loader会接收前一个loader执行的返回值做为参数<br>单一原则: 每个 Loader 只做一件事；<br>链式调用: Webpack 会按顺序链式调用每个 Loader；<br>统一原则: 遵循 Webpack 制定的设计规则和结构，输入与输出均为字符串，各个 Loader 完全独立，即插即用；<br>4.写一个loader</p>
+<pre><code>// webpack.config.js
+rules: [
+  {
+    test: /\.txt$/,
+    use: [
+      &apos;./loaders/myloader2.js&apos;,&apos;./loaders/myloader1.js&apos;
+    ]
+  }
+]
+// loaders/myloader1.js    
+module.exports = function (src) {
+    src = src.split(&apos;&apos;).reverse().join(&apos;&apos;)
+    return src;
+}
+// loaders/myloader2.js   
+module.exports = function(source) {
+  // 通过 this.callback 告诉 Webpack 返回的结果
+  // 其中的this.callback是Webpack给Loader注入的API，以方便Loader和Webpack之间通信。
+  this.callback(null, source, sourceMaps);
+  // 当你使用 this.callback 返回内容时，该 Loader 必须返回 undefined，
+  // 以让 Webpack 知道该 Loader 返回的结果在 this.callback 中，而不是 return 中 
+  return;
+};</code></pre><h3 id="Plugin"><a href="#Plugin" class="headerlink" title="Plugin"></a>Plugin</h3><p>1.常见的Plugin<br>define-plugin：定义环境变量<br>HtmlWebpackPlugin:可以生成创建html入口文件,为html文件中引入的外部资源如script、link动态添加每次compile后的hash，防止引用缓存的外部文件问题<br>uglifyjs-webpack-plugin：通过UglifyES压缩ES6代码，删除警告<br>CleanWebpackPlugin：清除打包的文件<br>HotModuleReplacementPlugin：热重载（更新的模块重载）<br>2.plugin的原理<br>plugin 本质上就是一个类,有一个 apply 方法，接受一个 compiler 的对象, 我们会在 compiler 对象上钩子挂载一些监听函数，当 compiler 对象上这些钩子触发的时候，就会调用这些函数。Webpack启动后，在读取配置的过程中会先执行new BasicPlugin(options)初始化一个BasicPlugin获得其实例。 在初始化compiler对象后，再调用basicPlugin.apply(compiler)给插件实例传入compiler对象。 插件实例在获取到compiler对象后，就可以通过compiler.plugin(事件名称, 回调函数)监听到Webpack广播出来的事件。 并且可以通过compiler对象去操作Webpack。<br>3.写一个plugin</p>
+<pre><code>// BasicPlugin.js
+class BasicPlugin{
+  // 在构造函数中获取用户给该插件传入的配置
+  constructor(options){
+
+  }
+
+  // Webpack 会调用 BasicPlugin 实例的 apply 方法给插件实例传入 compiler 对象
+  apply(compiler){
+    compiler.plugin(&apos;compilation&apos;,function(compilation) {
+
+    })
+  }
+}
+// 导出 Plugin
+module.exports = BasicPlugin;
+
+
+// webpack.config.js
+const BasicPlugin = require(&apos;./BasicPlugin.js&apos;);
+module.export = {
+  plugins:[
+    new BasicPlugin(options),
+  ]
+} </code></pre><h3 id="用-webpack-实现-long-term-cache"><a href="#用-webpack-实现-long-term-cache" class="headerlink" title="用 webpack 实现 long term cache"></a>用 webpack 实现 long term cache</h3><p>思路：哪个模块更新了破坏他的缓存，没更新的模块继续利用缓存。<br>1.code splitting</p>
+<pre><code>// 1.多entry方式
+entry: {
+    a: &apos;./code_split_mode/a.js&apos;,
+    b: &apos;./code_split_mode/b.js&apos;
+},
+// 2.公共提取,拆分代码配置项方式
+optimization: {
+    splitChunks: {
+      cacheGroups: {
+        node_vendors: {
+          test: /[\\/]node_modules[\\/]/,
+          chunks: &apos;async&apos;,
+          priority: 1
+        }
+      }
+    }
+},
+// 3.动态加载
+output: {
+  path: config.build.assetsRoot,
+  filename: utils.assetsPath(&apos;js/[name].[chunkhash].js&apos;),
+  chunkFilename: utils.assetsPath(&apos;js/[id].[chunkhash].js&apos;)
+},
+// 4.动态加载在vue中
+// 把每个路由所包含的组件，都分割成一个单独的 bundle（通过import()就已经可以实现了）；当路由被访问的时候才加载该路由对应的 bundle（ue 允许将组件定义为一个工厂函数，异步地解析组件的定义。只在组件需要渲染时触发工厂函数，并且把结果缓存起来，用于后面的再次渲染。在工厂函数中可以返回 Promise，而 import() 也是返回 Promise 的，这样就把异步组件和 import() 结合起来了。）
+const router = new VueRouter({
+  routes: [
+    { path: &apos;/login&apos;, component: () =&gt; import(&apos;@/views/login&apos;), },
+    { path: &apos;/home&apos;, component: () =&gt; import(&apos;@/views/home&apos;), }
+  ]
+})</code></pre><p>2.生成稳定的 hash 文件名</p>
+<pre><code>  output: {
+    //...
+    filename: &apos;[name].[chunkhash:8].js&apos;,
+    chunkFilename: &apos;[name].[chunkhash:8].chunk.js&apos;,
+    //...
+  },
+}</code></pre><p>3.提取 webpack 的 runtime 代码（用来解析和加载模块之类的运行时代码）</p>
+<pre><code>new webpack.optimize.CommonsChunkPlugin({ 
+  name: [&apos;manifast&apos;] 
+}),</code></pre><p>4.保持moudule的id<br>webpack 里每个模块都有一个 module id ，module id 是该模块在模块依赖关系图里按顺序分配的序号，如果这个 module id 发生了变化，那么他的 chunkhash 也会发生变化。</p>
+<pre><code>plugins: [
+  new webpack.HashedModuleIdsPlugin(),
+  // ...
+],</code></pre><h3 id="使用webpack优化体积"><a href="#使用webpack优化体积" class="headerlink" title="使用webpack优化体积"></a>使用webpack优化体积</h3><p>1.mini-css-extract-plugin提取css<br>2.new OptimizeCSSAssetsPlugin()压缩css<br>3.cdn<br>4.splitChunks</p>
+<blockquote>
+<p>提取webpack的runtime代码到单独manifest的文件<br> 所有静态依赖第三方库被分割到同一个文件中,通过cacheGroup<br> 多入口情况下：被多次引用的自研发模块统一放到一个文件中，便于多个入口共享，整一个common<br> 配置缓存，new webpack.HashedModuleIdsPlugin()<br> 多入口情况下：在new HtmlWebpackPlugin下的chunks写如对应页面的引用模块名字</p>
+</blockquote>
+<p>5.路由按需加载（webpackchunkname）</p>
+<h3 id="提升构建速度"><a href="#提升构建速度" class="headerlink" title="提升构建速度"></a>提升构建速度</h3><p>1.缩小文件的查找范围<br>缩小loader的查找范围<br>当安装的第三方模块肯定在nodemoudles里，就通过resolve.moudules指定nodemoudles<br>尽量减少resolve.extension的查找后缀，平时引入文件的时候就把后缀都写上<br>使用module.noparse对一些jquery啥的不进行递归解析处理<br>2.使用dllplugin<br>包含大量的复用模块的动态链接库只需要被编译一次，在之后的构建过程中被动态链接库中大多数包含的是常用的第三方模块，例如react，react-dom这种只要不升级，就不重新编译<br>3.使用happypack<br>运行在node上的webpack是单线程的，也就是说webpack会一个一个处理任务，不能同时处理多个任务，js也是单线程模型，所以就只能通过多进程而不是多线程<br>针对loader进行不同的happypack编译<br>在整个webpack的构建过程中，loader可能是最耗时的，每通过一个new happypack实例化一个happypack，其实就是告诉happypack的核心调度器如何通过一系列的loader去转化一类文件，并且可以指定如何为这类型转换操作分配子进程。核心调度器的代码在主进程中，也就是运行这webpack的进程中，核心调度器会把一个个任务分配给当前的空闲的子进程，子进程处理完毕后将结果返回给核心调度器，他们之间的数据交换是通过进行间的通讯api实现的，核心调度器收到来自子进程处理完毕的结果后，会通知webpack该文件已处理完毕。<br>4.自动刷新<br>文件监听watch，文件监听的原理是定时获取这个文件的最后编辑时间，每次都存下最新的最后编辑的时间，如果发现当前的获取的和最后一次保存的时间不一致，就会认为刷新了，watchoption中的poll用来控制定时检查的周期，每秒检查多少次。当发现变化时，并不会直接告诉监听者，先缓存起来，收集一段时间才会一次性告诉监听者，watchoption中的aggregateTimeout用来配置这个等待时间。<br>所以忽略node_moudles下的监听，<br>5.模块热替换<br>只需重新编译新的模块，替换掉老得模块<br>注意，当子模块发生更新时，更新事件会一层一层向上递，知道有磨蹭的文件接收了当前模块的变化，如果一直往外抛，没有接收，就直接刷新网页</p>
+<h3 id="webpack缺陷"><a href="#webpack缺陷" class="headerlink" title="webpack缺陷"></a>webpack缺陷</h3><p>无法分别加载每个文件 </p>
+<h2 id="优化"><a href="#优化" class="headerlink" title="优化"></a>优化</h2><h3 id="函数防抖和节流有什么特点，区别，场景"><a href="#函数防抖和节流有什么特点，区别，场景" class="headerlink" title="函数防抖和节流有什么特点，区别，场景"></a>函数防抖和节流有什么特点，区别，场景</h3><p>防抖，只最后一次执行。可以在input输入内容发起请求的时候用<br>节流，定时执行，可以在滚动的时候触发</p>
+<h3 id="网页崩溃怎么排查，常见的原因"><a href="#网页崩溃怎么排查，常见的原因" class="headerlink" title="网页崩溃怎么排查，常见的原因"></a>网页崩溃怎么排查，常见的原因</h3><p>抓包，查询日志<br>原因：频繁操作dom,死循环</p>
+<h3 id="页面的加载时间（工具，各项指标）"><a href="#页面的加载时间（工具，各项指标）" class="headerlink" title="页面的加载时间（工具，各项指标）"></a>页面的加载时间（工具，各项指标）</h3><p>1.通过谷歌浏览器开发者工具看各个资源加载的情况<br>2.DOMContentLoaded/load</p>
+<pre><code>console.log(&apos;观察脚本加载的顺序&apos;)
+// 页面上所有的资源（图片，音频，视频等）被加载以后才会触发load事件，简单来说，页面的load事件会在DOMContentLoaded被触发之后才触发
+window.addEventListener(&quot;load&quot;, function() {
+    let a = document.getElementById(&apos;a&apos;)
+    console.log(&apos;load事件回调&apos;)
+}, false);
+// 当文档中没有脚本时，浏览器解析完文档便能触发 DOMContentLoaded 事件；如果文档中包含脚本，则脚本会阻塞文档的解析，而脚本需要等位于脚本前面的css加载完才能执行。在任何情况下，DOMContentLoaded 的触发不需要等待图片等其他资源加载完成。
+document.addEventListener(&quot;DOMContentLoaded&quot;, function() {
+    let a = document.getElementById(&apos;a&apos;)
+    console.log(&apos;DOMContentLoaded回调&apos;) // 不兼容老的浏览器，兼容写法见[jQuery中ready与load事件] ，原理看下文
+}, false);</code></pre><p>3.通过window.performance.timing<br>DNS查询耗时 ：domainLookupEnd - domainLookupStart<br>TCP链接耗时 ：connectEnd - connectStart<br>request请求耗时 ：responseEnd - responseStart<br>解析dom树耗时 ： domComplete- domInteractive<br>白屏时间 ：responseStart - navigationStart<br>domready时间 ：domContentLoadedEventEnd - navigationStart<br>onload时间 ：loadEventEnd - navigationStart</p>
+<p><img src="/image/%E5%89%8D%E7%AB%AF%E9%9D%A2%E8%AF%95%E9%A2%98%E9%9B%86/4.jpg" alt="4"><br>4.首屏可加载，首屏可交互概念</p>
+<h3 id="不同设备版本的兼容性"><a href="#不同设备版本的兼容性" class="headerlink" title="不同设备版本的兼容性"></a>不同设备版本的兼容性</h3><p>1.audio元素和video元素在ios和andriod中无法自动播放<br>原因： 因为各大浏览器都为了节省流量，做出了优化，在用户没有行为动作时（交互）不予许自动播放；</p>
+<pre><code>/音频，写法一
+&lt;audio src=&quot;music/bg.mp3&quot; autoplay loop controls&gt;你的浏览器还不支持哦&lt;/audio&gt;
+
+//音频，写法二
+&lt;audio controls=&quot;controls&quot;&gt; 
+    &lt;source src=&quot;music/bg.ogg&quot; type=&quot;audio/ogg&quot;&gt;&lt;/source&gt;
+    &lt;source src=&quot;music/bg.mp3&quot; type=&quot;audio/mpeg&quot;&gt;&lt;/source&gt;
+    优先播放音乐bg.ogg，不支持在播放bg.mp3
+&lt;/audio&gt;
+
+//JS绑定自动播放（操作window时，播放音乐）
+$(window).one(&apos;touchstart&apos;, function(){
+    music.play();
+})
+
+//微信下兼容处理
+document.addEventListener(&quot;WeixinJSBridgeReady&quot;, function () {
+    music.play();
+}, false);
+
+//小结
+//1.audio元素的autoplay属性在IOS及Android上无法使用，在PC端正常；
+//2.audio元素没有设置controls时，在IOS及Android会占据空间大小，而在PC端Chrome是不会占据任何空间；
+//3.注意不要遗漏微信的兼容处理需要引用微信JS；</code></pre><p>2.上传图片，iPhone7 iPhone7p在上传图片的时候，传不过去图片的name<br>手动添加图片name</p>
+<pre><code>let data = new FormData();
+data.append(&quot;fileName&quot;, file[0],file[0].name);     </code></pre><p>3.ios如果有fixed布局，滚动时底部定位的没了</p>
+<pre><code>-webkit-overflow-scrolling:touch // 回弹效果，有fiexd不能设置
+-webkit-overflow-scrolling:auto // 无回弹效果</code></pre><p>4.ios12虚拟键盘收起的时候，键盘区域留白问题</p>
+<pre><code>handleblur() {
+     window.scrollTo(0, 0);
+}</code></pre><p>5.ios输入英文会有空格</p>
+<pre><code>this.value = this.value.replace(/\u2006/g,&apos;&apos;);</code></pre><p>6.ie10不兼容vue-echar，改成eachar<br>7.ios键盘遮挡屏幕的问题</p>
+<pre><code>document.querySelector(&apos;#inputId&apos;).scrollIntoView();</code></pre><p>但是多次测试，仍然存在问题：当切换输入法的时候，input框的位置会往下移动，被键盘挡住一部分，而且出现的概率比较高（中英文切换）<br>8.ios input光标错乱的问题</p>
+<h3 id="pwa-server"><a href="#pwa-server" class="headerlink" title="pwa server"></a>pwa server</h3><h3 id="前端优化具体的做法"><a href="#前端优化具体的做法" class="headerlink" title="前端优化具体的做法"></a>前端优化具体的做法</h3><ul>
+<li>http层面优化</li>
+</ul>
+<p>减少cookie<br>coockie内的有关信息是通过HTTP文件头来在web服务器和浏览器之间进行交流的。</p>
+<p>使用http缓存<br>HTTP缓存有多种规则，根据是否需要重新向服务器发起请求来分类，一般分为强制缓存和对比缓存，强制缓存判断HTTP首部字段：cache-control,Expires.Expires是一个绝对时间，即服务器时间。浏览器检查当前时间，如果还没到失效时间就直接使用缓存文件，但是该方法存在一个问题，服务器时间和客户端时间可能不一致。Cache-control中的max-age保存一个相对时间，例如cache-control:max-age = 484200,表示浏览器收到文件后，缓存在484200s内有效，如果同时存在cache-control和Expires，浏览器总是优先使用cache-control.<br>对比缓存通过HTTP的last-modified,Etag字段进行判断，last-modified是第一次请求资源时，服务器返回的字段，表示最后一次更新的时间，下次浏览器请求资源时就发送if-modified-since字段，服务器用本地Last-modified时间与if-modified-since时间比较，如果不一致就认为缓存已过期并返回新资源给浏览器，如果时间一致就发送304状态码，让浏览器继续使用缓存。Etag：资源的实体标志（哈西字符串），当资源内容更新时Etag会改变，服务器会判断Etag是否发生变化，如果变化则返回新资源。</p>
+<p><img src="/image/%E8%BE%93%E5%85%A5url%E4%BC%9A%E5%8F%91%E7%94%9F%E4%BB%80%E4%B9%88/3.jpg" alt="3"></p>
+<ul>
+<li>资源优化</li>
+</ul>
+<p>图片优化<br>jpeg/jpg:体积小，有损压缩，一般背景图，轮播图会用得到，缺点不支持透明，压缩过后有些图片会模糊<br>png:无损压缩，支持透明，小logo并且颜色丰富的时候会用到，但是它体积较大<br>svg:无限放大不失真，体积更小，压缩性更强，兼容性好，但渲染成本高<br>base64:编码，可减少请求次数，非常小的小icon,但base64编码后，图片会膨胀为原来大小的3/4<br>按照需求选择更适合的图片<br>同时避免image标签的src为空，因为浏览器加载到image标签发现它空，就会以为自己没加载到，会再次请求一遍。</p>
+<p>体积优化<br>压缩静态资源：合并打包的js、css文件体积一般会比较大，一些图片也会比较大，这个时候必须要压缩处理。<br>编写高效率的CSS：减少深层次嵌套，减少元素选择器使用等等</p>
+<p>资源加载优化<br>静态资源部署cdn<br>按需加载，同域名内的文件充分的进行压缩<br>资源预加载，通过prefetch/preload</p>
+<pre><code>// 实行prefetch，注意只有webpack 4版本才支持prefetch功能。
+import(
+    /* webpackPrefetch: true */
+    /*webpackChunkName: &apos;topic&apos;*/
+    &quot;../topic&quot;
+  )</code></pre><blockquote>
+<p>webpack的动态import()需要指定包命，如果不在注释中说明包名，那么用了几次import() , webpack就会给同一个文件打包多少次。使得我们prefetch的文件和路由中要用到的文件并不是同一个文件。</p>
+</blockquote>
+<ul>
+<li>渲染优化</li>
+</ul>
+<p>DOM节点优化<br>太多不利于seo，也不利于渲染</p>
+<p>懒加载<br>最常见的场景是在图片的懒加载中，先用一种loading的图片占位，然后再用异步的方式加载图片。等真正图片加载完成后就填充进图片节点中去。</p>
+<p>动态加载<br>动态加载脚本就是利用javascript代码来加载脚本，通常是手工创建script元素，然后等到HTML文档解析完毕后插入到文档中去。这样就可以很好地控制脚本加载的时机，从而避免阻塞问题。</p>
+<pre><code>function loadJS(src) {
+  const script = document.createElement(&apos;script&apos;);
+  script.src = src;
+  document.getElementsByTagName(&apos;head&apos;)[0].appendChild(script);
+}
+loadJS(&apos;http://example.com/scq000.js&apos;);</code></pre><p>未来所需组件预加载</p>
+<p>减少重排重绘<br>当DOM的变化引发了元素几何属性的变化，比如改变元素的宽高，元素的位置，导致浏览器不得不重新计算元素的几何属性，并重新构建渲染树，这个过程称为“重排”。完成重排后，要将重新构建的渲染树渲染到屏幕上，这个过程就是“重绘”。<br>简单的说，重排负责元素的几何属性更新，重绘负责元素的样式更新。而且，重排必然带来重绘，但是重绘未必带来重排。比如，改变某个元素的背景，这个就不涉及元素的几何属性，所以只发生重绘。<br>触发重排和重绘的情况：<br>添加、删除、更新 DOM 节点<br>display: none 隐藏一个 DOM 节点-触发重排和重绘<br>通过 visibility: hidden 隐藏一个 DOM 节点-只触发重绘，因为没有几何变化<br>移动或者给页面中的 DOM 节点添加动画<br>添加一个样式表，调整样式属性<br>用户行为，例如调整窗口大小，改变字号，或者滚动。<br>解决方法：<br>让该元素脱离文档流-&gt;对其进行多重改变-&gt;将元素带回文档中</p>
+<ul>
+<li>打包优化</li>
+</ul>
+<p>路由按需加载（webpackchunkname）<br>mini-css-extract-plugin提取css<br>new OptimizeCSSAssetsPlugin()压缩css<br>cdn<br>splitChunks</p>
+<blockquote>
+<p>提取webpack的runtime代码到单独manifest的文件<br> 所有静态依赖第三方库被分割到同一个文件中,通过cacheGroup<br> 多入口情况下：被多次引用的自研发模块统一放到一个文件中，便于多个入口共享，整一个common<br> 配置缓存，new webpack.HashedModuleIdsPlugin()<br> 多入口情况下：在new HtmlWebpackPlugin下的chunks写如对应页面的引用模块名字</p>
+</blockquote>
+<h3 id="chorme网络面板性能分析"><a href="#chorme网络面板性能分析" class="headerlink" title="chorme网络面板性能分析"></a>chorme网络面板性能分析</h3><p>queuing排队时间<br>stalled停滞时间<br>proxy negotiation 代理服务器协商时间<br>initial connection/ssl 和服务器建立连接<br>request sent 请求数据发送给网络<br>wating 第一字节时间<br>content download 接受数据的全部时间</p>
+<h2 id="安全"><a href="#安全" class="headerlink" title="安全"></a>安全</h2><h3 id="CSRF攻击"><a href="#CSRF攻击" class="headerlink" title="CSRF攻击"></a>CSRF攻击</h3><p>CSRF跨站点请求伪造(Cross—Site Request Forgery)，跟XSS攻击一样，存在巨大的危害性，你可以这样来理解：攻击者盗用了你的身份，以你的名义发送恶意请求，对服务器来说这个请求是完全合法的，但是却完成了攻击者所期望的一个操作，比如以你的名义发送邮件、发消息，盗取你的账号，添加系统管理员，甚至于购买商品、虚拟货币转账等。<br>CSRF攻击攻击原理及过程如下：<br>1.用户打开浏览器，访问受信任网站A，输入用户名和密码请求登录网站A；<br>2.在用户信息通过验证后，网站A产生Cookie信息并返回给浏览器，此时用户登录网站A成功，可以正常发送请求到网站A；<br>3.用户未退出网站A之前，或者说是本地cookie没有失效，在同一浏览器中，打开一个TAB页访问网站B；<br>4.网站B接收到用户请求后，返回一些攻击性代码，并发出一个请求要求访问第三方站点A；<br>5.浏览器在接收到这些攻击性代码后，根据网站B的请求，在用户不知情的情况下携带Cookie信息，向网站A发出请求。网站A并不知道该请求其实是由B发起的，所以会根据用户C的Cookie信息以C的权限处理该请求，导致来自网站B的恶意代码被执行。</p>
+<h3 id="XSS攻击"><a href="#XSS攻击" class="headerlink" title="XSS攻击"></a>XSS攻击</h3><p>场景：想象一下 JSONP 就是你请求 <a href="http://youdomain.com?callback=douniwan" target="_blank" rel="noopener">http://youdomain.com?callback=douniwan</a>, 然后返回 douniwan({ data })，那假如请求 <a href="http://youdomain.com?callback=" target="_blank" rel="noopener">http://youdomain.com?callback=</a><script>'console.log(1)'</script> 不就返回 <script>console.log(1)</script>({ data })了吗，如果没有严格定义好 Content-Type（ Content-Type: application/json ），再加上没有过滤 callback 参数，直接当 html 解析了，就是一个赤裸裸的 XSS 了。<br>原则：不相信客户输入的数据<br>解决方法<br>严格定义 Content-Type: application/json<br>然后严格过滤 callback 后的参数并且限制长度（进行字符转义，例如&lt;换成&amp;lt，&gt;换成&amp;gt）等，这样返回的脚本内容会变成文本格式，脚本将不会执行。<br>将重要的cookie标记为http only,这样的话Javascript 中的document.cookie语句就不能获取到cookie了.<br>只允许用户输入我们期望的数据。<br>过滤JavaScript 事件的标签。例如 “onclick=”, “onfocus” 等等。</p>
+<h2 id="架构"><a href="#架构" class="headerlink" title="架构"></a>架构</h2><h3 id="前端工程化"><a href="#前端工程化" class="headerlink" title="前端工程化"></a>前端工程化</h3><p>模块化、组件化、规范化、自动化<br>1.模块化<br>模块化就是将一个大文件拆分成相互依赖的小文件，再进行统一的拼装和加载。现有的es6已经在语言层面上规定了模块系统，完全可以取代现有的CommonJS和AMD规范。<br>webpack可以将文件打包成一个文件，也可以搭乘多个chunk,资源模块化<br>CSS Modules仍然使用CSS，只是让JS来管理依赖。它能够最大化地结合CSS生态和JS模块化能力，目前来看是最好的解决方案。Vue的scoped style也算是一种。<br>2.组件化<br>从UI拆分下来的每个包含模板(HTML)+样式(CSS)+逻辑(JS)功能完备的结构单元，我们称之为组件。<br>模块化只是在文件层面上，对代码或资源的拆分；而组件化是在设计层面上，对UI（用户界面）的拆分。<br>3.规范化<br>结构规范/编码规范/接口规范/文档规范/commit规范<br>4.自动化<br>webpack编译打包，实时刷新等等</p>
+<h2 id="项目"><a href="#项目" class="headerlink" title="项目"></a>项目</h2><p>1.rn中转</p>
+<pre><code>&lt;script type=&quot;text/javascript&quot;&gt;
+    (function () {
+      var UA = navigator &amp;&amp; navigator.userAgent || &quot;&quot;;
+      var href = location &amp;&amp; location.href || &quot;&quot;;
+        var skuId
+        var search = location.search
+        if (search) {
+          var arr = search.match(/skuId=(\d*)/)
+          if (arr) {
+            skuId = arr[1]
+          }
+        }
+        var param = &apos;&apos;
+        if (skuId) {
+          param = `,&quot;skuId&quot;:&quot;${skuId}&quot;`
+        }
+        location.href = `openapp`
+        document.addEventListener(&quot;visibilitychange&quot;, function () {
+          if (!!UA.match(/\(i[^;]+;( U;)? CPU.+Mac OS X/)) {
+            location.href = &apos;closeApp://webview?refresh=true&apos;;
+          } else {
+            Android.finishWebActivity();
+          }
+        });
+    })()
+  &lt;/script&gt;</code></pre><p>2.店送</p>
+<pre><code> /**
+ * @desc 滚动穿透
+ */
+const lockMaskScroll = (bodyCls =&gt; {
+    let scrollTop
+    return {
+        afterOpen: function () {
+            scrollTop = document.scrollingElement.scrollTop || document.body.scrollTop
+            document.body.classList.add(bodyCls)
+            document.body.style.top = -scrollTop + &apos;px&apos;
+        },
+        beforeClose: function () {
+            if (document.body.classList.contains(bodyCls)) {
+                document.body.classList.remove(bodyCls)
+                document.scrollingElement.scrollTop = scrollTop
+            }
+        }
+    }
+})(&apos;dialog-open&apos;)
+
+
+/**
+ * @desc 添加购物车通用动画
+ * @param {*} startEl 起始目标元素 必传参数
+ * @param {*} endEl 终点目标元素 可选
+ * @param {*} delay 动画延迟时间 可选
+ */
+addCartAnimation (startEl, endEl, delay = 410) {
+  if (!startEl) return
+
+  startEl = startEl.target ? startEl.target : startEl
+  endEl = endEl &amp;&amp; (endEl.target ? endEl.target : endEl)
+
+  let $cartAniEl = document.createElement(&apos;div&apos;)
+  let startElPos = startEl.getBoundingClientRect()
+  let endElPos = endEl &amp;&amp; endEl.getBoundingClientRect()
+
+  $cartAniEl.style = `left:${startElPos.left + 7}px;top:${startElPos.top + 7}px;width: .12rem;height: .12rem;display: block;background: red;border-radius: 50%;position: fixed;-webkit-transition: left .4s linear,top .4s cubic-bezier(.58,-.42,1,.65);transition: left .4s linear,top .4s cubic-bezier(.58,-.42,1,.65);z-index: 999999;`
+  document.body.appendChild($cartAniEl)
+
+  $cartAniEl.style.top = `${(endEl &amp;&amp; (endElPos.top + endEl.offsetHeight / 2)) || (window.innerHeight - 45)}px`
+  $cartAniEl.style.left = `${(endEl &amp;&amp; (endElPos.left + endEl.offsetWidth / 2)) || 35}px`
+  setTimeout(function () {
+    document.body.removeChild($cartAniEl)
+  }, delay)
+}
+
+/**
+ * @desc iphonex
+ */
+export const isIphoneX = () =&gt; {
+    if (typeof window !== &apos;undefined&apos; &amp;&amp; window) {
+        return /iphone/gi.test(window.navigator.userAgent) &amp;&amp; window.screen.height &gt;= 812
+    }
+    return false
+}</code></pre><p>3.前端控制权限<br><img src="/image/%E5%89%8D%E7%AB%AF%E9%9D%A2%E8%AF%95%E9%A2%98%E9%9B%86/3.jpg" alt="3"><br>4.如何对音频和视频资源进行预加载</p>
+<h2 id="手写代码"><a href="#手写代码" class="headerlink" title="手写代码"></a>手写代码</h2><h3 id="promise-1"><a href="#promise-1" class="headerlink" title="promise"></a>promise</h3><p>`</p>
+<pre><code>/**
+* 1. new Promise时，需要传递一个 executor 执行器，执行器立刻执行
+* 2. executor 接受两个参数，分别是 resolve 和 reject
+* 3. promise 只能从 pending 到 rejected, 或者从 pending 到 fulfilled
+* 4. promise 的状态一旦确认，就不会再改变
+* 5. promise 都有 then 方法，then 接收两个参数，分别是 promise 成功的回调 onFulfilled,和 promise 失败的回调 onRejected
+* 6. 如果调用 then 时，promise已经成功，则执行 onFulfilled，并将promise的值作为参数传递进去。
+*    如果promise已经失败，那么执行 onRejected, 并将 promise 失败的原因作为参数传递进去。
+*    如果promise的状态是pending，需要将onFulfilled和onRejected函数存放起来，等待状态确定后，再依次将对应的函数执行(发布订阅)
+* 7. then 的参数 onFulfilled 和 onRejected 可以缺省
+* 8. promise 可以then多次，promise 的then 方法返回一个 promise
+* 9. 如果 then 返回的是一个结果，那么就会把这个结果作为参数，传递给下一个then的成功的回调(onFulfilled)
+* 10.如果 then 中抛出了异常，那么就会把这个异常作为参数，传递给下一个then的失败的回调(onRejected)
+* 11.如果 then 返回的是一个promise，那么会等这个promise执行完，promise如果成功，就走下一个then的成功，如果失败，就走下一个then的失败
+*/
+
+/**
+2.1 Promise States
+Promise 必须处于以下三个状态之一: pending, fulfilled 或者是 rejected
+
+2.1.1 如果promise在pending状态
+2.1.1.1 可以变成 fulfilled 或者是 rejected
+
+2.1.2 如果promise在fulfilled状态
+2.1.2.1 不会变成其它状态
+2.1.2.2 必须有一个value值
+
+2.1.3 如果promise在rejected状态
+2.1.3.1 不会变成其它状态
+2.1.3.2 必须有一个promise被reject的reason
+
+概括即是:promise的状态只能从pending变成fulfilled，或者从pending变成rejected.promise成功，有成功的value.promise失败的话，有失败的原因
+
+
+---------------------------------
+
+2.2 then方法
+promise必须提供一个then方法，来访问最终的结果
+promise的then方法接收两个参数
+promise.then(onFulfilled, onRejected)
+
+2.2.1 onFulfilled 和 onRejected 都是可选参数
+2.2.1.1 onFulfilled 必须是函数类型
+2.2.1.2 onRejected 必须是函数类型
+
+2.2.2 如果 onFulfilled 是函数:
+2.2.2.1 必须在promise变成 fulfilled 时，调用 onFulfilled，参数是promise的value
+2.2.2.2 在promise的状态不是 fulfilled 之前，不能调用
+2.2.2.3 onFulfilled 只能被调用一次
+
+2.2.3 如果 onRejected 是函数:
+2.2.3.1 必须在promise变成 rejected 时，调用 onRejected，参数是promise的reason
+2.2.3.2 在promise的状态不是 rejected 之前，不能调用
+2.2.3.3 onRejected 只能被调用一次
+
+2.2.4 onFulfilled 和 onRejected 应该是微任务
+
+2.2.5 onFulfilled  和 onRejected 必须作为函数被调用
+
+2.2.6 then方法可能被多次调用
+2.2.6.1 如果promise变成了 fulfilled态，所有的onFulfilled回调都需要按照then的顺序执行
+2.2.6.2 如果promise变成了 rejected态，所有的onRejected回调都需要按照then的顺序执行
+
+2.2.7 then必须返回一个promise
+promise2 = promise1.then(onFulfilled, onRejected);
+2.2.7.1 onFulfilled 或 onRejected 执行的结果为x,调用 resolvePromise
+2.2.7.2 如果 onFulfilled 或者 onRejected 执行时抛出异常e,promise2需要被reject
+2.2.7.3 如果 onFulfilled 不是一个函数，promise2 以promise1的值fulfilled
+2.2.7.4 如果 onRejected 不是一个函数，promise2 以promise1的reason rejected
+
+----------------------
+
+2.3 resolvePromise
+resolvePromise(promise2, x, resolve, reject)
+
+2.3.1 如果 promise2 和 x 相等，那么 reject promise with a TypeError
+2.3.2 如果 x 是一个 promsie
+2.3.2.1 如果x是pending态，那么promise必须要在pending,直到 x 变成 fulfilled or rejected.
+2.3.2.2 如果 x 被 fulfilled, fulfill promise with the same value.
+2.3.2.3 如果 x 被 rejected, reject promise with the same reason.
+
+2.3.3 如果 x 是一个 object 或者 是一个 function
+2.3.3.1 let then = x.then.
+2.3.3.2 如果 x.then 这步出错，那么 reject promise with e as the reason..
+2.3.3.3 如果 then 是一个函数，then.call(x, resolvePromiseFn, rejectPromise)
+2.3.3.3.1 resolvePromiseFn 的 入参是 y, 执行 resolvePromise(promise2, y, resolve, reject);
+2.3.3.3.2 rejectPromise 的 入参是 r, reject promise with r.
+2.3.3.3.3 如果 resolvePromise 和 rejectPromise 都调用了，那么第一个调用优先，后面的调用忽略。
+2.3.3.3.4 如果调用then抛出异常e
+2.3.3.3.4.1 如果 resolvePromise 或 rejectPromise 已经被调用，那么忽略
+2.3.3.3.4.3 否则，reject promise with e as the reason
+2.3.3.4 如果 then 不是一个function. fulfill promise with x.
+
+2.3.4 如果 x 不是一个 object 或者 function，fulfill promise with x.
+
+------------------------
+
+*/
+const PENDING = &apos;pending&apos;
+const FULFILLED = &apos;fulfilled&apos;
+const REJECTED = &apos;rejected&apos;
+
+function Promise(executor) {
+let self = this
+self.status = PENDING
+self.onFulfilled = []
+self.onRejected = []
+
+function resolve(value) {
+if (self.status === PENDING) {
+self.status = FULFILLED
+self.value = value
+
+      //PromiseA+ 2.2.6.1
+      // 2.2.6.1 如果promise变成了 fulfilled态，所有的onFulfilled回调都需要按照then的顺序执行
+
+      self.onFulfilled.forEach(fn =&gt; fn())
+    }
+}
+
+function reject(reason) {
+if (self.status === PENDING) {
+self.status = REJECTED
+self.reason = reason
+
+      //PromiseA+ 2.2.6.2
+      // 2.2.6.2 如果promise变成了 rejected态，所有的onRejected回调都需要按照then的顺序执行
+
+      self.onRejected.forEach(fn =&gt; fn())
+    }
+}
+
+try {
+executor(resolve, reject);
+} catch (e) {
+reject(e);
+}
+}
+
+Promise.prototype.then = function (onfulfilled,onrejected) {
+//PromiseA+ 2.2.1 / PromiseA+ 2.2.5 / PromiseA+ 2.2.7.3 / PromiseA+ 2.2.7.4
+onfulfilled = typeof onfulfilled === &apos;function&apos; ? onfulfilled : value =&gt; value
+onrejected = typeof onrejected === &apos;function&apos; ? onrejected : reason =&gt; {throw reason}
+let self = this
+
+// PromiseA+ 2.2.7
+// 2.2.7 then必须返回一个promise
+// promise2 = promise1.then(onFulfilled, onRejected);
+// 2.2.7.1 onFulfilled 或 onRejected 执行的结果为x,调用 resolvePromise
+// 2.2.7.2 如果 onFulfilled 或者 onRejected 执行时抛出异常e,promise2需要被reject
+// 2.2.7.3 如果 onFulfilled 不是一个函数，promise2 以promise1的值fulfilled
+// 2.2.7.4 如果 onRejected 不是一个函数，promise2 以promise1的reason rejected
+
+let promise2 = new Promise((resolve,reject) =&gt; {
+if(self.status === FULFILLED){
+//PromiseA+ 2.2.2
+// 2.2.2 如果 onFulfilled 是函数:
+// 2.2.2.1 必须在promise变成 fulfilled 时，调用 onFulfilled，参数是promise的value
+// 2.2.2.2 在promise的状态不是 fulfilled 之前，不能调用
+// 2.2.2.3 onFulfilled 只能被调用一次
+
+      //PromiseA+ 2.2.4 --- setTimeout
+      // onFulfilled 和 onRejected 应该是微任务
+
+      setTimeout(() =&gt; {
+        try{
+          //PromiseA+ 2.2.7.1
+          // 2.2.7.1 onFulfilled 或 onRejected 执行的结果为x,调用 resolvePromise
+
+          let x = onfulfilled(self.value)
+          resolvePromise(promise2,x,resolve,reject)
+
+        }catch (e) {
+          //PromiseA+ 2.2.7.2
+          // 2.2.7.2 如果 onFulfilled 或者 onRejected 执行时抛出异常e,promise2需要被reject
+
+          reject(e);
+        }
+      })
+    } else if(self.status === REJECTED){
+      //PromiseA+ 2.2.3
+      // 2.2.3 如果 onRejected 是函数:
+      // 2.2.3.1 必须在promise变成 rejected 时，调用 onRejected，参数是promise的reason
+      // 2.2.3.2 在promise的状态不是 rejected 之前，不能调用
+      // 2.2.3.3 onRejected 只能被调用一次
+
+      setTimeout(() =&gt; {
+        try{
+          //PromiseA+ 2.2.7.1
+          // 2.2.7.1 onFulfilled 或 onRejected 执行的结果为x,调用 resolvePromise
+
+          let x = onrejected(self.reason)
+          resolvePromise(promise2,x,resolve,reject)
+
+        }catch (e) {
+          //PromiseA+ 2.2.7.2
+          // 2.2.7.2 如果 onFulfilled 或者 onRejected 执行时抛出异常e,promise2需要被reject
+
+          reject(e);
+        }
+      })
+    } else if(self.status === PENDING){
+      self.onFulfilled.push(() =&gt; {
+        setTimeout(() =&gt; {
+          try {
+            let x = onFulfilled(self.value);
+            resolvePromise(promise2, x, resolve, reject);
+          } catch (e) {
+            reject(e);
+          }
+        });
+      })
+      self.onRejected.push(() =&gt; {
+        setTimeout(() =&gt; {
+          try {
+            let x = onRejected(self.reason);
+            resolvePromise(promise2, x, resolve, reject);
+          } catch (e) {
+            reject(e);
+          }
+        });
+      });
+    }
+})
+
+return promise2;
+}
+
+// 这个方法的主要作用是用来判断x的值，如果x的值是一个普通的值，就直接返回x的值，如果x的值是一个promise，就要返回x.then() 执行的结果
+
+function resolvePromise(promise2,x,resolve,reject) {
+let self = this
+//PromiseA+ 2.3.1
+// 2.3.1 如果 promise2 和 x 相等，那么 reject promise with a TypeError
+
+if(promise2 === x){
+reject(new TypeError(&apos;Chaining cycle&apos;))
+}
+
+if(x &amp;&amp; typeof x === &apos;object&apos; || typeof x === &apos;function&apos;){
+//PromiseA+2.3.3.3.3 只能调用一次
+// 2.3.3.3.3 如果 resolvePromise 和 rejectPromise 都调用了，那么第一个调用优先，后面的调用忽略。
+
+    let used;
+
+    try {
+
+      //PromiseA+ 2.3.3
+      // 2.3.3 如果 x 是一个 object 或者 是一个 function
+      // 2.3.3.1 let then = x.then.
+      // 2.3.3.2 如果 x.then 这步出错，那么 reject promise with e as the reason..
+      // 2.3.3.3 如果 then 是一个函数，then.call(x, resolvePromiseFn, rejectPromise)
+      // 2.3.3.3.1 resolvePromiseFn 的 入参是 y, 执行 resolvePromise(promise2, y, resolve, reject);
+      // 2.3.3.3.2 rejectPromise 的 入参是 r, reject promise with r.
+      // 2.3.3.3.3 如果 resolvePromise 和 rejectPromise 都调用了，那么第一个调用优先，后面的调用忽略。
+      // 2.3.3.3.4 如果调用then抛出异常e
+      // 2.3.3.3.4.1 如果 resolvePromise 或 rejectPromise 已经被调用，那么忽略
+      // 2.3.3.3.4.3 否则，reject promise with e as the reason
+      // 2.3.3.4 如果 then 不是一个function. fulfill promise with x.
+
+      // 2.3.3.2 如果 x.then 这步出错，那么 reject promise with e as the reason.. 取then可以报错，报错就走reject()
+      let then = x.then
+
+      if(typeof then === &apos;function&apos;){
+        // 用then.call()为了避免在使用一次x.then报错，调用then方法，将两个方法作为参数传到then里
+        then.call(x, (y) =&gt; {
+          //PromiseA+2.3.3.3.1
+          // 2.3.3.3.1 resolvePromiseFn 的 入参是 y, 执行 resolvePromise(promise2, y, resolve, reject);
+
+          if (used) return;
+          used = true;
+          // y有可能是一个promise函数
+          resolvePromise(promise2, y, resolve, reject);
+        }, (r) =&gt; {
+          //PromiseA+2.3.3.3.2
+          // 2.3.3.3.2 rejectPromise 的 入参是 r, reject promise with r.
+
+          if (used) return;
+          used = true;
+          reject(r);
+        });
+      }else{
+        //PromiseA+2.3.3.4
+        // 2.3.3.4 如果 then 不是一个function. fulfill promise with x.
+        if (used) return;
+        used = true;
+        resolve(x);
+      }
+
+    }catch (e) {
+      //PromiseA+ 2.3.3.2
+      // 2.3.3.2 如果 x.then 这步出错，那么 reject promise with e as the reason..
+      if (used) return;
+      used = true;
+      reject(e)
+    }
+
+
+} else {
+//PromiseA+ 2.3.3.4
+// 2.3.3.4 如果 then 不是一个function. fulfill promise with x.
+
+    resolve(x)
+}
+
+}
+
+module.exports = Promise;</code></pre><p>`</p>
+<h3 id="MVVM"><a href="#MVVM" class="headerlink" title="MVVM"></a>MVVM</h3><p>`</p>
+<pre><code>class Observer{
+  constructor (value){
+    if(typeof value != &apos;object&apos;|| !value){
+    return
+    }
+    this.walk(value)
+  }
+  // 把一个对象的每一项都转化成可观测对象
+  walk (obj) {
+    Object.keys(obj).forEach(key =&gt; {
+      defineReactive(obj,key,obj[key])
+    })
+  }
+}
+
+function defineReactive (obj,key,val) {
+    let dep = new Dep();
+    Object.defineProperty(obj, key, {
+        get(){
+            //收集所有订阅者
+            dep.depend();
+            return val;
+        },
+        set(newVal){
+            if (val === newVal) {
+                return;
+            }
+            val = newVal;
+            //数据变化通知所有订阅者
+            dep.notify()
+        }
+    })
+}
+class Dep {
+    constructor(){
+        // 所有的订阅者
+        this.subs = []
+    }
+    //增加订阅者
+    addSub(sub){
+        this.subs.push(sub);
+    }
+    //判断是否增加订阅者
+    depend () {
+        if (Dep.target) {
+            this.addSub(Dep.target)
+        }
+    }
+    //通知订阅者更新
+    notify(){
+        this.subs.forEach((sub) =&gt;{
+            sub.update()
+        })
+    }
+
+}
+Dep.target = null;
+
+class Watcher {
+    constructor(vm,exp,cb){
+        // console.log(&apos;vm&apos;,vm) //myVue
+        // console.log(&apos;exp&apos;,exp) //name
+        // console.log(&apos;cb&apos;,cb) // callback
+        this.vm = vm;
+        this.exp = exp;
+        this.cb = cb;
+        this.value = this.get();  // 将自己添加到订阅器的操作
+    }
+    get(){
+        Dep.target = this;  // 缓存自己
+        let value = this.vm.data[this.exp]  // 强制执行监听器里的get函数
+        Dep.target = null; // 释放自己
+        return value;
+    }
+    update(){
+        let value = this.vm.data[this.exp];
+        let oldVal = this.value;
+        if (value !== oldVal) {
+            this.value = value;
+            this.cb.call(this.vm, value, oldVal);
+        }
+    }
+}
+
+function myVue (data, el, exp) {
+    this.data = data;
+    el.innerHTML = this.data[exp];           // 初始化模板数据的值
+    new Observer(data);                      //将数据变的可观测
+    new Watcher(this, exp, function (value) {
+        el.innerHTML = value;
+    });
+    return this;
+}
+
+let ele = document.querySelector(&apos;#name&apos;);
+
+let myvue = new myVue({
+    name: &apos;hello world&apos;
+}, ele, &apos;name&apos;);</code></pre><p>`</p>
+<h3 id="apply"><a href="#apply" class="headerlink" title="apply"></a>apply</h3><p>`</p>
+<pre><code>Function.prototype.myApply = function (context,arr) {
+context = Object(context) || window;
+context.fn = this
+
+    let result
+    if (!arr) {
+        result = context.fn();
+    }else {
+        let args = []
+        for(let i = 1;i &lt; arr.length; i++) {
+            args.push(`arguments[${i}]`);
+        }
+        eval(&apos;context.fn(&apos; + args +&apos;)&apos;);
+    }
+
+    delete context.fn
+    return result;
+}
+
+
+// test
+let foo = {
+  value : 12
+}
+function bar(arr) {
+  console.log(arr)
+  return this.value
+}
+bar.myApply(foo,[&apos;wangyuqing&apos;,&apos;girl&apos;])</code></pre><p>`</p>
+<h3 id="bind"><a href="#bind" class="headerlink" title="bind"></a>bind</h3><p>`</p>
+<pre><code>Function.prototype.bind1 = function (context){
+    if(typeof this !== &apos;function&apos;){
+      throw new Error(&apos;should be a function&apos;)
+    }
+    // this指向bind调用者bar
+    let self = this
+    // 能将有length属性的对象转换为数组
+    let args = Array.prototype.slice.call(arguments,1)
+    let fNOP = function (){}
+    let fbound = function (){
+        let bindArgs = Array.prototype.slice.call(arguments);
+
+        // 为true的时候是构造函数，self与this指向相同
+        // false的时候为普通函数调用绑定的时候，this指向的是foo对象，self指向的是bar，所以this绑定foo上也就是context
+        self.apply(this instanceof self ? this : context,args.concat(bindArgs))
+    }
+    fNOP.prototype = this.prototype; // 空对象的原型指向绑定函数bar的原型
+    fbound.prototype = new fNOP(); // 创建一个新的，而不是直接该改变function的prototype
+
+    return fbound
+}
+
+// test
+let foo = {
+  value: 1
+};
+
+function bar(name,age) {
+// console.log(name)
+// console.log(age)
+// console.log(this.value);
+}
+
+// 返回了一个函数,并不立即执行
+// 可以接受分批传参
+let bindFoo = bar.bind1(foo,&apos;wangyuqing&apos;);
+
+bindFoo(18);
+
+// bind 返回的函数作为构造函数的时候，bind 时指定的 this 值会失效，但传入的参数依然生效。
+// let bindFoo1 = bar.bind1(foo,&apos;wangyuqing&apos;);
+// let obj = new bindFoo1(18)</code></pre><p>`</p>
+<h3 id="call"><a href="#call" class="headerlink" title="call"></a>call</h3><p>`</p>
+<pre><code>Function.prototype.myCall = function (context) {
+    context = context || window;
+    context.fn = this
+    let args = []
+    for(let i = 1;i &lt; arguments.length; i++) {
+      args.push(&apos;arguments[&apos; + i + &apos;]&apos;);
+    }
+    let result = eval(&apos;context.fn(&apos; + args +&apos;)&apos;);
+    delete context.fn
+    return result;
+}
+
+
+// test
+let foo = {
+  value : 12
+}
+function bar(name,sex) {
+  return this.value
+}
+let r = bar.myCall(foo,&apos;wangyuqing&apos;,&apos;girl&apos;)
+console.log(r)</code></pre><p>`</p>
+<h3 id="Curry"><a href="#Curry" class="headerlink" title="Curry"></a>Curry</h3><p>`</p>
+<pre><code>/**
+* 中转函数
+* @param fn    待柯里化的原函数
+* @param args    待柯里化的原函数
+  */
+  // -------低配-------------
+  function curry(fn,args) {
+  let len = fn.length
+  // 第一次进来是没有args的，递归循环后才有args，代表的是旧的参数合集
+  args = args || []
+  return function (){
+  // 新的参数数组是（旧的参数数组）和（新的arguments）合并后的合集数组
+  let newArg = args.concat([].slice.call(arguments))
+  // 如果参数的数组长度还是小于函数的参数，证明要接着递归循环，有下一个括号出现
+  if(newArg.length &lt; len){
+  // 递归，继续收集参数，传入函数和已经收集的数组
+  return curry.call(this,fn,newArg)
+  }else {
+  // 参数收集完毕，吧收集好的参数传到fn，执行fn就行了
+  return fn.apply(this, newArg);
+  }
+  }
+  }
+  // -------es6-------------
+  // 可以惰性求值,可以提前传递部分参数
+  const curry = (f, args1 = []) =&gt; (...args2) =&gt; {
+  console.log(&apos;args1&apos;,args1)
+  console.log(&apos;args2&apos;,args2)
+  const args = [ ...args1, ...args2 ]
+  return f.length === args.length ? f(...args) : curry(f, args)
+  }
+  // 测试
+  function fn(a,b,c,d,e) {
+  console.log(a,b,c,d,e)
+  }
+  let _fn = curry(fn);
+  _fn(1,2,3,4,5);     // print: 1,2,3,4,5
+  _fn(1)(2)(3,4,5);   // print: 1,2,3,4,5
+  _fn(1,2)(3,4)(5);   // print: 1,2,3,4,5
+  _fn(1)(2)(3)(4)(5); // print: 1,2,3,4,5</code></pre><p>`</p>
+<h3 id="防抖"><a href="#防抖" class="headerlink" title="防抖"></a>防抖</h3><p>`</p>
+<pre><code>function debounce(func,wait,immediate) {
+    let timer = null
+    return function (){
+        let self = this
+        let args = arguments
+        // 如果有定时器的时候，就清掉
+        if(timer){
+            clearTimeout(timer)
+        }
+        if(immediate){
+            // timer第一次进来的时候，是不存在的，callnow = true 所以要立即执行下
+            // 等到停止触发n秒后，才可以重新触发执行。
+            let callNow = !timer
+            // 初始化timer，每次进这个函数都会初始化这个timer，直到最后一次触发，等待了wait秒后，timer变成了null，再次触发才可以执行
+            timer = setTimeout(function (){
+                timer = null
+            },wait)
+            if(callNow){
+                func.apply(self,args)
+            }
+
+        }else {
+            timer = setTimeout(() =&gt; {
+                func.apply(self,args)
+            },wait)
+        }
+
+    }
+}</code></pre><p>`</p>
+<h3 id="节流"><a href="#节流" class="headerlink" title="节流"></a>节流</h3><p>`</p>
+<pre><code>// 当触发事件的时候，我们设置一个定时器，再触发事件的时候，如果定时器存在，就不执行，直到定时器执行，然后执行函数，清空定时器，这样就可以设置下个定时器。
+// 一段时间只执行一次
+function throttle(func,wait) {
+    let timer = null
+    return function (){
+        let self = this
+        let args = arguments
+        // 如果定时器存在，就不执行
+        // 如果定时器不存在的，设置新的定时器，隔wait的时间去执行方法，执行一次后，立刻清空定时器
+        // 下次进来重新执行这段逻辑
+        if(!timer){
+            timer = setTimeout(function (){
+                timer = null
+                func.apply(self,args)
+            },wait)
+        }
+    }
+}</code></pre><p>`</p>
+<h3 id="deepclone"><a href="#deepclone" class="headerlink" title="deepclone"></a>deepclone</h3><p>`</p>
+<pre><code>// 深拷贝
+let deepClone = function (obj,map=new WeakMap()) {
+    // 不是对象的话，那就直接把值返回就好了
+    if(typeof obj != &apos;object&apos;){
+      return obj
+    }
+    // 根据类型判断应该新建一个数组还是对象
+    let newObj = obj instanceof Array ? [] : {}
+    if(map.get(obj)){
+        return map.get(obj);
+    }
+    map.set(obj,newObj)
+    // 遍历obj，obj所有的属性都拷贝
+    for(let key in obj){
+        if(obj.hasOwnProperty(key)){
+            newObj[key] = deepClone(obj[key],map)
+        }
+    }
+    return newObj
+}</code></pre><p>`</p>
+<h3 id="new"><a href="#new" class="headerlink" title="new"></a>new</h3><p>`</p>
+<pre><code>// 访问到 函数 构造函数里的属性
+// 访问到 函数.prototype 中的属性
+// new 的结果是一个新对象
+function objectFactory() {
+
+    // 1.新建了一个对象 obj
+    let obj = Object.create(null)
+
+    // 2.取出第一个参数，就是我们要传入的构造函数，此处为animal。此外因为 shift 会修改原数组，所以 arguments 会被去除第一个参数
+    // shift 去掉数组第一个元素的值并返回第一个元素
+    let Constructor = Array.prototype.shift.call(arguments)
+
+    // 3.将构造器的原型指向空对象的原型
+    obj.__proto__ = Constructor.prototype
+
+    //4.将构造器的this指向对象
+    Constructor.apply(obj,arguments)
+
+    // 5.返回新的对象
+    return obj
+
+}
+
+function Animal (name) {
+this.name = name
+}
+// 使用 objectFactory
+let person = objectFactory(Animal,&apos;马&apos;)
+console.log(person.name)</code></pre><p>`</p>
+<h3 id="扁平化"><a href="#扁平化" class="headerlink" title="扁平化"></a>扁平化</h3><p>`</p>
+<pre><code>function flatten(arr) {
+    let newArr = []
+    for(let i = 0;i&lt; arr.length;i++){
+        if(arr[i] instanceof Array){
+            newArr = newArr.concat(flatten(arr[i]))
+        }else {
+            newArr.push(arr[i])
+        }
+    }
+    return newArr
+}
+let arr = [1, [2, [3, 4]]];
+flatten(arr)</code></pre><p>`</p>
+<h3 id=""><a href="#" class="headerlink" title=""></a></h3>
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://vera0720.github.io/2021/04/28/%E5%89%8D%E7%AB%AF%E9%9D%A2%E8%AF%95%E9%A2%98%E9%9B%86/" data-id="ckp1zpvxd003f1pr9fv0aa29p"
+         class="article-share-link">Share</a>
+      
+  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/%E9%9D%A2%E8%AF%95/" rel="tag">面试</a></li></ul>
+
+    </footer>
+
+  </div>
+
+  
+    
+  <nav class="article-nav">
+    
+    
+      <a href="/2020/03/14/webpack%E7%B3%BB%E5%88%97%E4%B9%8B%E9%85%8D%E7%BD%AE/" class="article-nav-link">
+        <strong class="article-nav-caption">Olde posts</strong>
+        <div class="article-nav-title">webpack系列之配置</div>
+      </a>
+    
+  </nav>
+
+
+  
+
+  
+    
+  
+
+</article>
+
+
+
+</section>
+  <footer class="footer">
+  <div class="outer">
+    <ul class="list-inline">
+      <li>&copy; 2021 今天天气晴朗</li>
+      <li>Author <span>Vera</span></li>
+    </ul>
+  </div>
+</footer>
+
+</main>
+
+<aside class="sidebar sidebar-specter">
+  
+    <button class="navbar-toggle"></button>
+<nav class="navbar">
+  
+    <div class="logo">
+      <a href="/"><img src="/images/headImg.jpeg" alt="今天天气晴朗"></a>
+    </div>
+  
+  <ul class="nav nav-main">
+    
+      <li class="nav-item">
+        <a class="nav-item-link" href="/">Home</a>
+      </li>
+    
+      <li class="nav-item">
+        <a class="nav-item-link" href="/archives">Archives</a>
+      </li>
+    
+      <li class="nav-item">
+        <a class="nav-item-link" href="/gallery">Gallery</a>
+      </li>
+    
+      <li class="nav-item">
+        <a class="nav-item-link" href="/about">About</a>
+      </li>
+    
+    <li class="nav-item">
+      <a class="nav-item-link nav-item-search" title="Search">
+        <i class="fe fe-search"></i>
+        Search
+      </a>
+    </li>
+  </ul>
+</nav>
+<nav class="navbar navbar-bottom">
+  <ul class="nav">
+    <li class="nav-item">
+      <div class="totop" id="totop">
+  <i class="fe fe-rocket"></i>
+</div>
+    </li>
+    <li class="nav-item">
+      
+    </li>
+  </ul>
+</nav>
+<div class="search-form-wrap">
+  <div class="local-search local-search-plugin">
+  <input type="search" id="local-search-input" class="local-search-input" placeholder="Search...">
+  <div id="local-search-result" class="local-search-result"></div>
+</div>
+</div>
+  </aside>
+  
+<script src="/js/jquery-2.0.3.min.js"></script>
+
+
+<script src="/js/jquery.justifiedGallery.min.js"></script>
+
+
+<script src="/js/lazyload.min.js"></script>
+
+
+<script src="/js/busuanzi-2.3.pure.min.js"></script>
+
+
+  
+<script src="/fancybox/jquery.fancybox.min.js"></script>
+
+
+
+
+  
+<script src="/js/tocbot.min.js"></script>
+
+  <script>
+    // Tocbot_v4.7.0  http://tscanlin.github.io/tocbot/
+    tocbot.init({
+      tocSelector: '.tocbot',
+      contentSelector: '.article-entry',
+      headingSelector: 'h1, h2, h3, h4, h5, h6',
+      hasInnerContainers: true,
+      scrollSmooth: true,
+      positionFixedSelector: '.tocbot',
+      positionFixedClass: 'is-position-fixed',
+      fixedSidebarOffset: 'auto',
+    });
+  </script>
+
+
+
+<script src="/js/ocean.js"></script>
+
+
+</body>
+</html>

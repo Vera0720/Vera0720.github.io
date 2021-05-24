@@ -1,0 +1,463 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  
+  
+  
+    <meta name="description" content="治愈系少女">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <title>
+    前端面试系列之必会算法 |
+    
+    今天天气晴朗</title>
+  
+    <link rel="shortcut icon" href="/favicon.ico">
+  
+  
+<link rel="stylesheet" href="/css/style.css">
+
+  
+    
+<link rel="stylesheet" href="/fancybox/jquery.fancybox.min.css">
+
+  
+  
+<script src="/js/pace.min.js"></script>
+
+<meta name="generator" content="Hexo 4.2.0"></head>
+
+<body>
+<main class="content">
+  <section class="outer">
+  
+
+<article id="post-前端面试系列之必会算法" class="article article-type-post" itemscope itemprop="blogPost" data-scroll-reveal>
+
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
+  
+    <h1 class="article-title" itemprop="name">
+      前端面试系列之必会算法
+    </h1>
+  
+  
+
+
+
+
+      </header>
+    
+
+    
+      <div class="article-meta">
+        <a href="/2017/10/05/%E5%89%8D%E7%AB%AF%E9%9D%A2%E8%AF%95%E7%B3%BB%E5%88%97%E4%B9%8B%E5%BF%85%E4%BC%9A%E7%AE%97%E6%B3%95/" class="article-date">
+  <time datetime="2017-10-05T14:47:08.000Z" itemprop="datePublished">2017-10-05</time>
+</a>
+        
+      </div>
+    
+
+    
+      
+    <div class="tocbot"></div>
+
+
+
+
+
+    
+
+    <div class="article-entry" itemprop="articleBody">
+      
+
+
+      
+
+      
+        <p>好久没有写过算法题啦，今年目标刷完100道leetcode。还是要有一个目标的，万一实现了呢～</p>
+<a id="more"></a>
+
+<h2 id="单向链表"><a href="#单向链表" class="headerlink" title="单向链表"></a>单向链表</h2><p>上代码</p>
+<pre><code>// 链表存储有序的集合，但不同于数组
+// 链表中的元素在内存中并不是连续放置的
+// 每个元素由一个存储元素本身的节点和一个指向下一个元素的引用（也称指针或链接）组成
+
+function LinkedList() {
+
+    function Node (element) {
+        this.element = element
+        this.next = null
+    }
+    let length = 0
+    let head = null
+
+    // 向链表尾部追加元素
+    this.append = function (element) {
+        let node = new Node(element)
+        let current
+        if (head === null) { // 列表中第一个节点
+            head = node
+        } else {
+            current = head
+            while (current.next) {
+                current = current.next // 找到最后一项，是null
+            }
+            current.next = node // 给最后一项赋值
+        }
+        length++ // 更新列表的长度
+    }
+
+    // 向链表中间增加元素
+    this.insert = function (position,element) {
+        if(position &gt;= 0 &amp;&amp; position &lt;= length){
+            let node = new Node(element)
+            let current = head
+            let previous = null
+            let index = 0
+            // 如果当前的位置是0，就把插入的元素设置成head
+            if(position === 0){
+                node.next = current
+                head = node
+            }else{
+                while(index &lt; position){
+                    previous = current
+                    current = current.next
+                    index ++
+                }
+                node.next = current
+                previous.next = node
+            }
+            length++
+            return true
+        } else{
+            return false
+        }
+    }
+
+    // 从链表中移除指定位置的元素
+    this.remove = function (position) {
+        if(position &gt;= 0 &amp;&amp; position &lt;= length){
+            let current = head
+            let previous = 0
+            let index = 0
+            if (position === 0) { //  移除第一项
+                head = current.next
+            }else{
+                while(index &lt; position){
+                    previous = current
+                    current = current.next
+                    index ++
+                }
+                previous.next = current.next
+            }
+            length --
+            return true
+        } else{
+            return false
+        }
+    }
+
+    // 把链表内的值转换成一个字符串
+    this.toString = function () {
+        let current = head,
+            string = &apos;&apos;
+        while (current) {
+            string += current.element + &apos;,&apos;
+            current = current.next
+        }
+        return string
+    }
+
+}
+
+let list = new LinkedList()
+list.append(&apos;a&apos;)
+list.append(&apos;b&apos;)
+list.insert(1, &apos;hello&apos;)
+console.log(list.toString())
+list.remove(0)
+console.log(list.toString())</code></pre><h2 id="回文"><a href="#回文" class="headerlink" title="回文"></a>回文</h2><pre><code>function checkPalindrom(str) {  
+    return str == str.split(&apos;&apos;).reverse().join(&apos;&apos;);
+}</code></pre><h2 id="数组去重"><a href="#数组去重" class="headerlink" title="数组去重"></a>数组去重</h2><pre><code>let obj = {}
+let newArr = []
+for(let i = 0; i &lt; arr.length; i++) {
+    if(!obj[arr[i]]){
+        obj[arr[i]] = 1
+        newArr.push(arr[i])
+    }
+}
+console.log(newArr)
+// nan，object都能过滤掉，但是会把‘nan’和nan视为同一个</code></pre><h2 id="统计字符中出现频率最高的一个"><a href="#统计字符中出现频率最高的一个" class="headerlink" title="统计字符中出现频率最高的一个"></a>统计字符中出现频率最高的一个</h2><pre><code>function findMaxDuplicateChar (str) {
+    if(str.length == 0){
+        return false
+    }
+    if(str.length == 1){
+        return str
+    }
+    let obj = {}
+    for(let i = 0;i&lt;str.length;i++){
+        if(!obj[str.charAt(i)]){
+            obj[str.charAt(i)] = 1
+        }else{
+            obj[str.charAt(i)] += 1
+        }
+    }
+
+    let maxValue = 1
+    let maxChar = &apos;&apos;
+
+
+    for(let i in obj){
+        if(obj[i] &gt; maxValue){
+            maxValue = obj[i]
+            maxChar = i
+        }
+    }
+    return (maxChar + &apos;:&apos; + maxValue)
+
+}</code></pre><h2 id="不借助临时变量，进行两个整数的交换"><a href="#不借助临时变量，进行两个整数的交换" class="headerlink" title="不借助临时变量，进行两个整数的交换"></a>不借助临时变量，进行两个整数的交换</h2><pre><code>function swap(a , b) {  
+  b = b - a;
+  a = a + b;
+  b = a - b;
+  return [a,b];
+}</code></pre><h2 id="斐波那契数列"><a href="#斐波那契数列" class="headerlink" title="斐波那契数列"></a>斐波那契数列</h2><pre><code>公式：arr[i] = arr[i-1]+arr[i-2];  
+
+function fbnq(n){
+    var arr = []
+    n为斐波那契的总共位数,循环位数进行数组创建
+    for(let i = 0;i&lt;n;i++){
+        // 因为要考虑第0位和第1位，第2位
+        if(i&gt;=2){
+            arr.push(arr[i-1]+arr[i-2])
+        }else{
+            arr.push(i)
+        }
+    }
+    return arr
+}</code></pre><h2 id="找出下列正数组的最大差值，即最大值-最小值"><a href="#找出下列正数组的最大差值，即最大值-最小值" class="headerlink" title="找出下列正数组的最大差值，即最大值-最小值"></a>找出下列正数组的最大差值，即最大值-最小值</h2><pre><code>function getMaxProfit(arr){
+    arr.sort(function(a, b){return a - b})
+    return (arr[arr.length-1]- arr[0])
+}</code></pre><h2 id="随机生成指定长度的字符串"><a href="#随机生成指定长度的字符串" class="headerlink" title="随机生成指定长度的字符串"></a>随机生成指定长度的字符串</h2><pre><code>function randomString(str,n) {  
+    let str = str || &apos;abcdefghijklmnopqrstuvwxyz9876543210&apos;;
+    let newStr = &apos;&apos;
+    for(let i = 0;i&lt;n;i++){
+        newStr += str.charAt(Math.round(Math.random() * str.length))
+    }
+    return newStr
+}</code></pre><h2 id="快速排序"><a href="#快速排序" class="headerlink" title="快速排序"></a>快速排序</h2><p>算法步骤：<br>1.从数列中挑出一个元素，称为基准<br>2.重新排序数列，所有元素比基准值小的摆放在基准前面，所有愿所有比基准值大的摆在基准的后面（相同的数可以到任意一边），在这个分区退出之后，该基准就处于数列的中间位置，这个称之为分区操作。<br>3.递归的把所有小于基准值元素的子数列和大于基准值元素的子数列排序<br>递归的最底部情形是数列的大小是0或1，也就是永远都已经被排序好了，虽然一直递归下去，但这个方法总会退出，因为在每次的迭代中，它至少把一个元素摆到它最后的位置去。</p>
+<pre><code>function qSort(a,left,right){
+    var mid = a[left];
+    while(left&lt;right){
+        while(a[right]&gt;mid&amp;&amp;left&lt;right)right--;
+        if(left&lt;right)
+            a[left++]=a[right];
+        while(a[left]&lt;mid&amp;&amp;left&lt;right) left++;
+        if(left&lt;right)
+            a[right--]=a[left];
+    }
+    a[left] = mid;
+    return left;
+}
+function quickSort(a,left,right){
+    if(left&lt;right){
+        var mid = qSort(a,left,right);
+        quickSort(a,left,mid-1);
+        quickSort(a,mid+1,right);
+    }
+}
+var a=[25,79,44,11,36,42,8];
+quickSort(a,0, a.length-1);
+for(var i=0; i&lt; a.length;i++){
+    console.log(a[i]);
+}</code></pre><h2 id="冒泡排序"><a href="#冒泡排序" class="headerlink" title="冒泡排序"></a>冒泡排序</h2><p>算法步骤：<br>1.比较相邻的元素，如果第一个比第二个大，就交换他们两个<br>2.对每一对相邻的元素作同样的工作，从开始第一对到结尾的最后一对，这步做完后，最后的元素会是最大的数<br>3.针对所有的元素重复以上步骤，除了最后一个<br>4.持续对每次越来越少的元素重复上面的步骤，直到没有任何一对数字需要比较<br>代码示例：</p>
+<pre><code>var a=[38,9,2,14,6];
+for(var i=0;i&lt;a.length;i++){
+    for(var j=0;j&lt;a.length-1;j++){
+        if(a[j+1]&gt;a[j]){
+            a[j]=a[j]+a[j+1];
+            a[j+1]=a[j]-a[j+1];
+            a[j]=a[j]-a[j+1];
+        }
+    }
+    console.log(a[i]);
+}    </code></pre><h2 id="二分查找"><a href="#二分查找" class="headerlink" title="二分查找"></a>二分查找</h2><p>1.从有序数组的中间的元素开始搜索，如果该元素正好是目标元素（即要查找的元素），则搜索过程结束，否则进行下一步。<br>2.如果目标元素大于或者小于中间元素，则在数组大于或小于中间元素的那一半区域查找，然后重复第一步的操作。<br>3.如果某一步数组为空，则表示找不到目标元素。</p>
+<pre><code>function binary_search (arr,key) {
+    let low = 0
+    let high = arr.length - 1
+
+    while (low &lt;= high){
+        let mid = parseInt((low+high)/2)
+        // 如果一样，直接找到了
+        if(key == arr[mid]){
+            return  mid;
+        }
+        // 如果想要查找的值大于
+        else if(key &gt; arr[mid]){
+            low = mid + 1
+        }
+        else if(key &lt; arr[mid]){
+           high = mid -1;
+        }
+        else{
+            return -1
+        }
+    }
+
+}</code></pre><h2 id="找到数组的中位数"><a href="#找到数组的中位数" class="headerlink" title="找到数组的中位数"></a>找到数组的中位数</h2>
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://vera0720.github.io/2017/10/05/%E5%89%8D%E7%AB%AF%E9%9D%A2%E8%AF%95%E7%B3%BB%E5%88%97%E4%B9%8B%E5%BF%85%E4%BC%9A%E7%AE%97%E6%B3%95/" data-id="ckp1zpvwb002n1pr9ec6fc0u8"
+         class="article-share-link">Share</a>
+      
+  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/%E7%AE%97%E6%B3%95/" rel="tag">算法</a></li></ul>
+
+    </footer>
+
+  </div>
+
+  
+    
+  <nav class="article-nav">
+    
+      <a href="/2017/10/06/%E5%89%8D%E7%AB%AF%E9%9D%A2%E8%AF%95%E7%B3%BB%E5%88%97%E4%B9%8B%E8%BE%93%E5%85%A5url%E4%BC%9A%E5%8F%91%E7%94%9F%E4%BB%80%E4%B9%88/" class="article-nav-link">
+        <strong class="article-nav-caption">Newer posts</strong>
+        <div class="article-nav-title">
+          
+            前端面试系列之输入url会发生什么
+          
+        </div>
+      </a>
+    
+    
+      <a href="/2017/10/03/%E7%AE%97%E6%B3%95%E7%B3%BB%E5%88%97%E4%B9%8B%E6%95%B0%E7%BB%84%E5%8E%BB%E9%87%8D/" class="article-nav-link">
+        <strong class="article-nav-caption">Olde posts</strong>
+        <div class="article-nav-title">算法系列之数组去重</div>
+      </a>
+    
+  </nav>
+
+
+  
+
+  
+    
+  
+
+</article>
+
+
+
+</section>
+  <footer class="footer">
+  <div class="outer">
+    <ul class="list-inline">
+      <li>&copy; 2021 今天天气晴朗</li>
+      <li>Author <span>Vera</span></li>
+    </ul>
+  </div>
+</footer>
+
+</main>
+
+<aside class="sidebar sidebar-specter">
+  
+    <button class="navbar-toggle"></button>
+<nav class="navbar">
+  
+    <div class="logo">
+      <a href="/"><img src="/images/headImg.jpeg" alt="今天天气晴朗"></a>
+    </div>
+  
+  <ul class="nav nav-main">
+    
+      <li class="nav-item">
+        <a class="nav-item-link" href="/">Home</a>
+      </li>
+    
+      <li class="nav-item">
+        <a class="nav-item-link" href="/archives">Archives</a>
+      </li>
+    
+      <li class="nav-item">
+        <a class="nav-item-link" href="/gallery">Gallery</a>
+      </li>
+    
+      <li class="nav-item">
+        <a class="nav-item-link" href="/about">About</a>
+      </li>
+    
+    <li class="nav-item">
+      <a class="nav-item-link nav-item-search" title="Search">
+        <i class="fe fe-search"></i>
+        Search
+      </a>
+    </li>
+  </ul>
+</nav>
+<nav class="navbar navbar-bottom">
+  <ul class="nav">
+    <li class="nav-item">
+      <div class="totop" id="totop">
+  <i class="fe fe-rocket"></i>
+</div>
+    </li>
+    <li class="nav-item">
+      
+    </li>
+  </ul>
+</nav>
+<div class="search-form-wrap">
+  <div class="local-search local-search-plugin">
+  <input type="search" id="local-search-input" class="local-search-input" placeholder="Search...">
+  <div id="local-search-result" class="local-search-result"></div>
+</div>
+</div>
+  </aside>
+  
+<script src="/js/jquery-2.0.3.min.js"></script>
+
+
+<script src="/js/jquery.justifiedGallery.min.js"></script>
+
+
+<script src="/js/lazyload.min.js"></script>
+
+
+<script src="/js/busuanzi-2.3.pure.min.js"></script>
+
+
+  
+<script src="/fancybox/jquery.fancybox.min.js"></script>
+
+
+
+
+  
+<script src="/js/tocbot.min.js"></script>
+
+  <script>
+    // Tocbot_v4.7.0  http://tscanlin.github.io/tocbot/
+    tocbot.init({
+      tocSelector: '.tocbot',
+      contentSelector: '.article-entry',
+      headingSelector: 'h1, h2, h3, h4, h5, h6',
+      hasInnerContainers: true,
+      scrollSmooth: true,
+      positionFixedSelector: '.tocbot',
+      positionFixedClass: 'is-position-fixed',
+      fixedSidebarOffset: 'auto',
+    });
+  </script>
+
+
+
+<script src="/js/ocean.js"></script>
+
+
+</body>
+</html>

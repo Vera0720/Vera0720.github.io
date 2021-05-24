@@ -1,0 +1,408 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  
+  
+  
+    <meta name="description" content="治愈系少女">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <title>
+    函数式编程 |
+    
+    今天天气晴朗</title>
+  
+    <link rel="shortcut icon" href="/favicon.ico">
+  
+  
+<link rel="stylesheet" href="/css/style.css">
+
+  
+    
+<link rel="stylesheet" href="/fancybox/jquery.fancybox.min.css">
+
+  
+  
+<script src="/js/pace.min.js"></script>
+
+<meta name="generator" content="Hexo 4.2.0"></head>
+
+<body>
+<main class="content">
+  <section class="outer">
+  
+
+<article id="post-函数式编程" class="article article-type-post" itemscope itemprop="blogPost" data-scroll-reveal>
+
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
+  
+    <h1 class="article-title" itemprop="name">
+      函数式编程
+    </h1>
+  
+  
+
+
+
+
+      </header>
+    
+
+    
+      <div class="article-meta">
+        <a href="/2020/01/01/%E5%87%BD%E6%95%B0%E5%BC%8F%E7%BC%96%E7%A8%8B/" class="article-date">
+  <time datetime="2020-01-01T02:11:48.000Z" itemprop="datePublished">2020-01-01</time>
+</a>
+        
+      </div>
+    
+
+    
+      
+    <div class="tocbot"></div>
+
+
+
+
+
+    
+
+    <div class="article-entry" itemprop="articleBody">
+      
+
+
+      
+
+      
+        <p>在JavaScript中，函数是一等值。何谓一等？一等，是编程语言中值的通用修饰词，只要某个值满足以下三个条件，就能被成为一等值：<br>1.可以作为参数传递给函数<br>2.可以作为函数的返回值<br>3.可以赋值给变量</p>
+<a id="more"></a>
+
+<p>众所周知 JavaScript 是一种拥有很多共享状态的动态语言，慢慢的，代码就会积累足够的复杂性，变得笨拙难以维护。当我们在设计应用程序的时候，我们应该考虑是否遵守了以下的设计原则。</p>
+<ul>
+<li>可扩展性–我是否需要不断地重构代码来支持额外的功能？</li>
+<li>易模块化–如果我更改了一个文件，另一个文件是否会受到影响？</li>
+<li>可重用性–是否有很多重复的代码？</li>
+<li>可测试性–给这些函数添加单元测试是否让我纠结？</li>
+<li>易推理性–我写的代码是否非结构化严重并难以推理？</li>
+</ul>
+<p>什么是函数式编程？<br>函数式编程是声明式编程的一部分。javascript中的函数是第一类公民，这意味着函数是数据，你可以像保存变量一样在应用程序中保存、检索和传递这些函数。<br>简单来说，函数式编程是一种强调以函数使用为主的软件开发风格。函数式编程的目的是使用函数来抽象作用在数据之上的控制流和操作，从而在系统中消除副作用并减少对状态的改变。</p>
+<!-- more -->
+
+<h3 id="举个例子"><a href="#举个例子" class="headerlink" title="举个例子"></a>举个例子</h3><p>现在的需求就是输出在网页上输出 “Hello World”。</p>
+<p>一般的初学者会这样写：</p>
+<pre><code>document.querySelector(&apos;#msg&apos;).innerHTML = &apos;&lt;h1&gt;Hello World&lt;/h1&gt;&apos;</code></pre><p>如果想复用，改变消息格式内容，所以可能有经验的前端开发者会这么写：</p>
+<pre><code>function printMessage(elementId, format, message) {
+  document.querySelector(elementId).innerHTML = `&lt;${format}&gt;${message}&lt;/${format}&gt;`
+}
+printMessage(&apos;msg&apos;, &apos;h1&apos;, &apos;Hello World&apos;)</code></pre><p>如果是要将文本写入文件，而不是插入到HTML中，那么会怎么写这段代码呢</p>
+<pre><code>const printMessage = compose(addToDom, h1, echo)
+printMessage(&apos;Hello World&apos;)</code></pre><p>其中h1、echo、addToDom和compose都是函数，compose函数尤为关键，它的每个参数都是函数，自右向左执行参数，下一个函数接收上一个函数的执行结果作为参数。<br>那么我们为什么要写成这样呢？看起来多了很多函数。其实我们是将程序分解为一些更可重用、更可靠且更易于理解的部分，然后再将他们组合起来，形成一个更易推理的程序整体。</p>
+<p>如果我想重复的显示Hello World</p>
+<pre><code>var printMessaage = compose(console.log, repeat(3), echo)
+printMessage(‘Hello World’)</code></pre><h3 id="基本概念"><a href="#基本概念" class="headerlink" title="基本概念"></a>基本概念</h3><h4 id="声明式编程"><a href="#声明式编程" class="headerlink" title="声明式编程"></a>声明式编程</h4><p>声明式编程是一种编程范式，它关注的是你要做什么，而不是如何做。它表达逻辑而不显式地定义步骤。这意味着我们需要根据逻辑的计算来声明要显示的组件。它没有描述控制流步骤。声明式编程的例子有HTML、SQL等<br>声明式编程的编写方式描述了应该做什么，而命令式编程描述了如何做。在声明式编程中，让编译器决定如何做事情。声明性程序很容易推理，因为代码本身描述了它在做什么。<br>来看一组代码再来对比一下命令式编程和声明式编程</p>
+<pre><code>// 命令式方式
+var array = [0, 1, 2, 3]
+for(let i = 0; i &lt; array.length; i++) {
+    array[i] = Math.pow(array[i], 2)
+}
+
+array; // [0, 1, 4, 9]
+
+// 声明式方式
+[0, 1, 2, 3].map(num =&gt; Math.pow(num, 2))</code></pre><h4 id="不可变数据"><a href="#不可变数据" class="headerlink" title="不可变数据"></a>不可变数据</h4><p>创建不可变数据的主要实现思路就是：一次更新过程中，不应该改变原有对象，只需要新创建一个对象用来承载新的数据状态。<br>来看一个例子</p>
+<pre><code>const student1 = {
+    school: &quot;北大&quot;, 
+    sex:&apos;woman&apos;,
+    name: &apos;jack&apos;,
+    birthday: &apos;1996-7-20&apos;,
+}
+
+const changeStudent = (student, newName, newBirthday) =&gt; {
+    return {
+        ...student,             // 使用解构
+        name: newName,          // 覆盖name属性
+        birthday: newBirthday   // birthday
+    }
+}
+
+const student2 = changeStudent(student1, &apos;cherry&apos;, &apos;1993-6-14&apos;)</code></pre><h4 id="纯函数"><a href="#纯函数" class="headerlink" title="纯函数"></a>纯函数</h4><p>纯函数指没有副作用的函数，相同的输入有相同的输出。</p>
+<p>常常这些情况会产生副作用。</p>
+<ul>
+<li>改变一个函数参数的原始值</li>
+<li>读取作用域外的其他变量</li>
+<li>改变作用域外的其他变量</li>
+<li>处理用户输入</li>
+<li>抛出一个异常</li>
+<li>屏幕打印或记录日志</li>
+<li>访问浏览器的Cookie</li>
+<li>发起一个网络请求</li>
+<li>DOM查询/操作</li>
+</ul>
+<p>所以纯函数有如下特性：</p>
+<ul>
+<li>变量都只在函数作用域内获取, 作为的函数的参数传入</li>
+<li>不会产生副作用, 不会改变被传入的数据或者其他数据</li>
+<li>相同的输入保证相同的输出</li>
+</ul>
+<p>但是在我们平时的开发中，有一些副作用是难以避免的，与外部的存储系统或 DOM 交互等，我们可以通过将其从主逻辑中分离出来，使他们易于管理。</p>
+<p>看下面的例子，通过id找到学生的记录并渲染在浏览器(在写程序的时候要想到可能也会写到控制台，数据库或者文件，所以要想如何让自己的代码能重用)中。</p>
+<pre><code>// 命令式代码
+function showStudent(id) {
+    // 这里假如是同步查询
+    var student = db.get(id)
+    if(student !== null) {
+          // 读取外部的 elementId
+          document.querySelector(`${elementId}`).innerHTML = `${student.id},${student.name},${student.lastname}`
+    } else {
+        throw new Error(&apos;not found&apos;)
+    }
+}
+showStudent(&apos;666&apos;)
+
+// 函数式代码
+
+// 通过 find 函数找到学生
+var find = curry(function(db, id) {
+    var obj = db.get(id)
+    if(obj === null) {
+        throw new Error(&apos;not fount&apos;)
+    }
+
+    return obj
+})
+
+// 将学生对象 format
+var csv = (student) =&gt; `${student.id},${student.name},${student.lastname}`
+
+// 在屏幕上显示
+var append = curry(function(elementId, info) {
+    document.querySelector(elementId).innerHTML = info
+})
+
+var showStudent = compose(append(&apos;#student-info&apos;), csv, find(db))
+
+showStudent(&apos;666&apos;)</code></pre><h4 id="高阶函数"><a href="#高阶函数" class="headerlink" title="高阶函数"></a>高阶函数</h4><p>高阶函数是将函数作为参数或返回函数的函数，或者有时它们都有。 这些高阶函数可以操纵其他函数。Array.map，Array.filter和Array.reduce是高阶函数，因为它们将函数作为参数。</p>
+<pre><code>function foo(x, bar){
+   return bar(x)
+}</code></pre><p>高阶函数在JS中的应用比比皆是，其中ECMAScript5中提供的一些数组方法就是典型的高阶函数，比如：forEach()、map()、reduce()、reduceRight()、filter()、every()、some()等。</p>
+<h4 id="lambda表达式"><a href="#lambda表达式" class="headerlink" title="lambda表达式"></a>lambda表达式</h4><p>lambda 表达式其实是一个匿名函数，使用箭头清晰的表示输入输出的映射关系，JavaScript 中使用箭头函数来实现。</p>
+<h4 id="递归"><a href="#递归" class="headerlink" title="递归"></a>递归</h4><p>递归是一种函数在满足一定条件之前调用自身的技术。只要可能，最好使用递归而不是循环。你必须注意这一点，浏览器不能处理太多递归和抛出错误。</p>
+<h4 id="组合"><a href="#组合" class="headerlink" title="组合"></a>组合</h4><p>在React中，我们将功能划分为小型可重用的纯函数，我们必须将所有这些可重用的函数放在一起，最终使其成为产品。 将所有较小的函数组合成更大的函数，最终，得到一个应用程序，这称为组合。实现组合有许多不同方法。 我们从Javascript中了解到的一种常见方法是链接。 链接是一种使用点表示法调用前一个函数的返回值的函数的方法。但在React中，我们使用了不同于链接的方法，因为如果有30个这样的函数，就很难进行链接。这里的目的是将所有更简单的函数组合起来生成一个更高阶的函数。</p>
+<pre><code>const name = compose(
+splitmyName,
+countEachName,
+comvertUpperCase,
+returnName
+)
+
+console.log(name);</code></pre><h4 id="柯里化"><a href="#柯里化" class="headerlink" title="柯里化"></a>柯里化</h4><p>是把接受多个参数的函数变换成接受一个单一参数（最初函数的第一个参数）的函数，并且返回接受余下的参数而且返回结果的新函数的技术。柯里化的作用就是解决基础函数如果是多参数函数，就不能作为参数传递给组合函数的问题。</p>
+<p>举个例子<br>比如你有一间店铺，并且你想给你顾客打个九个优惠，现在我们需要计算优惠了多少钱</p>
+<pre><code>function discount(price, discount) {
+  return price * discount
+}</code></pre><p>你可以预见，从长远来看，我们会发现自己每天都在计算打九折的优惠   </p>
+<pre><code>const price1 = discount(1500, 0.10); // $150
+const price2 = discount(2000, 0.10); // $200</code></pre><p>我们可以将 discount 函数柯里化，这样我们就不用总是每次计算时都输入这 0.10 的折扣。</p>
+<pre><code>// 这个就是一个柯里化函数，将本来两个参数的 discount ，转化为每次接收单个参数完成求职
+function discountCurry(discount) {
+    return (price) =&gt; {
+        return price * discount;
+    }
+}
+const tenPercentDiscount = discountCurry(0.1);
+
+// 现在，我们可以只计算你的顾客买的物品都价格了：
+tenPercentDiscount(500); // $50</code></pre><p>同样地，有些至尊vip客户，我们需要为他们提供 20% 的折扣。 可以使用我们的柯里化的discount函数：</p>
+<pre><code>onst twentyPercentDiscount = discountCurry(0.2);
+twentyPercentDiscount(500); // $100</code></pre><p>这就是柯里化，下面举个栗子说明柯里化在函数式编程里的应用</p>
+<p>假设现在我们有这么一个需求：给定的一个字符串，先翻转，然后转大写，找是否有JD，如果有那么就输出 yes，否则就输出 no。</p>
+<pre><code>function stringToUpper(str) {
+  return str.toUpperCase()
+}
+
+function stringReverse(str) {
+  return str.split(&apos;&apos;).reverse().join(&apos;&apos;)
+}
+
+function find(str, targetStr) {
+  return str.includes(targetStr)
+}
+
+function judge(is) {
+  console.log(is ? &apos;yes&apos; : &apos;no&apos;)
+}</code></pre><p>我们很容易就写出了这四个函数，现在我们想通过组合函数的方式来实现，但是我们的 find 函数要接受两个参数，不符合组合函数参数的规定，这个时候我们像前面一个例子一样，把 find 函数柯里化一下，然后再进行组合：</p>
+<pre><code>// 柯里化 find 函数
+function findCurry(targetStr) {
+    return str =&gt; str.includes(targetStr)
+}
+
+const findLW = findCurry(&apos;LW&apos;)
+
+const result = compose(judge, findLW, stringReverse, stringToUpper)</code></pre><p>最后让我们一起简单实现下compose的函数</p>
+<pre><code>function compose() {
+    let arg = arguments
+    return function (init) {
+        let res = init
+        for(let i = arg.length - 1 ; i &gt;= 0 ; i-- ){
+            res = arg[i](res)
+        }
+        return res
+    }
+}</code></pre><p>执行一下</p>
+<pre><code>result(&apos;lW is A Girl&apos;)</code></pre>
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://vera0720.github.io/2020/01/01/%E5%87%BD%E6%95%B0%E5%BC%8F%E7%BC%96%E7%A8%8B/" data-id="ckp1zpvvv001w1pr9eknb4nnr"
+         class="article-share-link">Share</a>
+      
+  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/js/" rel="tag">js</a></li></ul>
+
+    </footer>
+
+  </div>
+
+  
+    
+  <nav class="article-nav">
+    
+      <a href="/2020/01/03/%E5%87%BD%E6%95%B0%E6%9F%AF%E9%87%8C%E5%8C%96/" class="article-nav-link">
+        <strong class="article-nav-caption">Newer posts</strong>
+        <div class="article-nav-title">
+          
+            函数柯里化
+          
+        </div>
+      </a>
+    
+    
+      <a href="/2019/12/11/es6%E7%B3%BB%E5%88%97%E4%B9%8B%E8%AF%AD%E6%B3%95%E7%AE%80%E4%BB%8B/" class="article-nav-link">
+        <strong class="article-nav-caption">Olde posts</strong>
+        <div class="article-nav-title">es6系列之语法简介</div>
+      </a>
+    
+  </nav>
+
+
+  
+
+  
+    
+  
+
+</article>
+
+
+
+</section>
+  <footer class="footer">
+  <div class="outer">
+    <ul class="list-inline">
+      <li>&copy; 2021 今天天气晴朗</li>
+      <li>Author <span>Vera</span></li>
+    </ul>
+  </div>
+</footer>
+
+</main>
+
+<aside class="sidebar sidebar-specter">
+  
+    <button class="navbar-toggle"></button>
+<nav class="navbar">
+  
+    <div class="logo">
+      <a href="/"><img src="/images/headImg.jpeg" alt="今天天气晴朗"></a>
+    </div>
+  
+  <ul class="nav nav-main">
+    
+      <li class="nav-item">
+        <a class="nav-item-link" href="/">Home</a>
+      </li>
+    
+      <li class="nav-item">
+        <a class="nav-item-link" href="/archives">Archives</a>
+      </li>
+    
+      <li class="nav-item">
+        <a class="nav-item-link" href="/gallery">Gallery</a>
+      </li>
+    
+      <li class="nav-item">
+        <a class="nav-item-link" href="/about">About</a>
+      </li>
+    
+    <li class="nav-item">
+      <a class="nav-item-link nav-item-search" title="Search">
+        <i class="fe fe-search"></i>
+        Search
+      </a>
+    </li>
+  </ul>
+</nav>
+<nav class="navbar navbar-bottom">
+  <ul class="nav">
+    <li class="nav-item">
+      <div class="totop" id="totop">
+  <i class="fe fe-rocket"></i>
+</div>
+    </li>
+    <li class="nav-item">
+      
+    </li>
+  </ul>
+</nav>
+<div class="search-form-wrap">
+  <div class="local-search local-search-plugin">
+  <input type="search" id="local-search-input" class="local-search-input" placeholder="Search...">
+  <div id="local-search-result" class="local-search-result"></div>
+</div>
+</div>
+  </aside>
+  
+<script src="/js/jquery-2.0.3.min.js"></script>
+
+
+<script src="/js/jquery.justifiedGallery.min.js"></script>
+
+
+<script src="/js/lazyload.min.js"></script>
+
+
+<script src="/js/busuanzi-2.3.pure.min.js"></script>
+
+
+  
+<script src="/fancybox/jquery.fancybox.min.js"></script>
+
+
+
+
+  
+<script src="/js/tocbot.min.js"></script>
+
+  <script>
+    // Tocbot_v4.7.0  http://tscanlin.github.io/tocbot/
+    tocbot.init({
+      tocSelector: '.tocbot',
+      contentSelector: '.article-entry',
+      headingSelector: 'h1, h2, h3, h4, h5, h6',
+      hasInnerContainers: true,
+      scrollSmooth: true,
+      positionFixedSelector: '.tocbot',
+      positionFixedClass: 'is-position-fixed',
+      fixedSidebarOffset: 'auto',
+    });
+  </script>
+
+
+
+<script src="/js/ocean.js"></script>
+
+
+</body>
+</html>

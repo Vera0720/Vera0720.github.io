@@ -1,0 +1,286 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  
+  
+  
+    <meta name="description" content="治愈系少女">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <title>
+    js基础系列之this解析 |
+    
+    今天天气晴朗</title>
+  
+    <link rel="shortcut icon" href="/favicon.ico">
+  
+  
+<link rel="stylesheet" href="/css/style.css">
+
+  
+    
+<link rel="stylesheet" href="/fancybox/jquery.fancybox.min.css">
+
+  
+  
+<script src="/js/pace.min.js"></script>
+
+<meta name="generator" content="Hexo 4.2.0"></head>
+
+<body>
+<main class="content">
+  <section class="outer">
+  
+
+<article id="post-js基础系列之this解析" class="article article-type-post" itemscope itemprop="blogPost" data-scroll-reveal>
+
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
+  
+    <h1 class="article-title" itemprop="name">
+      js基础系列之this解析
+    </h1>
+  
+  
+
+
+
+
+      </header>
+    
+
+    
+      <div class="article-meta">
+        <a href="/2018/06/22/js%E5%9F%BA%E7%A1%80%E7%B3%BB%E5%88%97%E4%B9%8Bthis%E8%A7%A3%E6%9E%90/" class="article-date">
+  <time datetime="2018-06-22T08:01:08.000Z" itemprop="datePublished">2018-06-22</time>
+</a>
+        
+      </div>
+    
+
+    
+      
+    <div class="tocbot"></div>
+
+
+
+
+
+    
+
+    <div class="article-entry" itemprop="articleBody">
+      
+
+
+      
+
+      
+        <h3 id="调用位置"><a href="#调用位置" class="headerlink" title="调用位置"></a>调用位置</h3><p>this是在运行的时候进行绑定的，并不是在编写的时候绑定的，他的上下文取决于函数调用时的各种条件，this 的绑定和函数声明的位置没有任何关系，只取决与函数的调用方式</p>
+<a id="more"></a>
+
+<h3 id="绑定规则"><a href="#绑定规则" class="headerlink" title="绑定规则"></a>绑定规则</h3><ul>
+<li>默认绑定</li>
+</ul>
+<p>一个直白，毫无修饰的调用</p>
+<ul>
+<li>隐式绑定</li>
+</ul>
+<pre><code>function foo() {
+    console.log( this.a );
+}
+
+var obj = {
+    a: 2,
+    foo: foo
+};
+
+obj.foo(); // 2</code></pre><p>首先，注意foo()被声明然后作为引用属性添加到obj上的方式。无论foo()是否一开始就在obj上被声明，还是后来作为引用添加（如上面代码所示），这个函数都不被obj所真正“拥有”或“包含”。<br>然而，调用点使用obj环境来引用函数，所以你可以说obj对象在函数被调用的时间点上“拥有”或“包含”这个函数引用。<br>不论你怎样称呼这个模式，在foo()被调用的位置上，它被冠以一个指向obj的对象引用。当一个方法引用存在一个环境对象时，隐含绑定规则会说：是这个对象应当被用于这个函数调用的this绑定。<br>因为obj是foo()调用的this，所以this.a就是 obj.a 的同义词。<br>只有对象属性引用链的最后一层是影响调用点的。</p>
+<p>把函数中的this绑定到这个上下文对象，也可以说函数被调用时拥有它或者包含它<br>隐式绑定的函数会丢失绑定对象，也就是说他会应用默认绑定，把this绑定到全局上对象或者undefined上（这里取决与是否时严格模式）</p>
+<ul>
+<li>显式绑定</li>
+</ul>
+<p>1.硬绑定</p>
+<pre><code>function foo() {
+    console.log( this.a );
+}
+
+var obj = {
+    a: 2
+};
+
+var bar = function() {
+    foo.call( obj );
+};
+
+bar(); // 2
+setTimeout( bar, 100 ); // 2
+
+// `bar` 将 `foo` 的 `this` 硬绑定到 `obj`
+// 所以它不可以被覆盖
+bar.call( window ); // 2</code></pre><p>我们创建了一个函数 bar()，在它的内部手动调用 foo.call(obj)，由此强制 this 绑定到 obj 并调用 foo。无论你过后怎样调用函数 bar，它总是手动使用 obj 调用 foo。这种绑定即明确又坚定，所以我们称之为 硬绑定（hard binding）</p>
+<p>后来就增加了bind()函数，提供哥我们用作硬绑定</p>
+<p>2.call和apply</p>
+<p>foo.call(obj)会使foo调用的时候强制把他的this绑定到obj上<br>function.call(obj,arr1,arr2…)<br>function.apply(obj,[arr])<br>如果没有提供arr和obj任何一个参数，那么Global对象将被用作obj，并且无法被传递任何参数。</p>
+<ul>
+<li>new绑定</li>
+</ul>
+<p>所有函数都可以通过new来调用，这种函数调用被称作构造函数调用，实际上并不存在所谓的构造函数，只有对于函数的构造调用。</p>
+<p>使用new调用函数发生构造函数调用时，执行以下操作<br>1.创建一个全新的对象<br>2.这个新对象会被执行prototype链接<br>3.这个新对象会绑定到函数调用的this<br>4.如果函数中没有返回其他的对象，那么new表达式中的函数调用会自动返回这个新对象</p>
+<h3 id="判断this的规则"><a href="#判断this的规则" class="headerlink" title="判断this的规则"></a>判断this的规则</h3><p>1.判断是否new绑定，如果是的话，this绑定的是新创建的对象<br>2.函数是否通过call,apply进行的显示绑定或硬绑定，如果是，this绑定的是制定的对象<br>3.函数是够在某个上下文中调用，即隐式绑定，如果是，就绑定到那个上下文对象<br>4.如果以上都不是，即默认绑定，如果在严格模式下，就绑定到undefined,否则绑定到全局对象</p>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://vera0720.github.io/2018/06/22/js%E5%9F%BA%E7%A1%80%E7%B3%BB%E5%88%97%E4%B9%8Bthis%E8%A7%A3%E6%9E%90/" data-id="ckp1zpvve00111pr9bk5zh20u"
+         class="article-share-link">Share</a>
+      
+  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/js/" rel="tag">js</a></li></ul>
+
+    </footer>
+
+  </div>
+
+  
+    
+  <nav class="article-nav">
+    
+      <a href="/2018/07/04/js%E5%9F%BA%E7%A1%80%E7%B3%BB%E5%88%97%E4%B9%8Bbind%E5%8E%9F%E7%90%86/" class="article-nav-link">
+        <strong class="article-nav-caption">Newer posts</strong>
+        <div class="article-nav-title">
+          
+            js基础系列之bind原理
+          
+        </div>
+      </a>
+    
+    
+      <a href="/2018/04/03/js%E5%9F%BA%E7%A1%80%E7%B3%BB%E5%88%97%E4%B9%8B%E7%B1%BB%E5%9E%8B/" class="article-nav-link">
+        <strong class="article-nav-caption">Olde posts</strong>
+        <div class="article-nav-title">js基础系列之类型</div>
+      </a>
+    
+  </nav>
+
+
+  
+
+  
+    
+  
+
+</article>
+
+
+
+</section>
+  <footer class="footer">
+  <div class="outer">
+    <ul class="list-inline">
+      <li>&copy; 2021 今天天气晴朗</li>
+      <li>Author <span>Vera</span></li>
+    </ul>
+  </div>
+</footer>
+
+</main>
+
+<aside class="sidebar sidebar-specter">
+  
+    <button class="navbar-toggle"></button>
+<nav class="navbar">
+  
+    <div class="logo">
+      <a href="/"><img src="/images/headImg.jpeg" alt="今天天气晴朗"></a>
+    </div>
+  
+  <ul class="nav nav-main">
+    
+      <li class="nav-item">
+        <a class="nav-item-link" href="/">Home</a>
+      </li>
+    
+      <li class="nav-item">
+        <a class="nav-item-link" href="/archives">Archives</a>
+      </li>
+    
+      <li class="nav-item">
+        <a class="nav-item-link" href="/gallery">Gallery</a>
+      </li>
+    
+      <li class="nav-item">
+        <a class="nav-item-link" href="/about">About</a>
+      </li>
+    
+    <li class="nav-item">
+      <a class="nav-item-link nav-item-search" title="Search">
+        <i class="fe fe-search"></i>
+        Search
+      </a>
+    </li>
+  </ul>
+</nav>
+<nav class="navbar navbar-bottom">
+  <ul class="nav">
+    <li class="nav-item">
+      <div class="totop" id="totop">
+  <i class="fe fe-rocket"></i>
+</div>
+    </li>
+    <li class="nav-item">
+      
+    </li>
+  </ul>
+</nav>
+<div class="search-form-wrap">
+  <div class="local-search local-search-plugin">
+  <input type="search" id="local-search-input" class="local-search-input" placeholder="Search...">
+  <div id="local-search-result" class="local-search-result"></div>
+</div>
+</div>
+  </aside>
+  
+<script src="/js/jquery-2.0.3.min.js"></script>
+
+
+<script src="/js/jquery.justifiedGallery.min.js"></script>
+
+
+<script src="/js/lazyload.min.js"></script>
+
+
+<script src="/js/busuanzi-2.3.pure.min.js"></script>
+
+
+  
+<script src="/fancybox/jquery.fancybox.min.js"></script>
+
+
+
+
+  
+<script src="/js/tocbot.min.js"></script>
+
+  <script>
+    // Tocbot_v4.7.0  http://tscanlin.github.io/tocbot/
+    tocbot.init({
+      tocSelector: '.tocbot',
+      contentSelector: '.article-entry',
+      headingSelector: 'h1, h2, h3, h4, h5, h6',
+      hasInnerContainers: true,
+      scrollSmooth: true,
+      positionFixedSelector: '.tocbot',
+      positionFixedClass: 'is-position-fixed',
+      fixedSidebarOffset: 'auto',
+    });
+  </script>
+
+
+
+<script src="/js/ocean.js"></script>
+
+
+</body>
+</html>

@@ -1,0 +1,249 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  
+  
+  
+    <meta name="description" content="治愈系少女">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <title>
+    css系列之img和父容器间隙 |
+    
+    今天天气晴朗</title>
+  
+    <link rel="shortcut icon" href="/favicon.ico">
+  
+  
+<link rel="stylesheet" href="/css/style.css">
+
+  
+    
+<link rel="stylesheet" href="/fancybox/jquery.fancybox.min.css">
+
+  
+  
+<script src="/js/pace.min.js"></script>
+
+<meta name="generator" content="Hexo 4.2.0"></head>
+
+<body>
+<main class="content">
+  <section class="outer">
+  
+
+<article id="post-css系列之img和父容器间隙" class="article article-type-post" itemscope itemprop="blogPost" data-scroll-reveal>
+
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
+  
+    <h1 class="article-title" itemprop="name">
+      css系列之img和父容器间隙
+    </h1>
+  
+  
+
+
+
+
+      </header>
+    
+
+    
+      <div class="article-meta">
+        <a href="/2016/08/15/css%E7%B3%BB%E5%88%97%E4%B9%8Bimg%E5%92%8C%E7%88%B6%E5%AE%B9%E5%99%A8%E9%97%B4%E9%9A%99/" class="article-date">
+  <time datetime="2016-08-15T11:30:00.000Z" itemprop="datePublished">2016-08-15</time>
+</a>
+        
+      </div>
+    
+
+    
+      
+
+
+
+
+    
+
+    <div class="article-entry" itemprop="articleBody">
+      
+
+
+      
+
+      
+        <p>在前端开发中,经常遇到在一个img外面套div的时候,div的大小和img的大小并不一样,在底部会有一段空白.</p>
+<a id="more"></a>
+
+<p>代码如下:</p>
+<pre><code>&lt;div&gt;
+
+&lt;img src = &apos;&apos;imgs/1.jpg &apos;&apos;/ &gt;
+
+&lt;/div&gt;</code></pre><p>原因:img图片默认的vertical-align是baseline.而baseline又和父级底边有一定距离(这个距离和font-size,font-family有关),一个inline-block的元素,如果里面没有inline元素,或者overflow不是visible,则该元素的基线就是其margin底边缘,否则,则基线就是元素里面最后一行内联元素的基线.</p>
+<p>方法:</p>
+<p>1.将img图片的display:block</p>
+<p>2.将div的line-height设置的足够小</p>
+<p>3.将容器里的fontsize设置为0</p>
+<p>4.将vertical-align设置为middle,bottom,top,只要不取baseline即可</p>
+<p>相关:</p>
+<p>1.IE的显示有几种模式,假如声明为Strict模式,IE以W3C显示文档,而W3C里img默认inline,除非自己声明block</p>
+<p>2.空隙是ie针对盒模型默认的line-height和font-size.给img display:block虽然能解决问题,但并没从结构上考虑问题</p>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://vera0720.github.io/2016/08/15/css%E7%B3%BB%E5%88%97%E4%B9%8Bimg%E5%92%8C%E7%88%B6%E5%AE%B9%E5%99%A8%E9%97%B4%E9%9A%99/" data-id="ckp1zpvul00011pr9efaudbb8"
+         class="article-share-link">Share</a>
+      
+  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/css/" rel="tag">css</a></li></ul>
+
+    </footer>
+
+  </div>
+
+  
+    
+  <nav class="article-nav">
+    
+      <a href="/2016/09/02/css%E7%B3%BB%E5%88%97%E4%B9%8Binline-block%E9%97%B4%E9%9A%99/" class="article-nav-link">
+        <strong class="article-nav-caption">Newer posts</strong>
+        <div class="article-nav-title">
+          
+            css系列之inline-block间隙
+          
+        </div>
+      </a>
+    
+    
+      <a href="/2016/07/19/html%E7%B3%BB%E5%88%97%E4%B9%8BIframe/" class="article-nav-link">
+        <strong class="article-nav-caption">Olde posts</strong>
+        <div class="article-nav-title">html系列之Iframe</div>
+      </a>
+    
+  </nav>
+
+
+  
+
+  
+    
+  
+
+</article>
+
+
+
+</section>
+  <footer class="footer">
+  <div class="outer">
+    <ul class="list-inline">
+      <li>&copy; 2021 今天天气晴朗</li>
+      <li>Author <span>Vera</span></li>
+    </ul>
+  </div>
+</footer>
+
+</main>
+
+<aside class="sidebar sidebar-specter">
+  
+    <button class="navbar-toggle"></button>
+<nav class="navbar">
+  
+    <div class="logo">
+      <a href="/"><img src="/images/headImg.jpeg" alt="今天天气晴朗"></a>
+    </div>
+  
+  <ul class="nav nav-main">
+    
+      <li class="nav-item">
+        <a class="nav-item-link" href="/">Home</a>
+      </li>
+    
+      <li class="nav-item">
+        <a class="nav-item-link" href="/archives">Archives</a>
+      </li>
+    
+      <li class="nav-item">
+        <a class="nav-item-link" href="/gallery">Gallery</a>
+      </li>
+    
+      <li class="nav-item">
+        <a class="nav-item-link" href="/about">About</a>
+      </li>
+    
+    <li class="nav-item">
+      <a class="nav-item-link nav-item-search" title="Search">
+        <i class="fe fe-search"></i>
+        Search
+      </a>
+    </li>
+  </ul>
+</nav>
+<nav class="navbar navbar-bottom">
+  <ul class="nav">
+    <li class="nav-item">
+      <div class="totop" id="totop">
+  <i class="fe fe-rocket"></i>
+</div>
+    </li>
+    <li class="nav-item">
+      
+    </li>
+  </ul>
+</nav>
+<div class="search-form-wrap">
+  <div class="local-search local-search-plugin">
+  <input type="search" id="local-search-input" class="local-search-input" placeholder="Search...">
+  <div id="local-search-result" class="local-search-result"></div>
+</div>
+</div>
+  </aside>
+  
+<script src="/js/jquery-2.0.3.min.js"></script>
+
+
+<script src="/js/jquery.justifiedGallery.min.js"></script>
+
+
+<script src="/js/lazyload.min.js"></script>
+
+
+<script src="/js/busuanzi-2.3.pure.min.js"></script>
+
+
+  
+<script src="/fancybox/jquery.fancybox.min.js"></script>
+
+
+
+
+  
+<script src="/js/tocbot.min.js"></script>
+
+  <script>
+    // Tocbot_v4.7.0  http://tscanlin.github.io/tocbot/
+    tocbot.init({
+      tocSelector: '.tocbot',
+      contentSelector: '.article-entry',
+      headingSelector: 'h1, h2, h3, h4, h5, h6',
+      hasInnerContainers: true,
+      scrollSmooth: true,
+      positionFixedSelector: '.tocbot',
+      positionFixedClass: 'is-position-fixed',
+      fixedSidebarOffset: 'auto',
+    });
+  </script>
+
+
+
+<script src="/js/ocean.js"></script>
+
+
+</body>
+</html>

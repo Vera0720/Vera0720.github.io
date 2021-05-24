@@ -1,0 +1,271 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  
+  
+  
+    <meta name="description" content="治愈系少女">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <title>
+    前端面试系列之输入url会发生什么 |
+    
+    今天天气晴朗</title>
+  
+    <link rel="shortcut icon" href="/favicon.ico">
+  
+  
+<link rel="stylesheet" href="/css/style.css">
+
+  
+    
+<link rel="stylesheet" href="/fancybox/jquery.fancybox.min.css">
+
+  
+  
+<script src="/js/pace.min.js"></script>
+
+<meta name="generator" content="Hexo 4.2.0"></head>
+
+<body>
+<main class="content">
+  <section class="outer">
+  
+
+<article id="post-前端面试系列之输入url会发生什么" class="article article-type-post" itemscope itemprop="blogPost" data-scroll-reveal>
+
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
+  
+    <h1 class="article-title" itemprop="name">
+      前端面试系列之输入url会发生什么
+    </h1>
+  
+  
+
+
+
+
+      </header>
+    
+
+    
+      <div class="article-meta">
+        <a href="/2017/10/06/%E5%89%8D%E7%AB%AF%E9%9D%A2%E8%AF%95%E7%B3%BB%E5%88%97%E4%B9%8B%E8%BE%93%E5%85%A5url%E4%BC%9A%E5%8F%91%E7%94%9F%E4%BB%80%E4%B9%88/" class="article-date">
+  <time datetime="2017-10-06T06:24:09.000Z" itemprop="datePublished">2017-10-06</time>
+</a>
+        
+      </div>
+    
+
+    
+      
+
+
+
+
+    
+
+    <div class="article-entry" itemprop="articleBody">
+      
+
+
+      
+
+      
+        <p>这是一道常见的面试题，面试必问。之前一直只是简单的了解几个点，今天来整理一下整个过程。</p>
+<a id="more"></a>
+
+<p>整体来说有几个基本的点：</p>
+<p>1.浏览器的地址栏输入url并按下回车</p>
+<p>2.浏览器查找当前url是否存在缓存，并比较缓存是否过期</p>
+<p>3.DNS解析url对应的IP</p>
+<p>4.根据IP建立TCP连接（三次握手）</p>
+<p>5.服务器端处理（动态页面处理，静态页面返回。CDN相关）</p>
+<p>6.HTTP发起请求</p>
+<p>7.服务器处理请求，浏览器接收HTTP响应</p>
+<p>8.渲染页面，构建DOM树（收到HTML内容解析，并行加载串行执行执行CSS，js）</p>
+<p>9.请求头内容缓存到浏览器端</p>
+<p>10.关闭TCP连接，4次握手</p>
+<p>一、URL：我们常见的URL是由三部分组成，协议名，域名，端口号，有时候端口是默认所以隐藏，HTTP默认端口80，HTTPS默认端口443，（同源问题和跨域问题）除此之外还会包括一些路径，查询和其他片段，我们最常见的协议是HTTP协议，还有加密的HTTPS协议，FTP协议等等</p>
+<p>二、缓存：HTTP缓存有多种规则，根据是否需要重新向服务器发起请求来分类，一般分为强制缓存和对比缓存，强制缓存判断HTTP首部字段：cache-control,Expires.Expires是一个绝对时间，即服务器时间。浏览器检查当前时间，如果还没到失效时间就直接使用缓存文件，但是该方法存在一个问题，服务器时间和客户端时间可能不一致。Cache-control中的max-age保存一个相对时间，例如cache-control:max-age = 484200,表示浏览器收到文件后，缓存在484200s内有效，如果同时存在cache-control和Expires，浏览器总是优先使用cache-control.</p>
+<p>对比缓存通过HTTP的last-modified,Etag字段进行判断，last-modified是第一次请求资源时，服务器返回的字段，表示最后一次更新的时间，下次浏览器请求资源时就发送if-modified-since字段，服务器用本地Last-modified时间与if-modified-since时间比较，如果不一致就认为缓存已过期并返回新资源给浏览器，如果时间一致就发送304状态码，让浏览器继续使用缓存。Etag：资源的实体标志（哈西字符串），当资源内容更新时Etag会改变，服务器会判断Etag是否发生变化，如果变化则返回新资源。</p>
+<p><img src="/image/%E8%BE%93%E5%85%A5url%E4%BC%9A%E5%8F%91%E7%94%9F%E4%BB%80%E4%B9%88/3.jpg" alt="3"></p>
+<p>三、域名解析的过程实际是将域名还原为IP地址的过程。首先浏览器先检查本地hosts文件是否有这个网址映射关系，如果有就调用这个IP地址映射，完成域名解析。如果没找到则会查找本地DNS解析器缓存，如果查找到则返回。如果还是没有找到则会查找本地DNS服务器，如果查找到则返回。最后迭代查询，按根域服务器 -&gt;顶级域（.cn）-&gt;第二层域（hb.cn） -&gt;子域（ <a href="http://www.hb.cn" target="_blank" rel="noopener">www.hb.cn</a> ）的顺序找到IP地址。</p>
+<p>四、建立连接，这是由TCP协议完成的，主要通过三次握手进行连接。</p>
+<p>　　第一次握手： 建立连接时，客户端发送syn包（syn=j）到服务器，并进入SYN_SENT状态，等待服务器确认； </p>
+<p>　　第二次握手： 服务器收到syn包，必须确认客户的SYN（ack=j+1），同时自己也发送一个SYN包（syn=k），即SYN+ACK包，此时服务器进入SYN_RECV状态；</p>
+<p>　　第三次握手： 客户端收到服务器的SYN+ACK包，向服务器发送确认包ACK(ack=k+1），此包发送完毕，客户端和服务器进入ESTABLISHED（TCP连接成功）状态，完成三次握手。</p>
+<p>　　完成三次握手，客户端与服务器开始传送数据。</p>
+<p><img src="/image/%E8%BE%93%E5%85%A5url%E4%BC%9A%E5%8F%91%E7%94%9F%E4%BB%80%E4%B9%88/4.jpg" alt="4"></p>
+<p>五、完整的HTTP请求包含请求起始行、请求头部、请求主体三部分。</p>
+<p>六、服务器在收到浏览器发送的HTTP请求之后，会将收到的HTTP报文封装成HTTP的Request对象，并通过不同的Web服务器进行处理，处理完的结果以HTTP的Response对象返回，主要包括状态码，响应头，响应报文三个部分。</p>
+<p>　　状态码主要包括以下部分</p>
+<p>　　1xx：指示信息–表示请求已接收，继续处理。</p>
+<p>　　2xx：成功–表示请求已被成功接收、理解、接受。</p>
+<p>　　3xx：重定向–要完成请求必须进行更进一步的操作。</p>
+<p>　　4xx：客户端错误–请求有语法错误或请求无法实现。</p>
+<p>　　5xx：服务器端错误–服务器未能实现合法的请求。</p>
+<p>　　响应头主要由Cache-Control、 Connection、Date、Pragma等组成。</p>
+<p>　　响应体为服务器返回给浏览器的信息，主要由HTML，css，js，图片文件组成。</p>
+<p>七、如果说响应的内容是HTML文档的话，就需要浏览器进行解析渲染呈现给用户。整个过程涉及两个方面：解析和渲染。在渲染页面之前，需要构建DOM树和CSSOM树。在浏览器还没接收到完整的 HTML 文件时，它就开始渲染页面了，在遇到外部链入的脚本标签或样式标签或图片时，会再次发送 HTTP 请求重复上述的步骤。在收到 CSS 文件后会对已经渲染的页面重新渲染，加入它们应有的样式，图片文件加载完立刻显示在相应位置。</p>
+<p>八、关闭TCP连接或继续保持连接，通过四次挥手关闭连接(FIN ACK, ACK, FIN ACK, ACK)。</p>
+<p><img src="/image/%E8%BE%93%E5%85%A5url%E4%BC%9A%E5%8F%91%E7%94%9F%E4%BB%80%E4%B9%88/1.png" alt="1"><br>　<br>第一次挥手是浏览器发完数据后，发送FIN请求断开连接。第二次挥手是服务器发送ACK表示同意，如果在这一次服务器也发送FIN请求断开连接似乎也没有不妥，但考虑到服务器可能还有数据要发送，所以服务器发送FIN应该放在第三次挥手中。这样浏览器需要返回ACK表示同意，也就是第四次挥手。</p>
+<p><img src="/image/%E8%BE%93%E5%85%A5url%E4%BC%9A%E5%8F%91%E7%94%9F%E4%BB%80%E4%B9%88/2.jpg" alt="2"></p>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://vera0720.github.io/2017/10/06/%E5%89%8D%E7%AB%AF%E9%9D%A2%E8%AF%95%E7%B3%BB%E5%88%97%E4%B9%8B%E8%BE%93%E5%85%A5url%E4%BC%9A%E5%8F%91%E7%94%9F%E4%BB%80%E4%B9%88/" data-id="ckp1zpvw8002i1pr948fthpkr"
+         class="article-share-link">Share</a>
+      
+  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/%E9%9D%A2%E8%AF%95/" rel="tag">面试</a></li></ul>
+
+    </footer>
+
+  </div>
+
+  
+    
+  <nav class="article-nav">
+    
+      <a href="/2017/11/06/%E5%BA%8F%E5%88%97%E5%8C%96/" class="article-nav-link">
+        <strong class="article-nav-caption">Newer posts</strong>
+        <div class="article-nav-title">
+          
+            序列化
+          
+        </div>
+      </a>
+    
+    
+      <a href="/2017/10/05/%E5%89%8D%E7%AB%AF%E9%9D%A2%E8%AF%95%E7%B3%BB%E5%88%97%E4%B9%8B%E5%BF%85%E4%BC%9A%E7%AE%97%E6%B3%95/" class="article-nav-link">
+        <strong class="article-nav-caption">Olde posts</strong>
+        <div class="article-nav-title">前端面试系列之必会算法</div>
+      </a>
+    
+  </nav>
+
+
+  
+
+  
+    
+  
+
+</article>
+
+
+
+</section>
+  <footer class="footer">
+  <div class="outer">
+    <ul class="list-inline">
+      <li>&copy; 2021 今天天气晴朗</li>
+      <li>Author <span>Vera</span></li>
+    </ul>
+  </div>
+</footer>
+
+</main>
+
+<aside class="sidebar sidebar-specter">
+  
+    <button class="navbar-toggle"></button>
+<nav class="navbar">
+  
+    <div class="logo">
+      <a href="/"><img src="/images/headImg.jpeg" alt="今天天气晴朗"></a>
+    </div>
+  
+  <ul class="nav nav-main">
+    
+      <li class="nav-item">
+        <a class="nav-item-link" href="/">Home</a>
+      </li>
+    
+      <li class="nav-item">
+        <a class="nav-item-link" href="/archives">Archives</a>
+      </li>
+    
+      <li class="nav-item">
+        <a class="nav-item-link" href="/gallery">Gallery</a>
+      </li>
+    
+      <li class="nav-item">
+        <a class="nav-item-link" href="/about">About</a>
+      </li>
+    
+    <li class="nav-item">
+      <a class="nav-item-link nav-item-search" title="Search">
+        <i class="fe fe-search"></i>
+        Search
+      </a>
+    </li>
+  </ul>
+</nav>
+<nav class="navbar navbar-bottom">
+  <ul class="nav">
+    <li class="nav-item">
+      <div class="totop" id="totop">
+  <i class="fe fe-rocket"></i>
+</div>
+    </li>
+    <li class="nav-item">
+      
+    </li>
+  </ul>
+</nav>
+<div class="search-form-wrap">
+  <div class="local-search local-search-plugin">
+  <input type="search" id="local-search-input" class="local-search-input" placeholder="Search...">
+  <div id="local-search-result" class="local-search-result"></div>
+</div>
+</div>
+  </aside>
+  
+<script src="/js/jquery-2.0.3.min.js"></script>
+
+
+<script src="/js/jquery.justifiedGallery.min.js"></script>
+
+
+<script src="/js/lazyload.min.js"></script>
+
+
+<script src="/js/busuanzi-2.3.pure.min.js"></script>
+
+
+  
+<script src="/fancybox/jquery.fancybox.min.js"></script>
+
+
+
+
+  
+<script src="/js/tocbot.min.js"></script>
+
+  <script>
+    // Tocbot_v4.7.0  http://tscanlin.github.io/tocbot/
+    tocbot.init({
+      tocSelector: '.tocbot',
+      contentSelector: '.article-entry',
+      headingSelector: 'h1, h2, h3, h4, h5, h6',
+      hasInnerContainers: true,
+      scrollSmooth: true,
+      positionFixedSelector: '.tocbot',
+      positionFixedClass: 'is-position-fixed',
+      fixedSidebarOffset: 'auto',
+    });
+  </script>
+
+
+
+<script src="/js/ocean.js"></script>
+
+
+</body>
+</html>

@@ -1,0 +1,333 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  
+  
+  
+    <meta name="description" content="治愈系少女">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <title>
+    css系列之sass和scss |
+    
+    今天天气晴朗</title>
+  
+    <link rel="shortcut icon" href="/favicon.ico">
+  
+  
+<link rel="stylesheet" href="/css/style.css">
+
+  
+    
+<link rel="stylesheet" href="/fancybox/jquery.fancybox.min.css">
+
+  
+  
+<script src="/js/pace.min.js"></script>
+
+<meta name="generator" content="Hexo 4.2.0"></head>
+
+<body>
+<main class="content">
+  <section class="outer">
+  
+
+<article id="post-css系列之sass和scss" class="article article-type-post" itemscope itemprop="blogPost" data-scroll-reveal>
+
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
+  
+    <h1 class="article-title" itemprop="name">
+      css系列之sass和scss
+    </h1>
+  
+  
+
+
+
+
+      </header>
+    
+
+    
+      <div class="article-meta">
+        <a href="/2016/12/02/css%E7%B3%BB%E5%88%97%E4%B9%8Bsass%E5%92%8Cscss/" class="article-date">
+  <time datetime="2016-12-02T06:10:14.000Z" itemprop="datePublished">2016-12-02</time>
+</a>
+        
+      </div>
+    
+
+    
+      
+
+
+
+
+    
+
+    <div class="article-entry" itemprop="articleBody">
+      
+
+
+      
+
+      
+        <p>最近研究了一下sass和scss,清晰结构化,在某些地方的确强大,所以写了一篇入门教程,大概15分钟左右就能明白基本原理</p>
+<p>什么是sass(css预处理器)</p>
+<p>Sass官网上是这样描述sass的,sass是一门高于css的元语言,他能用来清晰地,结构化的描述文件样式,有着比普通css功能更加强大的功能,sass能提供更简洁,更优雅的语法,同时提供多种功能来穿件可维护和管理的样式表.</p>
+<a id="more"></a>
+
+<p>SASS 和 SCSS 有什么区别？</p>
+<p>文件扩展名不同，Sass 是以“.sass”后缀为扩展名，而 SCSS 是以“.scss”后缀为扩展名</p>
+<p>语法书写方式不同，Sass 是以严格的缩进式语法规则来书写，不带大括号({})和分号(;)，而 SCSS 的语法书写和我们的 CSS 语法书写方式非常类似。</p>
+<p>命令编译：</p>
+<p>sass &lt;要编译的Sass文件路径&gt;/style.scss:&lt;要输出CSS文件路径&gt;/style.css</p>
+<p>单文件监听命令</p>
+<p>sass –watch style.scss:style.css</p>
+<p>GUI工具编译</p>
+<p>自动化编译gulp</p>
+<p>不同样式风格的输出方法</p>
+<p>sass –watch style.scss:style.css –style compact</p>
+<p>嵌套输出方式 nested</p>
+<p>展开输出方式 expanded  </p>
+<p>紧凑输出方式 compact</p>
+<p>压缩输出方式 compressed</p>
+<p>$变量</p>
+<p>普通变量</p>
+<p>默认变量</p>
+<p>$color:#ccc;<br>$color:#000 !default;</p>
+<p>特殊变量(一般我们定义的变量都为属性值，可直接使用，但是如果变量作为属性或在某些特殊情况下等则必须要以#{$variables}形式使用。)</p>
+<p>1.应用于class和属性</p>
+<p>2.应用于复杂的属性值</p>
+<p>嵌套</p>
+<p>选择器嵌套</p>
+<p>属性嵌套</p>
+<p>伪类嵌套</p>
+<p>例:hover</p>
+<p>a{<br>  color: #ff0000;<br>  &amp;:hover{<br>    color: green;<br>  }<br>}</p>
+<p>需要在:hover前加&amp;,不然选择的是a里面的元素hover</p>
+<p>混合宏 @mixin 引用  @include</p>
+<p>1、声明混合宏</p>
+<p>@mixin border($color1,$color2){<br>  border:1px solid $color1;<br>  border-radius: 5px;<br>  box-shadow: 4px 5px 3px 5px $color2;<br>}</p>
+<p>2、调用混合宏</p>
+<p>.aa{<br>  width: 200px;<br>  height: 200px;<br>  @include border();<br>}</p>
+<p>3、混合宏的参数   传一个不带值的参数  如上图的$color1,$color2</p>
+<p>4、混合宏的参数   传带值的参数 (默认值)  可以在$color1,$color2后面加默认值,如($color1:#ccc,$color2:#ddd)</p>
+<p>Eg:</p>
+<p>@mixin css3($attr,$val){<br>  -webkit-#{$attr}:$val;<br>  -moz-#{$attr}:$val;<br>  -ms-#{$attr}:$val;<br>  -o-#{$attr}:$val;<br>  #{$attr}:$val;<br>}<br>.bb{<br>  @include css3(border-radius,10px);<br>}</p>
+<p>继承 @extend</p>
+<p>.ee{<br>  width: 200px;<br>  height: 300px;<br>  @extend .bb;<br>}</p>
+<p>占位符 %placeholder   @extend</p>
+<p>%ff{<br>  width: 200px;<br>  height: 200px;<br>}<br>.g{<br>  @extend %ff;<br>}</p>
+<p>只有在引入后占位符的样式才会生效</p>
+<p>@import  引入另一个scss文件,一般引入公共样式</p>
+<p>自定义函数@function</p>
+<p>@function add($a,$b){<br>  @return $a+$b;<br>}<br>.k{<br>  width: add(200px,300px);<br>}</p>
+<p>sass具有运算的特性，可以对数值型的Value(如：数字、颜色、变量等)进行加减乘除四则运算。</p>
+<p>数据类型Data Type</p>
+<p>Sass -i   type-of()</p>
+<ol>
+<li><p>数字: 如，1、 2、 13、 10px；</p>
+</li>
+<li><p>字符串：有引号字符串或无引号字符串，如，”foo”、 ‘bar’、 baz；</p>
+</li>
+<li><p>颜色：如，blue、 #04a3f9、 rgba(255,0,0,0.5)；</p>
+</li>
+<li><p>布尔型：如，true、 false；</p>
+</li>
+<li><p>空值：如，null；</p>
+</li>
+<li><p>值列表：用空格或者逗号分开，如，1.5em 1em 0 2em。</p>
+</li>
+</ol>
+<p>函数</p>
+<ol>
+<li><p>数字函数: abs()、round()、ceil()、floor()</p>
+</li>
+<li><p>字符串函数：to-upper-case()、to-lower-case()、str-length()、str-index()</p>
+</li>
+<li><p>颜色：rgb()、lighten()、darken()</p>
+</li>
+<li><p>值列表：length()、nth()、index()、append()、join()</p>
+</li>
+</ol>
+<p>注释</p>
+<p>注释对于一名程序员来说，是极其重要，良好的注释能帮助自己或者别人阅读源码。在 Sass 中注释有两种方式：</p>
+<p>1、类似 CSS 的注释方式，使用 ”/*  */ ”</p>
+<p>2、类似 JavaScript 的注释方式，使用“//”</p>
+<p>两者区别，前者会在编译出来的 CSS 显示，后者在编译出来的 CSS 中不会显示，</p>
+<p>Sass的控制命令</p>
+<ol>
+<li>@if</li>
+</ol>
+<p>三目判断语法为：if($condition, $if_true, $if_false)</p>
+<ol start="2">
+<li>@for循环</li>
+</ol>
+<p>@for $i from <start> through <end></p>
+<p>@for $i from <start> to <end></p>
+<ol start="3">
+<li><p>@while循环</p>
+</li>
+<li><p>@each循环</p>
+</li>
+</ol>
+<p>@each $var in <list></p>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://vera0720.github.io/2016/12/02/css%E7%B3%BB%E5%88%97%E4%B9%8Bsass%E5%92%8Cscss/" data-id="ckp1zpvuv000a1pr91mii1vby"
+         class="article-share-link">Share</a>
+      
+  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/css/" rel="tag">css</a></li></ul>
+
+    </footer>
+
+  </div>
+
+  
+    
+  <nav class="article-nav">
+    
+      <a href="/2016/12/07/css%E7%B3%BB%E5%88%97%E4%B9%8B%E4%B8%A4%E5%88%97%E5%B8%83%E5%B1%80/" class="article-nav-link">
+        <strong class="article-nav-caption">Newer posts</strong>
+        <div class="article-nav-title">
+          
+            css系列之两列布局
+          
+        </div>
+      </a>
+    
+    
+      <a href="/2016/11/30/css%E7%B3%BB%E5%88%97%E4%B9%8Binline-block%E5%B9%B6%E5%88%97%E6%8E%92%E5%BA%8F%E4%BD%8D%E7%BD%AE%E5%BD%B1%E5%93%8D/" class="article-nav-link">
+        <strong class="article-nav-caption">Olde posts</strong>
+        <div class="article-nav-title">css系列之inline-block并列排序位置影响</div>
+      </a>
+    
+  </nav>
+
+
+  
+
+  
+    
+  
+
+</article>
+
+
+
+</section>
+  <footer class="footer">
+  <div class="outer">
+    <ul class="list-inline">
+      <li>&copy; 2021 今天天气晴朗</li>
+      <li>Author <span>Vera</span></li>
+    </ul>
+  </div>
+</footer>
+
+</main>
+
+<aside class="sidebar sidebar-specter">
+  
+    <button class="navbar-toggle"></button>
+<nav class="navbar">
+  
+    <div class="logo">
+      <a href="/"><img src="/images/headImg.jpeg" alt="今天天气晴朗"></a>
+    </div>
+  
+  <ul class="nav nav-main">
+    
+      <li class="nav-item">
+        <a class="nav-item-link" href="/">Home</a>
+      </li>
+    
+      <li class="nav-item">
+        <a class="nav-item-link" href="/archives">Archives</a>
+      </li>
+    
+      <li class="nav-item">
+        <a class="nav-item-link" href="/gallery">Gallery</a>
+      </li>
+    
+      <li class="nav-item">
+        <a class="nav-item-link" href="/about">About</a>
+      </li>
+    
+    <li class="nav-item">
+      <a class="nav-item-link nav-item-search" title="Search">
+        <i class="fe fe-search"></i>
+        Search
+      </a>
+    </li>
+  </ul>
+</nav>
+<nav class="navbar navbar-bottom">
+  <ul class="nav">
+    <li class="nav-item">
+      <div class="totop" id="totop">
+  <i class="fe fe-rocket"></i>
+</div>
+    </li>
+    <li class="nav-item">
+      
+    </li>
+  </ul>
+</nav>
+<div class="search-form-wrap">
+  <div class="local-search local-search-plugin">
+  <input type="search" id="local-search-input" class="local-search-input" placeholder="Search...">
+  <div id="local-search-result" class="local-search-result"></div>
+</div>
+</div>
+  </aside>
+  
+<script src="/js/jquery-2.0.3.min.js"></script>
+
+
+<script src="/js/jquery.justifiedGallery.min.js"></script>
+
+
+<script src="/js/lazyload.min.js"></script>
+
+
+<script src="/js/busuanzi-2.3.pure.min.js"></script>
+
+
+  
+<script src="/fancybox/jquery.fancybox.min.js"></script>
+
+
+
+
+  
+<script src="/js/tocbot.min.js"></script>
+
+  <script>
+    // Tocbot_v4.7.0  http://tscanlin.github.io/tocbot/
+    tocbot.init({
+      tocSelector: '.tocbot',
+      contentSelector: '.article-entry',
+      headingSelector: 'h1, h2, h3, h4, h5, h6',
+      hasInnerContainers: true,
+      scrollSmooth: true,
+      positionFixedSelector: '.tocbot',
+      positionFixedClass: 'is-position-fixed',
+      fixedSidebarOffset: 'auto',
+    });
+  </script>
+
+
+
+<script src="/js/ocean.js"></script>
+
+
+</body>
+</html>

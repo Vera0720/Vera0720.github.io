@@ -1,0 +1,346 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  
+  
+  
+    <meta name="description" content="治愈系少女">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <title>
+    php系列之CI框架 |
+    
+    今天天气晴朗</title>
+  
+    <link rel="shortcut icon" href="/favicon.ico">
+  
+  
+<link rel="stylesheet" href="/css/style.css">
+
+  
+    
+<link rel="stylesheet" href="/fancybox/jquery.fancybox.min.css">
+
+  
+  
+<script src="/js/pace.min.js"></script>
+
+<meta name="generator" content="Hexo 4.2.0"></head>
+
+<body>
+<main class="content">
+  <section class="outer">
+  
+
+<article id="post-php系列之CI框架" class="article article-type-post" itemscope itemprop="blogPost" data-scroll-reveal>
+
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
+  
+    <h1 class="article-title" itemprop="name">
+      php系列之CI框架
+    </h1>
+  
+  
+
+
+
+
+      </header>
+    
+
+    
+      <div class="article-meta">
+        <a href="/2017/03/14/php%E7%B3%BB%E5%88%97%E4%B9%8BCI%E6%A1%86%E6%9E%B6/" class="article-date">
+  <time datetime="2017-03-14T15:57:00.000Z" itemprop="datePublished">2017-03-14</time>
+</a>
+        
+      </div>
+    
+
+    
+      
+    <div class="tocbot"></div>
+
+
+
+
+
+    
+
+    <div class="article-entry" itemprop="articleBody">
+      
+
+
+      
+
+      
+        <p>作为前端开发人员,掌握一门后端语言是必不可少的,PHP的CI框架是一个快速开发框架,基于MVC,比较接近原生PHP,在原有的PHP代码上封装了许多类,易上手,容易扩展,适用于小项目,并且CI的文档及案例及其丰富,我用了5天时间从一头雾水照猫画虎用CI框架写了一个个人博客,顺路也看了看数据库,所以CI框架针对新手及小项目还是非常友好的.学完这个我由衷的明白了为什么论坛上的人将PHP奉为世界上最好的语言.</p>
+<p>推荐的书籍:PHP与MySQL程序设计</p>
+<a id="more"></a>
+
+<h3 id="我们所关心的为XAMPP下的这几部分"><a href="#我们所关心的为XAMPP下的这几部分" class="headerlink" title="我们所关心的为XAMPP下的这几部分:"></a>我们所关心的为XAMPP下的这几部分:</h3><p>1.Apache—web服务器,客户端发送request到服务器端,服务器返回response给客户端</p>
+<p>2.Mysql</p>
+<p>3.Php运行环境</p>
+<p>注意:将项目文件夹放在xampp下的htdocs下,将ci框架直接下载到项目文件夹里</p>
+<p>CI框架分为几部分:</p>
+<p>1.Models模型   简单来说就是所有放跟数据库有关的操作以及其他用来摆放实体类工具类的地方</p>
+<p>2.Controls控制器  起到一个连接的作用,将用户界面和后台数据库将View中的用户界面显示,并调用Models里的操作,实现相关操作</p>
+<p>3.View视图   用户界面,主要用html等前端语言来写</p>
+<p>小提示:</p>
+<p>隐藏文件.htaccess是用来做访问控制的</p>
+<p>System下的文件基本不需要改动</p>
+<p>Application下config目录是配置目录,根据所需修改相关配置</p>
+<h3 id="CI环境配置"><a href="#CI环境配置" class="headerlink" title="CI环境配置"></a>CI环境配置</h3><p>去官网上下载相应的压缩包，其中application、system、index.php放到项目的根目录中，启动服务器，如果看到欢迎界面，说明成功。</p>
+<p>application文件夹中：<br>config：配置信息<br>controllers：控制器层<br>models：模型层<br>views：视图层</p>
+<p>system文件夹：系统文件，一般情况下不需要修改<br>index.php 入口文件</p>
+<p>controller: class User extends CI_Controller，如果不指定方法默认进入index方法</p>
+<p>autoload.php:<br>$autoload[‘libraries’] = array(‘database’, ‘session’);<br>$autoload[‘helper’] = array(‘url’); <?php echo site_url();?><br>config.php:<br>$config[‘index_page’] = ‘’;<br>$config[‘encryption_key’] = ‘jsdoijfodskjksldjkj’;<br>database.php<br>$db[‘default’][‘hostname’] = ‘localhost’;<br>$db[‘default’][‘username’] = ‘root’;<br>$db[‘default’][‘password’] = ‘’;<br>$db[‘default’][‘database’] = ‘ci10’;</p>
+<p>在项目的根目录下：.htaccess</p>
+<h3 id="编码流程示例"><a href="#编码流程示例" class="headerlink" title="编码流程示例:"></a>编码流程示例:</h3><p>1.在view下创建一个html文件名为login.php,简单写一下代码</p>
+<pre><code>&lt;form id=&quot;frm_login&quot; action=&quot;welcome/check_login&quot; method=&quot;POST&quot;&quot;&gt;
+
+        &lt;table&gt;
+
+            &lt;tbody&gt;
+
+                &lt;tr&gt;
+
+                    &lt;th nowrap=&quot;nowrap&quot;&gt;邮箱 或 账号：&lt;/th&gt;
+
+                    &lt;td&gt;&lt;input name=&quot;username&quot; type=&quot;text&quot;&gt;&lt;/td&gt;
+
+                &lt;/tr&gt;
+
+                &lt;tr&gt;
+
+                    &lt;th&gt;登录密码：&lt;/th&gt;
+
+                     &lt;td&gt;&lt;input name=&quot;password&quot; type=&quot;password&quot;&gt;&lt;/td&gt;
+
+                &lt;/tr&gt;
+
+                &lt;tr class=&quot;buttons&quot;&gt;
+
+                    &lt;td&gt;
+
+                        &lt;input value=&quot;现在登录&quot; class=&quot;BUTTON SUBMIT&quot; type=&quot;submit&quot;/&gt;
+
+                    &lt;/td&gt;
+
+                &lt;/tr&gt;
+
+            &lt;/tbody&gt;
+
+        &lt;/table&gt;
+
+&lt;/form&gt;</code></pre><p>2.在控制器里先加载界面</p>
+<pre><code>public function login()
+
+{
+
+   $this-&gt;load-&gt;view(&apos;login&apos;);
+
+}</code></pre><p>通过在地址栏下输入地址localhost:/myblog/welcome/login就能看到登录界面</p>
+<p>3.当输入账号密码后点击登录按钮,会通过表单post来提交数据,前端与后端的联系是通过name传值.所以将所需传值的变量设置name,input name=”username”以及input name=”password”,并利用表单通过action跳转到相应控制器下的方法,这里为action=”welcome/check_login” ,控制器下check_login代码如下</p>
+<pre><code>public function check_login()
+
+    {
+
+        //1.接收数据
+
+        $username = $this-&gt;input-&gt;post(&apos;username&apos;);
+
+        $password = $this-&gt;input-&gt;post(&apos;password&apos;);
+
+        //2.验证
+
+        //3.数据库操作
+
+        $this-&gt;load-&gt;model(&apos;user_model&apos;);//加载model文件
+
+        $result = $this-&gt;user_model-&gt;get_by_name_pwd($username, $password);//调用model文件下的方法并传值
+
+        if ($result) {
+
+            echo &apos;ok&apos;;
+
+        } else {
+
+            echo &apos;fail&apos;;
+
+        }
+
+    }</code></pre><p>控制器中的代码有3个步骤,接收数据,验证,数据库操作(包括加载model文件和用model文件下的方法并传值,然后根据返回结果写所需代码)</p>
+<p>4.操作model,主要为数据库操作,建数据库表的过程省略</p>
+<pre><code>public function get_by_name_pwd($name,$pwd){
+
+        $query = $this -&gt; db -&gt; get_where(&apos;t_user&apos;,array(
+
+            &apos;username&apos; =&gt; $name,
+
+            &apos;password&apos; =&gt; $pwd
+
+        ));
+
+        return $query -&gt; row();
+
+}</code></pre><p>接收传过来的值并在数据库中查询,将结果返回到上一步控制器中,然后继续进行</p>
+<p>CI框架简单易上手,拿它做个毕业设计什么的简直跟玩一样,哈哈哈</p>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://vera0720.github.io/2017/03/14/php%E7%B3%BB%E5%88%97%E4%B9%8BCI%E6%A1%86%E6%9E%B6/" data-id="ckp1zpvvp001i1pr92sgfg2rj"
+         class="article-share-link">Share</a>
+      
+  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/php/" rel="tag">php</a></li></ul>
+
+    </footer>
+
+  </div>
+
+  
+    
+  <nav class="article-nav">
+    
+      <a href="/2017/03/29/css%E7%B3%BB%E5%88%97%E4%B9%8B%E5%BC%B9%E6%80%A7%E7%9B%92%E6%A8%A1%E5%9E%8B/" class="article-nav-link">
+        <strong class="article-nav-caption">Newer posts</strong>
+        <div class="article-nav-title">
+          
+            css系列之弹性盒模型
+          
+        </div>
+      </a>
+    
+    
+      <a href="/2017/02/22/css%E7%B3%BB%E5%88%97%E4%B9%8B%E6%96%87%E5%AD%97%E7%9A%84%E5%9E%82%E7%9B%B4%E5%B1%85%E4%B8%AD/" class="article-nav-link">
+        <strong class="article-nav-caption">Olde posts</strong>
+        <div class="article-nav-title">css系列之文字的垂直居中</div>
+      </a>
+    
+  </nav>
+
+
+  
+
+  
+    
+  
+
+</article>
+
+
+
+</section>
+  <footer class="footer">
+  <div class="outer">
+    <ul class="list-inline">
+      <li>&copy; 2021 今天天气晴朗</li>
+      <li>Author <span>Vera</span></li>
+    </ul>
+  </div>
+</footer>
+
+</main>
+
+<aside class="sidebar sidebar-specter">
+  
+    <button class="navbar-toggle"></button>
+<nav class="navbar">
+  
+    <div class="logo">
+      <a href="/"><img src="/images/headImg.jpeg" alt="今天天气晴朗"></a>
+    </div>
+  
+  <ul class="nav nav-main">
+    
+      <li class="nav-item">
+        <a class="nav-item-link" href="/">Home</a>
+      </li>
+    
+      <li class="nav-item">
+        <a class="nav-item-link" href="/archives">Archives</a>
+      </li>
+    
+      <li class="nav-item">
+        <a class="nav-item-link" href="/gallery">Gallery</a>
+      </li>
+    
+      <li class="nav-item">
+        <a class="nav-item-link" href="/about">About</a>
+      </li>
+    
+    <li class="nav-item">
+      <a class="nav-item-link nav-item-search" title="Search">
+        <i class="fe fe-search"></i>
+        Search
+      </a>
+    </li>
+  </ul>
+</nav>
+<nav class="navbar navbar-bottom">
+  <ul class="nav">
+    <li class="nav-item">
+      <div class="totop" id="totop">
+  <i class="fe fe-rocket"></i>
+</div>
+    </li>
+    <li class="nav-item">
+      
+    </li>
+  </ul>
+</nav>
+<div class="search-form-wrap">
+  <div class="local-search local-search-plugin">
+  <input type="search" id="local-search-input" class="local-search-input" placeholder="Search...">
+  <div id="local-search-result" class="local-search-result"></div>
+</div>
+</div>
+  </aside>
+  
+<script src="/js/jquery-2.0.3.min.js"></script>
+
+
+<script src="/js/jquery.justifiedGallery.min.js"></script>
+
+
+<script src="/js/lazyload.min.js"></script>
+
+
+<script src="/js/busuanzi-2.3.pure.min.js"></script>
+
+
+  
+<script src="/fancybox/jquery.fancybox.min.js"></script>
+
+
+
+
+  
+<script src="/js/tocbot.min.js"></script>
+
+  <script>
+    // Tocbot_v4.7.0  http://tscanlin.github.io/tocbot/
+    tocbot.init({
+      tocSelector: '.tocbot',
+      contentSelector: '.article-entry',
+      headingSelector: 'h1, h2, h3, h4, h5, h6',
+      hasInnerContainers: true,
+      scrollSmooth: true,
+      positionFixedSelector: '.tocbot',
+      positionFixedClass: 'is-position-fixed',
+      fixedSidebarOffset: 'auto',
+    });
+  </script>
+
+
+
+<script src="/js/ocean.js"></script>
+
+
+</body>
+</html>

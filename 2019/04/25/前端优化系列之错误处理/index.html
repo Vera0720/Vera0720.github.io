@@ -1,0 +1,274 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  
+  
+  
+    <meta name="description" content="治愈系少女">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <title>
+    前端优化系列之错误处理 |
+    
+    今天天气晴朗</title>
+  
+    <link rel="shortcut icon" href="/favicon.ico">
+  
+  
+<link rel="stylesheet" href="/css/style.css">
+
+  
+    
+<link rel="stylesheet" href="/fancybox/jquery.fancybox.min.css">
+
+  
+  
+<script src="/js/pace.min.js"></script>
+
+<meta name="generator" content="Hexo 4.2.0"></head>
+
+<body>
+<main class="content">
+  <section class="outer">
+  
+
+<article id="post-前端优化系列之错误处理" class="article article-type-post" itemscope itemprop="blogPost" data-scroll-reveal>
+
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
+  
+    <h1 class="article-title" itemprop="name">
+      前端优化系列之错误处理
+    </h1>
+  
+  
+
+
+
+
+      </header>
+    
+
+    
+      <div class="article-meta">
+        <a href="/2019/04/25/%E5%89%8D%E7%AB%AF%E4%BC%98%E5%8C%96%E7%B3%BB%E5%88%97%E4%B9%8B%E9%94%99%E8%AF%AF%E5%A4%84%E7%90%86/" class="article-date">
+  <time datetime="2019-04-25T02:41:33.000Z" itemprop="datePublished">2019-04-25</time>
+</a>
+        
+      </div>
+    
+
+    
+      
+    <div class="tocbot"></div>
+
+
+
+
+
+    
+
+    <div class="article-entry" itemprop="articleBody">
+      
+
+
+      
+
+      
+        <p>今天搞出了一个线上事故，由于业务原因，我在所有的业务处理逻辑前加了一行</p>
+<pre><code>if(str.includes(&apos;aaa&apos;)){
+
+    return
+
+}</code></pre><p>但因为这个某些低版本浏览器不支持es6语法，上线后就出错了，有的人就直接打不开了。<br>所以解决这个问题后，我突然联想到，错误处理是多么的重要。今天来整理下，前端的常用的错误处理都有哪些。</p>
+<a id="more"></a>
+
+<h2 id="为什么要处理异常？"><a href="#为什么要处理异常？" class="headerlink" title="为什么要处理异常？"></a>为什么要处理异常？</h2><p>异常是不可控的，会影响最终的呈现结果，但是我们有充分的理由去做这样的事情。<br>1.增强用户体验；<br>2.远程定位问题；<br>3.及早发现问题；<br>4.无法复线问题，尤其是移动端，机型，系统都是问题；<br>5.完善的前端方案，前端监控系统；<br>对于 JS 而言，我们面对的仅仅只是异常，异常的出现不会直接导致 JS 引擎崩溃，最多只会使当前执行的任务终止。</p>
+<h2 id="需要处理哪些异常？"><a href="#需要处理哪些异常？" class="headerlink" title="需要处理哪些异常？"></a>需要处理哪些异常？</h2><p>JS 语法错误、代码异常<br>静态资源加载异常<br>Promise异常</p>
+<ul>
+<li><p>try-catch语句：try-catch 只能捕获到同步的运行时错误，对语法和异步错误却无能为力，捕获不到。</p>
+</li>
+<li><p>window.onerror：当JS运行时错误发生时，window会触发一个ErrorEvent接口的 error事件，并执行window.onerror()。<br>不论是静态资源异常，或者接口异常，错误都无法捕获到。最好写在所有 JS 脚本的前面，否则有可能捕获不到错误；<br>window.onerror 函数只有在返回 true 的时候，异常才不会向上抛出，否则即使是知道异常的发生控制台还是会显示 Uncaught Error: xxxxx</p>
+</li>
+</ul>
+<pre><code>window.onerror = function(){
+    console.log(&apos;error&apos;)
+    return true
+}</code></pre><p>在实际的使用过程中，onerror 主要是来捕获预料之外的错误，而 try-catch 则是用来在可预见情况下监控特定的错误，两者结合使用更加高效。</p>
+<ul>
+<li>window.addEventListener<br>当一项资源（如图片或脚本）加载失败，加载资源的元素会触发一个 Event 接口的 error 事件，并执行该元素上的onerror() 处理函数。这些 error 事件不会向上冒泡到 window ，不过（至少在 Firefox 中）能被单一的window.addEventListener 捕获。</li>
+</ul>
+<pre><code>window.addEventListener(&apos;error&apos;,function(e){
+  var typeName = e.target.localName;
+  var sourceUrl = &quot;&quot;;
+  if (typeName === &quot;link&quot;) {
+    sourceUrl = e.target.href;
+  } else if (typeName === &quot;script&quot;) {
+    sourceUrl = e.target.src;
+  }
+  console.log(&apos;error&apos;,sourceUrl)
+}, true);</code></pre><ul>
+<li>unhandledrejection<br>为了防止有漏掉的 Promise 异常，建议在全局增加一个对 unhandledrejection 的监听，用来全局监听Uncaught Promise Error</li>
+</ul>
+<pre><code>window.addEventListener(&apos;unhandledrejection&apos;,function(e){
+      console.log(e)
+    }, true);</code></pre><ul>
+<li>统一封装请求方法<br>对一些请求，封装统一的方法，对http状态码进行判断，做对应的拖底处理</li>
+</ul>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://vera0720.github.io/2019/04/25/%E5%89%8D%E7%AB%AF%E4%BC%98%E5%8C%96%E7%B3%BB%E5%88%97%E4%B9%8B%E9%94%99%E8%AF%AF%E5%A4%84%E7%90%86/" data-id="ckp1zpvw8002g1pr9dbmhham8"
+         class="article-share-link">Share</a>
+      
+  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/js/" rel="tag">js</a></li></ul>
+
+    </footer>
+
+  </div>
+
+  
+    
+  <nav class="article-nav">
+    
+      <a href="/2019/04/28/%E5%89%8D%E7%AB%AF%E4%BC%98%E5%8C%96%E7%B3%BB%E5%88%97%E4%B9%8Bcss%E6%9B%BF%E4%BB%A3js%E5%8A%A8%E7%94%BB/" class="article-nav-link">
+        <strong class="article-nav-caption">Newer posts</strong>
+        <div class="article-nav-title">
+          
+            前端优化系列之css替代js动画
+          
+        </div>
+      </a>
+    
+    
+      <a href="/2019/04/01/%E5%89%8D%E7%AB%AF%E4%BC%98%E5%8C%96%E7%B3%BB%E5%88%97%E4%B9%8B%E9%98%B2%E6%8A%96%E4%B8%8E%E8%8A%82%E6%B5%81/" class="article-nav-link">
+        <strong class="article-nav-caption">Olde posts</strong>
+        <div class="article-nav-title">前端优化系列之防抖与节流</div>
+      </a>
+    
+  </nav>
+
+
+  
+
+  
+    
+  
+
+</article>
+
+
+
+</section>
+  <footer class="footer">
+  <div class="outer">
+    <ul class="list-inline">
+      <li>&copy; 2021 今天天气晴朗</li>
+      <li>Author <span>Vera</span></li>
+    </ul>
+  </div>
+</footer>
+
+</main>
+
+<aside class="sidebar sidebar-specter">
+  
+    <button class="navbar-toggle"></button>
+<nav class="navbar">
+  
+    <div class="logo">
+      <a href="/"><img src="/images/headImg.jpeg" alt="今天天气晴朗"></a>
+    </div>
+  
+  <ul class="nav nav-main">
+    
+      <li class="nav-item">
+        <a class="nav-item-link" href="/">Home</a>
+      </li>
+    
+      <li class="nav-item">
+        <a class="nav-item-link" href="/archives">Archives</a>
+      </li>
+    
+      <li class="nav-item">
+        <a class="nav-item-link" href="/gallery">Gallery</a>
+      </li>
+    
+      <li class="nav-item">
+        <a class="nav-item-link" href="/about">About</a>
+      </li>
+    
+    <li class="nav-item">
+      <a class="nav-item-link nav-item-search" title="Search">
+        <i class="fe fe-search"></i>
+        Search
+      </a>
+    </li>
+  </ul>
+</nav>
+<nav class="navbar navbar-bottom">
+  <ul class="nav">
+    <li class="nav-item">
+      <div class="totop" id="totop">
+  <i class="fe fe-rocket"></i>
+</div>
+    </li>
+    <li class="nav-item">
+      
+    </li>
+  </ul>
+</nav>
+<div class="search-form-wrap">
+  <div class="local-search local-search-plugin">
+  <input type="search" id="local-search-input" class="local-search-input" placeholder="Search...">
+  <div id="local-search-result" class="local-search-result"></div>
+</div>
+</div>
+  </aside>
+  
+<script src="/js/jquery-2.0.3.min.js"></script>
+
+
+<script src="/js/jquery.justifiedGallery.min.js"></script>
+
+
+<script src="/js/lazyload.min.js"></script>
+
+
+<script src="/js/busuanzi-2.3.pure.min.js"></script>
+
+
+  
+<script src="/fancybox/jquery.fancybox.min.js"></script>
+
+
+
+
+  
+<script src="/js/tocbot.min.js"></script>
+
+  <script>
+    // Tocbot_v4.7.0  http://tscanlin.github.io/tocbot/
+    tocbot.init({
+      tocSelector: '.tocbot',
+      contentSelector: '.article-entry',
+      headingSelector: 'h1, h2, h3, h4, h5, h6',
+      hasInnerContainers: true,
+      scrollSmooth: true,
+      positionFixedSelector: '.tocbot',
+      positionFixedClass: 'is-position-fixed',
+      fixedSidebarOffset: 'auto',
+    });
+  </script>
+
+
+
+<script src="/js/ocean.js"></script>
+
+
+</body>
+</html>

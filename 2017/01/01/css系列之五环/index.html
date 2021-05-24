@@ -1,0 +1,409 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  
+  
+  
+    <meta name="description" content="治愈系少女">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <title>
+    css系列之五环 |
+    
+    今天天气晴朗</title>
+  
+    <link rel="shortcut icon" href="/favicon.ico">
+  
+  
+<link rel="stylesheet" href="/css/style.css">
+
+  
+    
+<link rel="stylesheet" href="/fancybox/jquery.fancybox.min.css">
+
+  
+  
+<script src="/js/pace.min.js"></script>
+
+<meta name="generator" content="Hexo 4.2.0"></head>
+
+<body>
+<main class="content">
+  <section class="outer">
+  
+
+<article id="post-css系列之五环" class="article article-type-post" itemscope itemprop="blogPost" data-scroll-reveal>
+
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
+  
+    <h1 class="article-title" itemprop="name">
+      css系列之五环
+    </h1>
+  
+  
+
+
+
+
+      </header>
+    
+
+    
+      <div class="article-meta">
+        <a href="/2017/01/01/css%E7%B3%BB%E5%88%97%E4%B9%8B%E4%BA%94%E7%8E%AF/" class="article-date">
+  <time datetime="2017-01-01T06:27:00.000Z" itemprop="datePublished">2017-01-01</time>
+</a>
+        
+      </div>
+    
+
+    
+      
+
+
+
+
+    
+
+    <div class="article-entry" itemprop="articleBody">
+      
+
+
+      
+
+      
+        <p>今年夏天我守在电视旁边看了所有能看的奥运比赛,到现在我都记得孙杨那场比赛.卧槽老娘简直被孙杨燃炸了!!!最近又在朋友圈里看到了孙杨来录制节目,想想做个五环玩玩吧.</p>
+<a id="more"></a>
+
+<p>首先,五环的特点是五个圆,并且是一个套着一个,看图</p>
+<p><img src="/image/%E4%BA%94%E7%8E%AF/1.png" alt="图1"></p>
+<p>通过立体图能看出来五环某些边的层叠关系,怎么用css实现?思路是这样的,第一步做5个圆,但是这种一个套着一个的样式不可能是一个div就可以实现的,所以再弄五个一模一样的圆放在上面,通过改变z-index和透明度来实现.</p>
+<p>第一步:做五个圆</p>
+<p>HTML部分代码</p>
+<pre><code>&lt;div class=&quot;circle blue&quot;&gt;&lt;/div&gt;
+&lt;div class=&quot;circle black&quot;&gt;&lt;/div&gt;
+&lt;div class=&quot;circle red&quot;&gt;&lt;/div&gt;
+&lt;div class=&quot;circle yellow&quot;&gt;&lt;/div&gt;
+&lt;div class=&quot;circle green&quot;&gt;&lt;/div&gt;</code></pre><p>CSS样式部分代码</p>
+<pre><code>.circle{
+    width: 200px;
+    height: 200px;
+    border-radius: 50%;
+    border-width: 10px;
+    border-style: solid;
+    position: absolute;
+}
+.blue{
+    border-color: blue;
+    top: 0;
+    left: 0;
+}
+.black{
+    border-color: black;
+    top: 0;
+    left: 230px;
+}
+.red{
+    border-color: red;
+    top: 0;
+    left: 460px;
+}
+.yellow{
+    border-color: yellow;
+    top: 110px;
+    left: 110px;
+}
+.green{
+    border-color: green;
+    top: 110px;
+    left: 340px;
+}</code></pre><p>运行结果</p>
+<p><img src="/image/%E4%BA%94%E7%8E%AF/2.png" alt="图2"></p>
+<p>此时的五环是没有一个套一个的样式的,我们向每一个圆里插入一个一样的圆,用到的是css3中的::after</p>
+<p>CSS代码</p>
+<pre><code>.circle, .circle::after{
+    width: 200px;
+    height: 200px;
+    border-radius: 50%;
+    border-width: 10px;
+    border-style: solid;
+    position: absolute;
+}
+.circle::after{
+    content: &quot;&quot;;
+}
+.blue{
+    border-color: blue;
+    top: 0;
+    left: 0;
+}
+.blue.circle::after{
+    border-color: blue;
+}
+.black{
+    border-color: black;
+    top: 0;
+    left: 230px;
+}
+.black.circle::after{
+    border-color: black;
+}
+.red{
+    border-color: red;
+    top: 0;
+    left: 460px;
+}
+.red.circle::after{
+    border-color: red;
+}
+.yellow{
+    border-color: yellow;
+    top: 110px;
+    left: 110px;
+}
+.yellow.circle::after{
+    border-color: yellow;
+}
+.green{
+    border-color: green;
+    top: 110px;
+    left: 340px;
+}
+.green.circle::after{
+    border-color: green;
+}</code></pre><p>运行结果:</p>
+<p><img src="/image/%E4%BA%94%E7%8E%AF/3.png" alt="图3"></p>
+<p>在插入同样元素的时候,发现并没有与原来的元素重合,我们把边框圆角去掉,并且把所有的后插入的元素边框设置为黑色,再看一下.</p>
+<p><img src="/image/%E4%BA%94%E7%8E%AF/4.png" alt="图4"></p>
+<p>这是因为在内容中插入.所以让所有后插入的元素定位left和top都为-10px.代码如下</p>
+<pre><code>.circle::after{
+    content: &quot;&quot;;
+    left: -10px;
+    top: -10px;
+}</code></pre><p><img src="/image/%E4%BA%94%E7%8E%AF/5.png" alt="图5"></p>
+<p>然后开始改变层叠关系,下图为改变后的五环图</p>
+<p><img src="/image/%E4%BA%94%E7%8E%AF/6.png" alt="图6"></p>
+<p>对比后,首先改变蓝色右边和黄色交叉的地方,让后插入的蓝色的右边框z-index变为1,然后运行</p>
+<p><img src="/image/%E4%BA%94%E7%8E%AF/7.png" alt="图7"></p>
+<p>再改变蓝色下方和黄色交叉的地方,把后插入的蓝色下边框设为透明,语法为border-bottom-color,透明的属性为transparent.运行</p>
+<p><img src="/image/%E4%BA%94%E7%8E%AF/8.png" alt="图7"></p>
+<p>同理,可以设置后面的圆环样式,完整css样式代码如下</p>
+<pre><code>.circle, .circle::after{
+    width: 200px;
+    height: 200px;
+    border-radius: 50%;
+    border-width: 10px;
+    border-color: black;
+    border-style: solid;
+    position: absolute;
+}
+.circle::after{
+    content: &quot;&quot;;
+    left: -10px;
+    top: -10px;
+}
+.blue{
+    border-color: blue;
+    top: 0;
+    left: 0;
+}
+.blue.circle::after{
+    border-color: blue;
+    z-index: 1;
+    border-bottom-color: transparent;
+}
+.black{
+    border-color: black;
+    top: 0;
+    left: 230px;
+}
+.black.circle::after{
+    border-color: black;
+    z-index: 1;
+    border-left-color: transparent;
+}
+.red{
+    border-color: red;
+    top: 0;
+    left: 460px;
+}
+.red.circle::after{
+    border-color: red;
+    z-index: 2;
+    border-left-color: transparent;
+}
+.yellow{
+    border-color: yellow;
+    top: 110px;
+    left: 110px;
+}
+.yellow.circle::after{
+    border-color: yellow;
+}
+.green{
+    border-color: green;
+    top: 110px;
+    left: 340px;
+}
+.green.circle::after{
+    border-color: green;
+    z-index: 1;
+    border-top-color: transparent;
+}</code></pre>
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://vera0720.github.io/2017/01/01/css%E7%B3%BB%E5%88%97%E4%B9%8B%E4%BA%94%E7%8E%AF/" data-id="ckp1zpvux000c1pr9cx482jnu"
+         class="article-share-link">Share</a>
+      
+  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/css/" rel="tag">css</a></li></ul>
+
+    </footer>
+
+  </div>
+
+  
+    
+  <nav class="article-nav">
+    
+      <a href="/2017/02/22/css%E7%B3%BB%E5%88%97%E4%B9%8B%E6%96%87%E5%AD%97%E7%9A%84%E5%9E%82%E7%9B%B4%E5%B1%85%E4%B8%AD/" class="article-nav-link">
+        <strong class="article-nav-caption">Newer posts</strong>
+        <div class="article-nav-title">
+          
+            css系列之文字的垂直居中
+          
+        </div>
+      </a>
+    
+    
+      <a href="/2016/12/07/css%E7%B3%BB%E5%88%97%E4%B9%8B%E4%B8%A4%E5%88%97%E5%B8%83%E5%B1%80/" class="article-nav-link">
+        <strong class="article-nav-caption">Olde posts</strong>
+        <div class="article-nav-title">css系列之两列布局</div>
+      </a>
+    
+  </nav>
+
+
+  
+
+  
+    
+  
+
+</article>
+
+
+
+</section>
+  <footer class="footer">
+  <div class="outer">
+    <ul class="list-inline">
+      <li>&copy; 2021 今天天气晴朗</li>
+      <li>Author <span>Vera</span></li>
+    </ul>
+  </div>
+</footer>
+
+</main>
+
+<aside class="sidebar sidebar-specter">
+  
+    <button class="navbar-toggle"></button>
+<nav class="navbar">
+  
+    <div class="logo">
+      <a href="/"><img src="/images/headImg.jpeg" alt="今天天气晴朗"></a>
+    </div>
+  
+  <ul class="nav nav-main">
+    
+      <li class="nav-item">
+        <a class="nav-item-link" href="/">Home</a>
+      </li>
+    
+      <li class="nav-item">
+        <a class="nav-item-link" href="/archives">Archives</a>
+      </li>
+    
+      <li class="nav-item">
+        <a class="nav-item-link" href="/gallery">Gallery</a>
+      </li>
+    
+      <li class="nav-item">
+        <a class="nav-item-link" href="/about">About</a>
+      </li>
+    
+    <li class="nav-item">
+      <a class="nav-item-link nav-item-search" title="Search">
+        <i class="fe fe-search"></i>
+        Search
+      </a>
+    </li>
+  </ul>
+</nav>
+<nav class="navbar navbar-bottom">
+  <ul class="nav">
+    <li class="nav-item">
+      <div class="totop" id="totop">
+  <i class="fe fe-rocket"></i>
+</div>
+    </li>
+    <li class="nav-item">
+      
+    </li>
+  </ul>
+</nav>
+<div class="search-form-wrap">
+  <div class="local-search local-search-plugin">
+  <input type="search" id="local-search-input" class="local-search-input" placeholder="Search...">
+  <div id="local-search-result" class="local-search-result"></div>
+</div>
+</div>
+  </aside>
+  
+<script src="/js/jquery-2.0.3.min.js"></script>
+
+
+<script src="/js/jquery.justifiedGallery.min.js"></script>
+
+
+<script src="/js/lazyload.min.js"></script>
+
+
+<script src="/js/busuanzi-2.3.pure.min.js"></script>
+
+
+  
+<script src="/fancybox/jquery.fancybox.min.js"></script>
+
+
+
+
+  
+<script src="/js/tocbot.min.js"></script>
+
+  <script>
+    // Tocbot_v4.7.0  http://tscanlin.github.io/tocbot/
+    tocbot.init({
+      tocSelector: '.tocbot',
+      contentSelector: '.article-entry',
+      headingSelector: 'h1, h2, h3, h4, h5, h6',
+      hasInnerContainers: true,
+      scrollSmooth: true,
+      positionFixedSelector: '.tocbot',
+      positionFixedClass: 'is-position-fixed',
+      fixedSidebarOffset: 'auto',
+    });
+  </script>
+
+
+
+<script src="/js/ocean.js"></script>
+
+
+</body>
+</html>

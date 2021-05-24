@@ -1,0 +1,349 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  
+  
+  
+    <meta name="description" content="治愈系少女">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <title>
+    webpack系列之配置 |
+    
+    今天天气晴朗</title>
+  
+    <link rel="shortcut icon" href="/favicon.ico">
+  
+  
+<link rel="stylesheet" href="/css/style.css">
+
+  
+    
+<link rel="stylesheet" href="/fancybox/jquery.fancybox.min.css">
+
+  
+  
+<script src="/js/pace.min.js"></script>
+
+<meta name="generator" content="Hexo 4.2.0"></head>
+
+<body>
+<main class="content">
+  <section class="outer">
+  
+
+<article id="post-webpack系列之配置" class="article article-type-post" itemscope itemprop="blogPost" data-scroll-reveal>
+
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
+  
+    <h1 class="article-title" itemprop="name">
+      webpack系列之配置
+    </h1>
+  
+  
+
+
+
+
+      </header>
+    
+
+    
+      <div class="article-meta">
+        <a href="/2020/03/14/webpack%E7%B3%BB%E5%88%97%E4%B9%8B%E9%85%8D%E7%BD%AE/" class="article-date">
+  <time datetime="2020-03-14T07:29:59.000Z" itemprop="datePublished">2020-03-14</time>
+</a>
+        
+      </div>
+    
+
+    
+      
+    <div class="tocbot"></div>
+
+
+
+
+
+    
+
+    <div class="article-entry" itemprop="articleBody">
+      
+
+
+      
+
+      
+        <p>为什么选择webpack呢？大多数团队会在开发时采用紧跟时代的技术，这些技术基本上是采用”模块化+新语言+新框架”，webpack可以提供一个一站式解决的方案。<br>不知道你是不是和曾经的我一样，只会在vue里简单用用它自带的，或者是百度出来直接复制。今天让我们一起从0开始了解webpack吧～<br>本文主要从配置，优化，实战，原理4个方向来梳理。在此感谢吴浩麟先生的书，本文有一部分内容是借鉴吴先生的文章。</p>
+<a id="more"></a>
+
+<p>Webpack 有以下几个核心概念。<br>Entry：入口，Webpack 执行构建的第一步将从 Entry 开始，可抽象成输入。<br>Module：模块，在 Webpack 里一切皆模块，一个模块对应着一个文件。Webpack 会从配置的 Entry 开始递归找出所有依赖的模块。<br>Chunk：代码块，一个 Chunk 由多个模块组合而成，用于代码合并与分割。<br>Loader：模块转换器，用于把模块原内容按照需求转换成新内容。<br>Plugin：扩展插件，在 Webpack 构建流程中的特定时机注入扩展逻辑来改变构建结果或做你想要的事情。<br>Output：输出结果，在 Webpack 经过一系列处理并得出最终想要的代码后输出结果。</p>
+<p>Webpack 启动后会从 Entry 里配置的 Module 开始递归解析 Entry 依赖的所有 Module。 每找到一个 Module， 就会根据配置的 Loader 去找出对应的转换规则，对 Module 进行转换后，再解析出当前 Module 依赖的 Module。 这些模块会以 Entry 为单位进行分组，一个 Entry 和其所有依赖的 Module 被分到一个组也就是一个 Chunk。最后 Webpack 会把所有 Chunk 转换成文件输出。 在整个流程中 Webpack 会在恰当的时机执行 Plugin 里定义的逻辑。</p>
+<h2 id="配置"><a href="#配置" class="headerlink" title="配置"></a>配置</h2><h3 id="Entry"><a href="#Entry" class="headerlink" title="Entry"></a>Entry</h3><p>entry是配置模块的入口，webpack会通过这个入口开始查找。所以一定要配啊～</p>
+<pre><code>// 单入口配置
+entry: &quot;./src/app1.js&quot;
+// 多入口数组配置
+entry: [&quot;./src/app1.js&quot;,&quot;./src/app2.js&quot;]
+// 多入口对象配置
+entry: {
+    &quot;app1&quot;: &quot;./src/app1.js&quot;,
+    &quot;app2&quot;: &quot;./src/app2.js&quot;,
+}
+// path方式配置
+entry: {
+    context:path.resolve(__dirname,&apos;app&apos;) 
+}
+// 动态入口---同步
+entry: () =&gt; {
+    return {
+        &quot;app1&quot;: &quot;./src/app1.js&quot;,
+        &quot;app2&quot;: &quot;./src/app2.js&quot;,
+    }
+}
+// 动态入口---异步
+entry: () =&gt; {
+    return new Promise ((resolve) =&gt; {
+        resolve({
+            &quot;app1&quot;: &quot;./src/app1.js&quot;,
+            &quot;app2&quot;: &quot;./src/app2.js&quot;,
+        })
+    })
+
+}</code></pre><p>webpack会为每一个chunk取一个名字，chunk和entry的配置有关，如果entry是一个string/array，就只会生成一个名字为main的chunk，如果entry是一个object，那就会出现多个chunk，这是chunk的名称是object中对应的键的名字。</p>
+<h3 id="Output"><a href="#Output" class="headerlink" title="Output"></a>Output</h3><p>output是配置最后如何输出代码的配置项。</p>
+<pre><code>output: {
+        path: path.resolve(__dirname, &apos;dist&apos;), // 输出文件在本地的绝对路径
+        filename: &apos;[name].[chunkhash:8].js&apos;, // 输出文件的名字，
+        chunkFilename: &apos;[name].[chunkhash:8].chunk.js&apos;,
+        publicPath: &apos;/&apos;
+},</code></pre><h3 id="Module"><a href="#Module" class="headerlink" title="Module"></a>Module</h3><pre><code>module: {
+    rules: [
+        {
+          // 命中 JavaScript 文件
+          test: /\.js$/,
+          // 用 babel-loader 转换 JavaScript 文件
+          // ?cacheDirectory 表示传给 babel-loader 的参数，用于缓存 babel 编译结果加快重新编译速度
+          use: [&apos;babel-loader?cacheDirectory&apos;],
+          // 只命中src目录里的js文件，加快 Webpack 搜索速度
+          include: path.resolve(__dirname, &apos;src&apos;)
+        },
+        {
+          // 命中 SCSS 文件
+          test: /\.scss$/,
+          // 使用一组 Loader 去处理 SCSS 文件。
+          // 处理顺序为从后到前，即先交给 sass-loader 处理，再把结果交给 css-loader 最后再给 style-loader。
+          use: [&apos;style-loader&apos;, &apos;css-loader&apos;, &apos;sass-loader&apos;],
+          // 排除 node_modules 目录下的文件
+          exclude: path.resolve(__dirname, &apos;node_modules&apos;),
+        },
+        {
+          // 对非文本文件采用 file-loader 加载
+          test: /\.(gif|png|jpe?g|eot|woff|ttf|svg|pdf)$/,
+          use: [&apos;file-loader&apos;],
+        },
+    ],
+    // 让 Webpack 忽略对部分没采用模块化的文件的递归解析和处理，这样做的好处是能提高构建性能。 原因是一些库例如 jQuery 、ChartJS 它们庞大又没有采用模块化标准，让 Webpack 去解析这些文件耗时又没有意义。
+    noParse: /jquery|chartjs/
+}</code></pre><h3 id="Resolve"><a href="#Resolve" class="headerlink" title="Resolve"></a>Resolve</h3><pre><code>resolve:{
+  // 通过别名来把原导入路径映射成一个新的导入路径
+  alias:{
+    components: &apos;./src/components/&apos;
+  },
+  // 有一些第三方模块会针对不同环境提供几分代码,在 package.json 文件有两个入口文件，会根据 mainFields 的配置去决定优先采用那份代码
+  mainFields: [&apos;browser&apos;, &apos;main&apos;],
+  // 导入语句没带文件后缀时，Webpack 会自动带上后缀后去尝试访问文件是否存在。 resolve.extensions 用于配置在尝试过程中用到的后缀列表，
+  extensions: [&apos;.js&apos;, &apos;.json&apos;],
+  //  Webpack 去哪些目录下寻找第三方模块
+  modules:[&apos;./src/components&apos;,&apos;node_modules&apos;]
+}</code></pre><h3 id="Plugins"><a href="#Plugins" class="headerlink" title="Plugins"></a>Plugins</h3><p>Plugin 用于扩展 Webpack 功能</p>
+<pre><code>plugins: [
+    // 所有页面都会用到的公共代码提取到 common 代码块中
+    new CommonsChunkPlugin({
+      name: &apos;common&apos;,
+      chunks: [&apos;a&apos;, &apos;b&apos;]
+    }),
+  ]</code></pre><h3 id="devServer"><a href="#devServer" class="headerlink" title="devServer"></a>devServer</h3><p>提高开发效率的 DevServer ，它提供了一些配置项可以改变 DevServer 的默认行为</p>
+<pre><code>devServer:{
+    hot:true,
+    inline:true,
+    // 配置 DevServer HTTP 服务器的文件根目录。 默认情况下为当前执行目录，通常是项目根目录，所有一般情况下你不必设置它，除非你有额外的文件需要被 DevServer 服务。
+    contentBase: path.join(__dirname, &apos;public&apos;),
+    // 单页应用要求服务器在针对任何命中的路由时都返回一个对应的 HTML 文件
+    historyApiFallback: true
+    // 多个单页应用组成根据不同的请求来返回不同的 HTML 文件
+    historyApiFallback: {
+    // 使用正则匹配命中路由
+    rewrites: [
+      // /user 开头的都返回 user.html
+      { from: /^\/user/, to: &apos;/user.html&apos; },
+      { from: /^\/game/, to: &apos;/game.html&apos; },
+      // 其它的都返回 index.html
+      { from: /./, to: &apos;/index.html&apos; },
+    ]
+    },
+    // 在 HTTP 响应中注入一些 HTTP 响应头
+    headers: {
+      &apos;X-foo&apos;:&apos;bar&apos;
+    },
+    host:&apos;&apos;,
+    port:80
+    // DevServer 默认使用 HTTP 协议服务，它也能通过 HTTPS 协议服务。 有
+    https: true
+}</code></pre>
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://vera0720.github.io/2020/03/14/webpack%E7%B3%BB%E5%88%97%E4%B9%8B%E9%85%8D%E7%BD%AE/" data-id="ckp1zpvvu001u1pr9eql9576t"
+         class="article-share-link">Share</a>
+      
+  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/webpack/" rel="tag">webpack</a></li></ul>
+
+    </footer>
+
+  </div>
+
+  
+    
+  <nav class="article-nav">
+    
+      <a href="/2021/04/28/%E5%89%8D%E7%AB%AF%E9%9D%A2%E8%AF%95%E9%A2%98%E9%9B%86/" class="article-nav-link">
+        <strong class="article-nav-caption">Newer posts</strong>
+        <div class="article-nav-title">
+          
+            前端面试题集
+          
+        </div>
+      </a>
+    
+    
+      <a href="/2020/02/01/react%E5%8E%9F%E7%90%86%E8%A7%A3%E6%9E%90%E7%B3%BB%E5%88%97%E4%B9%8BsetState/" class="article-nav-link">
+        <strong class="article-nav-caption">Olde posts</strong>
+        <div class="article-nav-title">react原理解析之setState</div>
+      </a>
+    
+  </nav>
+
+
+  
+
+  
+    
+  
+
+</article>
+
+
+
+</section>
+  <footer class="footer">
+  <div class="outer">
+    <ul class="list-inline">
+      <li>&copy; 2021 今天天气晴朗</li>
+      <li>Author <span>Vera</span></li>
+    </ul>
+  </div>
+</footer>
+
+</main>
+
+<aside class="sidebar sidebar-specter">
+  
+    <button class="navbar-toggle"></button>
+<nav class="navbar">
+  
+    <div class="logo">
+      <a href="/"><img src="/images/headImg.jpeg" alt="今天天气晴朗"></a>
+    </div>
+  
+  <ul class="nav nav-main">
+    
+      <li class="nav-item">
+        <a class="nav-item-link" href="/">Home</a>
+      </li>
+    
+      <li class="nav-item">
+        <a class="nav-item-link" href="/archives">Archives</a>
+      </li>
+    
+      <li class="nav-item">
+        <a class="nav-item-link" href="/gallery">Gallery</a>
+      </li>
+    
+      <li class="nav-item">
+        <a class="nav-item-link" href="/about">About</a>
+      </li>
+    
+    <li class="nav-item">
+      <a class="nav-item-link nav-item-search" title="Search">
+        <i class="fe fe-search"></i>
+        Search
+      </a>
+    </li>
+  </ul>
+</nav>
+<nav class="navbar navbar-bottom">
+  <ul class="nav">
+    <li class="nav-item">
+      <div class="totop" id="totop">
+  <i class="fe fe-rocket"></i>
+</div>
+    </li>
+    <li class="nav-item">
+      
+    </li>
+  </ul>
+</nav>
+<div class="search-form-wrap">
+  <div class="local-search local-search-plugin">
+  <input type="search" id="local-search-input" class="local-search-input" placeholder="Search...">
+  <div id="local-search-result" class="local-search-result"></div>
+</div>
+</div>
+  </aside>
+  
+<script src="/js/jquery-2.0.3.min.js"></script>
+
+
+<script src="/js/jquery.justifiedGallery.min.js"></script>
+
+
+<script src="/js/lazyload.min.js"></script>
+
+
+<script src="/js/busuanzi-2.3.pure.min.js"></script>
+
+
+  
+<script src="/fancybox/jquery.fancybox.min.js"></script>
+
+
+
+
+  
+<script src="/js/tocbot.min.js"></script>
+
+  <script>
+    // Tocbot_v4.7.0  http://tscanlin.github.io/tocbot/
+    tocbot.init({
+      tocSelector: '.tocbot',
+      contentSelector: '.article-entry',
+      headingSelector: 'h1, h2, h3, h4, h5, h6',
+      hasInnerContainers: true,
+      scrollSmooth: true,
+      positionFixedSelector: '.tocbot',
+      positionFixedClass: 'is-position-fixed',
+      fixedSidebarOffset: 'auto',
+    });
+  </script>
+
+
+
+<script src="/js/ocean.js"></script>
+
+
+</body>
+</html>

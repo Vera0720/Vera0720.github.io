@@ -1,0 +1,323 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  
+  
+  
+    <meta name="description" content="治愈系少女">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <title>
+    css系列之两列布局 |
+    
+    今天天气晴朗</title>
+  
+    <link rel="shortcut icon" href="/favicon.ico">
+  
+  
+<link rel="stylesheet" href="/css/style.css">
+
+  
+    
+<link rel="stylesheet" href="/fancybox/jquery.fancybox.min.css">
+
+  
+  
+<script src="/js/pace.min.js"></script>
+
+<meta name="generator" content="Hexo 4.2.0"></head>
+
+<body>
+<main class="content">
+  <section class="outer">
+  
+
+<article id="post-css系列之两列布局" class="article article-type-post" itemscope itemprop="blogPost" data-scroll-reveal>
+
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
+  
+    <h1 class="article-title" itemprop="name">
+      css系列之两列布局
+    </h1>
+  
+  
+
+
+
+
+      </header>
+    
+
+    
+      <div class="article-meta">
+        <a href="/2016/12/07/css%E7%B3%BB%E5%88%97%E4%B9%8B%E4%B8%A4%E5%88%97%E5%B8%83%E5%B1%80/" class="article-date">
+  <time datetime="2016-12-07T07:28:00.000Z" itemprop="datePublished">2016-12-07</time>
+</a>
+        
+      </div>
+    
+
+    
+      
+
+
+
+
+    
+
+    <div class="article-entry" itemprop="articleBody">
+      
+
+
+      
+
+      
+        <p>两列布局</p>
+<p>两列布局是网页布局中常用的布局方式之一,根据需求确定布局方式.布局成为了面试中出现频率较高的问题.</p>
+<p>以下为根据需求的几种实现方式</p>
+<p>需求:两列布局左边定宽,右边自适应</p>
+<a id="more"></a>
+
+<p>方法一:</p>
+<p>部分代码如下:</p>
+<p>HTML部分</p>
+<pre><code>&lt;div id=&quot;div1&quot;&gt;1&lt;/div&gt;
+&lt;div id=&quot;div2&quot;&gt;2&lt;/div&gt;</code></pre><p>CSS样式</p>
+<pre><code>#div1{
+    width: 100px;
+    height: 150px;
+    background: red;
+}
+#div2{
+    height: 150px;
+    background: blue;
+}</code></pre><p>因为div是块级元素,所以红色和蓝色并没有在同一水平上,此时想到,可以让红色向左浮动.</p>
+<p>虽然运行后我们看到红色和蓝色在同一个水平上,但通过开发者工具可以看到此时的蓝色是充满整个水平方向的,因为红色浮动脱离文档流,空间释放蓝色块挤上去了,所以此时并不是所需要的两列布局效果.解决方法可以给蓝色增加margin-left长度为红色的宽度或者适当的长度</p>
+<p>方法二:</p>
+<p>除了float方式,还有一种为定位法,有人就想到可以给蓝色position:absolute,让它距离浏览器左边合适的宽度,代码如下:</p>
+<p>CSS样式部分代码</p>
+<pre><code>#div1{
+    width: 100px;
+    height: 150px;
+    background: red;
+}
+#div2{
+    height: 150px;
+    background: blue;
+    position: absolute;
+    left: 200px;
+}</code></pre><p>HTML部分代码</p>
+<pre><code>&lt;div id=&quot;div1&quot;&gt;&lt;/div&gt;
+&lt;div id=&quot;div2&quot;&gt;&lt;/div&gt;</code></pre><p>现象：蓝色消失</p>
+<p>原因:定位后蓝色脱离文档了,它也没有宽度,所以看不见它.解决方法:给蓝色加width:100%和top:0.代码如下</p>
+<pre><code>#div2{
+    height: 150px;
+    width: 100%;
+    background: blue;
+    position: absolute;
+    left: 100px;
+    top: 0;
+}</code></pre><p>第一点,因为在不设置top值的时候,默认不是0,而是auto,所以我们应该养成习惯,即使top值不需要的时候,也把它写成0.第二点,蓝色是自适应,因为浏览器的不同我们无法加宽度,但是如果加上宽度100%,就不再是没有宽度了.运行结果如下</p>
+<p>推荐方法一和方法二,兼容性问题较少,方法三和方法四涉及到css3中的属性,有兼容性问题,不推荐.后续会详细写css3中的弹性盒模型</p>
+<p>方法三:</p>
+<p>使用flex布局</p>
+<p>代码如下:</p>
+<pre><code>*{
+    margin: 0;
+    padding: 0;
+}
+#container {
+    display: -webkit-box;
+    display: -moz-box;
+    display: -ms-box;
+    display: -o-box;
+    display: box;
+}
+#div1{
+    width: 100px;
+    height: 150px;
+    background: red;
+}
+#div2{
+    height: 150px;
+    background: blue;
+    -webkit-box-flex: 1;
+    -moz-box-flex: 1;
+    -ms-box-flex: 1;
+    -o-box-flex: 1;
+    box-flex: 1;
+}</code></pre><p>方式四:</p>
+<p>通过创建BFC来实现两列布局</p>
+<p>代码如下:</p>
+<pre><code>*{
+    margin: 0;
+    padding: 0;
+}
+#div1{
+    width: 100px;
+    height: 150px;
+    background: red;
+    float: left;
+}
+#div2{
+    height: 150px;
+    background: blue;
+    overflow: hidden;
+}</code></pre>
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://vera0720.github.io/2016/12/07/css%E7%B3%BB%E5%88%97%E4%B9%8B%E4%B8%A4%E5%88%97%E5%B8%83%E5%B1%80/" data-id="ckp1zpvuu00071pr92q8469go"
+         class="article-share-link">Share</a>
+      
+  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/css/" rel="tag">css</a></li></ul>
+
+    </footer>
+
+  </div>
+
+  
+    
+  <nav class="article-nav">
+    
+      <a href="/2017/01/01/css%E7%B3%BB%E5%88%97%E4%B9%8B%E4%BA%94%E7%8E%AF/" class="article-nav-link">
+        <strong class="article-nav-caption">Newer posts</strong>
+        <div class="article-nav-title">
+          
+            css系列之五环
+          
+        </div>
+      </a>
+    
+    
+      <a href="/2016/12/02/css%E7%B3%BB%E5%88%97%E4%B9%8Bsass%E5%92%8Cscss/" class="article-nav-link">
+        <strong class="article-nav-caption">Olde posts</strong>
+        <div class="article-nav-title">css系列之sass和scss</div>
+      </a>
+    
+  </nav>
+
+
+  
+
+  
+    
+  
+
+</article>
+
+
+
+</section>
+  <footer class="footer">
+  <div class="outer">
+    <ul class="list-inline">
+      <li>&copy; 2021 今天天气晴朗</li>
+      <li>Author <span>Vera</span></li>
+    </ul>
+  </div>
+</footer>
+
+</main>
+
+<aside class="sidebar sidebar-specter">
+  
+    <button class="navbar-toggle"></button>
+<nav class="navbar">
+  
+    <div class="logo">
+      <a href="/"><img src="/images/headImg.jpeg" alt="今天天气晴朗"></a>
+    </div>
+  
+  <ul class="nav nav-main">
+    
+      <li class="nav-item">
+        <a class="nav-item-link" href="/">Home</a>
+      </li>
+    
+      <li class="nav-item">
+        <a class="nav-item-link" href="/archives">Archives</a>
+      </li>
+    
+      <li class="nav-item">
+        <a class="nav-item-link" href="/gallery">Gallery</a>
+      </li>
+    
+      <li class="nav-item">
+        <a class="nav-item-link" href="/about">About</a>
+      </li>
+    
+    <li class="nav-item">
+      <a class="nav-item-link nav-item-search" title="Search">
+        <i class="fe fe-search"></i>
+        Search
+      </a>
+    </li>
+  </ul>
+</nav>
+<nav class="navbar navbar-bottom">
+  <ul class="nav">
+    <li class="nav-item">
+      <div class="totop" id="totop">
+  <i class="fe fe-rocket"></i>
+</div>
+    </li>
+    <li class="nav-item">
+      
+    </li>
+  </ul>
+</nav>
+<div class="search-form-wrap">
+  <div class="local-search local-search-plugin">
+  <input type="search" id="local-search-input" class="local-search-input" placeholder="Search...">
+  <div id="local-search-result" class="local-search-result"></div>
+</div>
+</div>
+  </aside>
+  
+<script src="/js/jquery-2.0.3.min.js"></script>
+
+
+<script src="/js/jquery.justifiedGallery.min.js"></script>
+
+
+<script src="/js/lazyload.min.js"></script>
+
+
+<script src="/js/busuanzi-2.3.pure.min.js"></script>
+
+
+  
+<script src="/fancybox/jquery.fancybox.min.js"></script>
+
+
+
+
+  
+<script src="/js/tocbot.min.js"></script>
+
+  <script>
+    // Tocbot_v4.7.0  http://tscanlin.github.io/tocbot/
+    tocbot.init({
+      tocSelector: '.tocbot',
+      contentSelector: '.article-entry',
+      headingSelector: 'h1, h2, h3, h4, h5, h6',
+      hasInnerContainers: true,
+      scrollSmooth: true,
+      positionFixedSelector: '.tocbot',
+      positionFixedClass: 'is-position-fixed',
+      fixedSidebarOffset: 'auto',
+    });
+  </script>
+
+
+
+<script src="/js/ocean.js"></script>
+
+
+</body>
+</html>

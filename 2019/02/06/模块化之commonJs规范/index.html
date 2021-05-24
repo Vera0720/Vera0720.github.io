@@ -1,0 +1,334 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  
+  
+  
+    <meta name="description" content="治愈系少女">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <title>
+    模块化之commonJs规范 |
+    
+    今天天气晴朗</title>
+  
+    <link rel="shortcut icon" href="/favicon.ico">
+  
+  
+<link rel="stylesheet" href="/css/style.css">
+
+  
+    
+<link rel="stylesheet" href="/fancybox/jquery.fancybox.min.css">
+
+  
+  
+<script src="/js/pace.min.js"></script>
+
+<meta name="generator" content="Hexo 4.2.0"></head>
+
+<body>
+<main class="content">
+  <section class="outer">
+  
+
+<article id="post-模块化之commonJs规范" class="article article-type-post" itemscope itemprop="blogPost" data-scroll-reveal>
+
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
+  
+    <h1 class="article-title" itemprop="name">
+      模块化之commonJs规范
+    </h1>
+  
+  
+
+
+
+
+      </header>
+    
+
+    
+      <div class="article-meta">
+        <a href="/2019/02/06/%E6%A8%A1%E5%9D%97%E5%8C%96%E4%B9%8BcommonJs%E8%A7%84%E8%8C%83/" class="article-date">
+  <time datetime="2019-02-06T15:00:45.000Z" itemprop="datePublished">2019-02-06</time>
+</a>
+        
+      </div>
+    
+
+    
+      
+
+
+
+
+    
+
+    <div class="article-entry" itemprop="articleBody">
+      
+
+
+      
+
+      
+        <p>CommonJS是服务器端模块的规范，Node.js采用了这个规范。</p>
+<a id="more"></a>
+
+<p>根据CommonJS规范，一个单独的文件就是一个模块。加载模块使用require方法，该方法读取一个文件并执行，最后返回文件内部的exports对象。下面就是一个简单的模块文件example.js。</p>
+<pre><code>console.log(&quot;evaluating example.js&quot;);
+
+var invisible = function () {
+
+  console.log(&quot;invisible&quot;);
+
+}
+
+exports.message = &quot;hi&quot;;
+
+exports.say = function () {
+
+  console.log(message);
+
+}</code></pre><p>使用require方法，加载example.js。</p>
+<p>var example = require(‘./example.js’);</p>
+<p>这时，变量example就对应模块中的exports对象，于是就可以通过这个变量，使用模块提供的各个方法。</p>
+<p>{</p>
+<p>  message: “hi”,</p>
+<p>  say: [Function]</p>
+<p>}</p>
+<p>require方法默认读取js文件，所以可以省略js后缀名。</p>
+<p>var example = require(‘./example’);</p>
+<p>js文件名前面需要加上路径，可以是相对路径（相对于使用require方法的文件），也可以是绝对路径。如果省略路径，node.js会认为，你要加载一个核心模块，或者已经安装在本地 node_modules 目录中的模块。如果加载的是一个目录，node.js会首先寻找该目录中的 package.json 文件，加载该文件 main 属性提到的模块，否则就寻找该目录下的 index.js 文件。</p>
+<p>下面的例子是使用一行语句，定义一个最简单的模块。</p>
+<p>exports.do = function(a, b){ return a + b };</p>
+<p>上面的语句定义了一个加法模块，做法就是在exports对象上定义一个do方法，那就是供外部调用的方法。使用的时候，只要用require函数调用即可。</p>
+<pre><code>var add = require(&apos;./addition&apos;);
+
+add.do(1,2)</code></pre><p>// 3</p>
+<p>再看一个复杂一点的例子。</p>
+<p>// foobar.js</p>
+<pre><code>function foobar(){
+
+        this.foo = function(){
+
+                console.log(&apos;Hello foo&apos;);
+
+        }
+
+        this.bar = function(){
+
+                console.log(&apos;Hello bar&apos;);
+
+        }
+
+}
+
+exports.foobar = foobar;</code></pre><p>调用该模块的方法如下：</p>
+<pre><code>var foobar = require(&apos;./foobar&apos;).foobar,
+
+    test   = new foobar();
+
+test.bar(); // &apos;Hello bar&apos;</code></pre><p>有时，不需要exports返回一个对象，只需要它返回一个函数。这时，就要写成module.exports。</p>
+<pre><code>module.exports = function () {
+
+  console.log(&quot;hello world&quot;)
+
+}</code></pre><p>AMD规范与CommonJS规范的兼容性</p>
+<p>CommonJS规范加载模块是同步的，也就是说，只有加载完成，才能执行后面的操作。AMD规范则是非同步加载模块，允许指定回调函数。由于Node.js主要用于服务器编程，模块文件一般都已经存在于本地硬盘，所以加载起来比较快，不用考虑非同步加载的方式，所以CommonJS规范比较适用。但是，如果是浏览器环境，要从服务器端加载模块，这时就必须采用非同步模式，因此浏览器端一般采用AMD规范。</p>
+<p>AMD规范使用define方法定义模块，下面就是一个例子：</p>
+<pre><code>define([&apos;package/lib&apos;], function(lib){
+
+    function foo(){
+
+        lib.log(&apos;hello world!&apos;);
+
+    }
+
+    return {
+
+        foo: foo
+
+    };
+
+});</code></pre><p>AMD规范允许输出的模块兼容CommonJS规范，这时define方法需要写成下面这样：</p>
+<pre><code>define(function (require, exports, module){
+
+    var someModule = require(&quot;someModule&quot;);
+
+    var anotherModule = require(&quot;anotherModule&quot;);    
+
+
+
+    someModule.doTehAwesome();
+
+    anotherModule.doMoarAwesome();
+
+
+
+    exports.asplode = function (){
+
+        someModule.doTehAwesome();
+
+        anotherModule.doMoarAwesome();
+
+    };
+
+});</code></pre>
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://vera0720.github.io/2019/02/06/%E6%A8%A1%E5%9D%97%E5%8C%96%E4%B9%8BcommonJs%E8%A7%84%E8%8C%83/" data-id="ckp1zpvwi00351pr999rv6hkm"
+         class="article-share-link">Share</a>
+      
+  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/js/" rel="tag">js</a></li></ul>
+
+    </footer>
+
+  </div>
+
+  
+    
+  <nav class="article-nav">
+    
+      <a href="/2019/02/23/%E6%A8%A1%E5%9D%97%E5%8C%96%E4%B9%8Bexports%E5%92%8Cmodule.exports/" class="article-nav-link">
+        <strong class="article-nav-caption">Newer posts</strong>
+        <div class="article-nav-title">
+          
+            模块化之exports和module.exports
+          
+        </div>
+      </a>
+    
+    
+      <a href="/2018/12/22/js%E5%9F%BA%E7%A1%80%E7%B3%BB%E5%88%97%E4%B9%8B%E4%BA%8B%E4%BB%B6%E5%BE%AA%E7%8E%AF/" class="article-nav-link">
+        <strong class="article-nav-caption">Olde posts</strong>
+        <div class="article-nav-title">js基础系列之事件循环</div>
+      </a>
+    
+  </nav>
+
+
+  
+
+  
+    
+  
+
+</article>
+
+
+
+</section>
+  <footer class="footer">
+  <div class="outer">
+    <ul class="list-inline">
+      <li>&copy; 2021 今天天气晴朗</li>
+      <li>Author <span>Vera</span></li>
+    </ul>
+  </div>
+</footer>
+
+</main>
+
+<aside class="sidebar sidebar-specter">
+  
+    <button class="navbar-toggle"></button>
+<nav class="navbar">
+  
+    <div class="logo">
+      <a href="/"><img src="/images/headImg.jpeg" alt="今天天气晴朗"></a>
+    </div>
+  
+  <ul class="nav nav-main">
+    
+      <li class="nav-item">
+        <a class="nav-item-link" href="/">Home</a>
+      </li>
+    
+      <li class="nav-item">
+        <a class="nav-item-link" href="/archives">Archives</a>
+      </li>
+    
+      <li class="nav-item">
+        <a class="nav-item-link" href="/gallery">Gallery</a>
+      </li>
+    
+      <li class="nav-item">
+        <a class="nav-item-link" href="/about">About</a>
+      </li>
+    
+    <li class="nav-item">
+      <a class="nav-item-link nav-item-search" title="Search">
+        <i class="fe fe-search"></i>
+        Search
+      </a>
+    </li>
+  </ul>
+</nav>
+<nav class="navbar navbar-bottom">
+  <ul class="nav">
+    <li class="nav-item">
+      <div class="totop" id="totop">
+  <i class="fe fe-rocket"></i>
+</div>
+    </li>
+    <li class="nav-item">
+      
+    </li>
+  </ul>
+</nav>
+<div class="search-form-wrap">
+  <div class="local-search local-search-plugin">
+  <input type="search" id="local-search-input" class="local-search-input" placeholder="Search...">
+  <div id="local-search-result" class="local-search-result"></div>
+</div>
+</div>
+  </aside>
+  
+<script src="/js/jquery-2.0.3.min.js"></script>
+
+
+<script src="/js/jquery.justifiedGallery.min.js"></script>
+
+
+<script src="/js/lazyload.min.js"></script>
+
+
+<script src="/js/busuanzi-2.3.pure.min.js"></script>
+
+
+  
+<script src="/fancybox/jquery.fancybox.min.js"></script>
+
+
+
+
+  
+<script src="/js/tocbot.min.js"></script>
+
+  <script>
+    // Tocbot_v4.7.0  http://tscanlin.github.io/tocbot/
+    tocbot.init({
+      tocSelector: '.tocbot',
+      contentSelector: '.article-entry',
+      headingSelector: 'h1, h2, h3, h4, h5, h6',
+      hasInnerContainers: true,
+      scrollSmooth: true,
+      positionFixedSelector: '.tocbot',
+      positionFixedClass: 'is-position-fixed',
+      fixedSidebarOffset: 'auto',
+    });
+  </script>
+
+
+
+<script src="/js/ocean.js"></script>
+
+
+</body>
+</html>
