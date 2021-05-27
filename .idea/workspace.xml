@@ -2,8 +2,7 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="87684892-ab2f-4c5d-a44e-40e56dbfe67e" name="Default Changelist" comment="前端面试题">
-      <change afterPath="$PROJECT_DIR$/.idea/.gitignore" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/source/image/前端面试题集/9.jpg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/source/image/前端面试题集/10.png" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/source/_posts/前端面试题集.md" beforeDir="false" afterPath="$PROJECT_DIR$/source/_posts/前端面试题集.md" afterDir="false" />
     </list>
@@ -189,7 +188,7 @@
     <property name="RunOnceActivity.OpenProjectViewOnStart" value="true" />
     <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
     <property name="WebServerToolWindowFactoryState" value="false" />
-    <property name="last_opened_file_path" value="$PROJECT_DIR$" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$/source/image/前端面试题集" />
     <property name="nodejs_interpreter_path.stuck_in_default_project" value="undefined stuck path" />
     <property name="nodejs_npm_path_reset_for_default_project" value="true" />
     <property name="nodejs_package_manager_path" value="yarn" />
@@ -198,8 +197,8 @@
   </component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
-      <recent name="$PROJECT_DIR$/source/image/react" />
       <recent name="$PROJECT_DIR$/source/image/前端面试题集" />
+      <recent name="$PROJECT_DIR$/source/image/react" />
       <recent name="$PROJECT_DIR$/source/_posts" />
       <recent name="$PROJECT_DIR$/source/image/输入url会发生什么" />
       <recent name="$PROJECT_DIR$/source/image/前端优化" />
@@ -242,7 +241,9 @@
       <workItem from="1620627742708" duration="5062000" />
       <workItem from="1620876834190" duration="1125000" />
       <workItem from="1621241380961" duration="2853000" />
-      <workItem from="1621665747938" duration="1754000" />
+      <workItem from="1621665747938" duration="2066000" />
+      <workItem from="1621668567006" duration="623000" />
+      <workItem from="1622013575112" duration="1512000" />
     </task>
     <task id="LOCAL-00001" summary="上传">
       <created>1578475152717</created>
@@ -342,7 +343,14 @@
       <option name="project" value="LOCAL" />
       <updated>1621305104438</updated>
     </task>
-    <option name="localTasksCounter" value="15" />
+    <task id="LOCAL-00015" summary="前端面试题">
+      <created>1621668257565</created>
+      <option name="number" value="00015" />
+      <option name="presentableId" value="LOCAL-00015" />
+      <option name="project" value="LOCAL" />
+      <updated>1621668257565</updated>
+    </task>
+    <option name="localTasksCounter" value="16" />
     <servers />
   </component>
   <component name="TimeTrackingManager">
